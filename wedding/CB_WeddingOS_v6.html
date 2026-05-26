@@ -1,0 +1,837 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C&B Wedding OS v6 · May 26, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,400&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#13221f;--is:#2e4540;--bg:#f6f3eb;--card:#fffdf7;--line:#d8d1bf;--gold:#b8872b;--gd:#8e6619;--gp:#fef9ee;--em:#1f6a55;--cr:#a9362d;--am:#b46f16;--tl:#0f5f72;--mu:#6e6a60;--ok:#2c7a4b;--sh:0 10px 28px rgba(19,34,31,.08);}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Work Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5}
+#gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999}
+.gc{background:var(--card);border:1px solid var(--line);padding:48px;text-align:center;max-width:420px;width:90%;box-shadow:var(--sh)}
+.gc h1{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;margin-bottom:6px}
+.gc p{color:var(--mu);font-size:13px;margin-bottom:24px}
+.gi{width:100%;padding:10px 14px;border:1px solid var(--line);background:var(--bg);font-family:'Work Sans',sans-serif;font-size:14px;margin-bottom:12px;outline:none}
+.gb{width:100%;padding:11px;background:var(--ink);color:#fff;font-family:'Work Sans',sans-serif;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer}
+.gb:hover{background:var(--em)}#ge{color:var(--cr);font-size:12px;margin-top:8px;min-height:16px}
+#app{display:none}
+.hdr{background:var(--ink);color:#fff;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.ht{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700}.ht em{color:var(--gold);font-style:italic}
+.hm{font-size:11px;color:rgba(255,255,255,.45);margin-top:2px}
+.hk{display:flex;gap:20px;align-items:center}.kp{text-align:center}
+.kv{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;line-height:1;color:var(--gold)}
+.kl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45)}
+.cd{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:#fff;line-height:1}
+.al{background:#fff8f0;border-bottom:3px solid var(--cr);padding:10px 28px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.ap{display:inline-flex;align-items:center;padding:4px 10px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-radius:2px}
+.ar{background:#fce8e8;color:var(--cr)}.aa{background:#fef4e0;color:var(--am)}.at{background:#e5f3f7;color:var(--tl)}
+.tn{background:var(--card);border-bottom:1px solid var(--line);padding:0 28px;display:flex;gap:2px;overflow-x:auto;white-space:nowrap}
+.tb{padding:12px 13px;font-size:11px;font-weight:500;color:var(--mu);border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;letter-spacing:.03em}
+.tb:hover{color:var(--ink)}.tb.on{color:var(--ink);font-weight:600;border-bottom-color:var(--gold)}
+.tb.tr.on{border-bottom-color:var(--cr);color:var(--cr)}.tb.tg.on{border-bottom-color:var(--em);color:var(--em)}
+.tb.tt.on{border-bottom-color:var(--tl);color:var(--tl)}.tb.ta.on{border-bottom-color:var(--am);color:var(--am)}
+.pn{display:none;padding:28px;max-width:1400px;margin:0 auto}.pn.on{display:block}
+.sh{border-left:3px solid var(--gold);padding-left:12px;margin-bottom:16px}
+.sh h2{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600}
+.sh p{font-size:12px;color:var(--mu);margin-top:2px}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:24px}
+.cd2{background:var(--card);border:1px solid var(--line);padding:20px;box-shadow:var(--sh)}
+.cl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:4px}
+.st{display:inline-block;padding:2px 8px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:2px}
+.s1{background:#e8f5ed;color:var(--ok)}.s2{background:#fce8e8;color:var(--cr)}
+.s3{background:#fef4e0;color:var(--am)}.s4{background:#e5f3f7;color:var(--tl)}.s5{background:#f0ede5;color:var(--mu)}
+.tw{overflow-x:auto;margin-bottom:24px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--ink);color:#fff;padding:8px 12px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+td{padding:8px 12px;border-bottom:1px solid var(--line)}tr:hover td{background:var(--gp)}
+.rr td{background:#fff5f5}.ra td{background:#fffbf0}.rg td{background:#f5fbf7}
+.v1{color:var(--em);font-weight:600}.v2{color:var(--am);font-weight:600}.v3{color:var(--tl);font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;border:none;font-family:'Work Sans',sans-serif}
+.bp{background:var(--ink);color:#fff}.bp:hover{background:var(--em)}
+.bo{background:transparent;border:1px solid var(--ink);color:var(--ink)}
+.bc{background:var(--gp);border:1px solid var(--line);color:var(--ink)}
+.bw{background:#25D366;color:#fff}.bm{background:var(--tl);color:#fff}
+.bs{padding:4px 10px;font-size:11px}.cp{background:#e8f5ed!important;color:var(--ok)!important}
+.ci{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:13px}
+.ci input[type=checkbox]{width:16px;height:16px;accent-color:var(--em);cursor:pointer}
+.ci.dn label{text-decoration:line-through;color:var(--mu)}
+.fx{background:var(--card);border:1px solid var(--line);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;flex-wrap:wrap;gap:14px;font-size:13px}
+.fx label{color:var(--mu);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.fx input{border:1px solid var(--line);padding:5px 10px;font-size:13px;width:90px;font-family:'Work Sans',sans-serif}
+.sc{background:var(--card);border:1px solid var(--line);padding:16px;flex:1;min-width:200px}
+.sc h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+.si{padding:8px;background:var(--bg);border-left:3px solid var(--line);margin-bottom:6px;font-size:12px}
+.si.cr2{border-left-color:var(--cr)}.si.wa{border-left-color:var(--am)}.si.ok2{border-left-color:var(--ok)}
+.so{font-size:10px;color:var(--mu);margin-top:4px}
+.mc{background:var(--card);border:1px solid var(--line);margin-bottom:12px;overflow:hidden}
+.mh{padding:10px 16px;background:var(--gp);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.mh strong{font-size:13px;font-weight:600}.mtg{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mu)}
+.mb2{padding:14px 16px;font-size:12px;line-height:1.7;white-space:pre-wrap;color:var(--is)}
+.ma{padding:10px 16px;background:#f9f7f1;border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap}
+.bg{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:2px;vertical-align:middle;margin-left:4px}
+.bgr{background:var(--cr);color:#fff}.bga{background:var(--am);color:#fff}.bgg{background:var(--ok);color:#fff}.bgp{background:var(--em);color:#fff}
+.cr2{font-size:12px;display:flex;gap:12px;flex-wrap:wrap;color:var(--mu);margin-top:6px}
+.cr2 a{color:var(--tl);text-decoration:none}.cr2 a:hover{text-decoration:underline}
+.fl{display:flex;gap:16px;flex-wrap:wrap}.dv{border:none;border-top:1px solid var(--line);margin:20px 0}
+.m8{margin-top:8px}.m16{margin-top:16px}.m24{margin-top:24px}
+.tm{color:var(--mu)}.td2{color:var(--cr)}.to{color:var(--ok)}.tg2{color:var(--gold)}
+@media print{#gate{display:none!important}#app{display:block!important}.tn{display:none}.pn{display:block!important;page-break-before:always}.pn:first-child{page-break-before:avoid}}
+</style></head><body>
+<div id="gate"><div class="gc">
+<h1>C&amp;B Wedding OS <span style="color:var(--gold)">v6</span></h1>
+<p>Internal Planning Command Center · Grand Palladium Costa Mujeres · June 2026</p>
+<input id="pi" class="gi" type="password" placeholder="Access code…" autocomplete="off" onkeydown="if(event.key==='Enter')checkPw()">
+<button class="gb" onclick="checkPw()">Enter</button><div id="ge"></div>
+</div></div>
+<div id="app">
+<div class="hdr">
+<div><div class="ht"><em>C&amp;B</em> Wedding OS <small style="font-size:13px;font-weight:400;font-family:'Work Sans',sans-serif;color:rgba(255,255,255,.4)">v6 · May 26, 2026</small></div>
+<div class="hm">Grand Palladium Costa Mujeres · Cancún · June 16–23, 2026 · Internal Use Only</div></div>
+<div class="hk">
+<div class="kp"><div class="cd" id="countdown">22</div><div class="kl">Days to Arrival</div></div>
+<div class="kp"><div class="kv">131</div><div class="kl">PAX</div></div>
+<div class="kp"><div class="kv">44</div><div class="kl">Rooms</div></div>
+<div class="kp"><div class="kv">62%</div><div class="kl">Paid</div></div>
+</div></div>
+<div class="al">
+<strong style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cr)">CRITICAL:</strong>
+<span class="ap ar">Zuniga Quote EXPIRED May 25 — Call NOW</span>
+<span class="ap aa">Mills James AV Expires TOMORROW — Sign Today</span>
+<span class="ap ar">Majestic Films Balance 5 Days Overdue</span>
+<span class="ap ar">Palladium Deposit 22 Days Overdue</span>
+<span class="ap at">GAMA Decor RFP Active — Preferred Vendor</span>
+</div>
+<div class="tn">
+<button class="tb tr on" onclick="sw(1)">T1 · Cockpit</button>
+<button class="tb" onclick="sw(2)">T2 · Sprint</button>
+<button class="tb" onclick="sw(3)">T3 · Budget</button>
+<button class="tb" onclick="sw(4)">T4 · Payments</button>
+<button class="tb" onclick="sw(5)">T5 · Vendors</button>
+<button class="tb tg" onclick="sw(6)">T6 · Natasha SAW</button>
+<button class="tb" onclick="sw(7)">T7 · Rooming</button>
+<button class="tb" onclick="sw(8)">T8 · SAW Docs</button>
+<button class="tb tt" onclick="sw(9)">T9 · Comms Hub</button>
+<button class="tb ta" onclick="sw(10)">T10 · Decor</button>
+<button class="tb" onclick="sw(11)">T11 · Vault</button>
+<button class="tb" onclick="sw(12)">T12 · Guest Site</button>
+<button class="tb tg" onclick="sw(13)">T13 · Ceremony SOP</button>
+<button class="tb tt" onclick="sw(14)">T14 · Beloved Hub</button>
+<button class="tb ta" onclick="sw(15)">T15 · AbsoluteWed</button>
+</div>
+<!-- T1 -->
+<div id="p1" class="pn on">
+<div class="sh"><h2>Task Control · Cockpit</h2><p>22 days to arrival · Last updated May 26, 2026</p></div>
+<div class="cg">
+<div class="cd2" style="border-top:3px solid var(--cr)">
+<div class="cl">🔴 Urgent — Act Today</div>
+<div class="ci"><input type="checkbox" id="c1a" onchange="ck(this)"><label for="c1a">Call Alejandra Galindo (Zuniga) — quote EXPIRED May 25. Re-engage or confirm GAMA path</label></div>
+<div class="ci"><input type="checkbox" id="c1b" onchange="ck(this)"><label for="c1b">Sign Mills James AV today — expires TOMORROW May 27 (Quotes 279122 + 279827)</label></div>
+<div class="ci"><input type="checkbox" id="c1c" onchange="ck(this)"><label for="c1c">Send Majestic Films balance payment — 5 days overdue</label></div>
+<div class="ci"><input type="checkbox" id="c1d" onchange="ck(this)"><label for="c1d">Palladium Deposit #3 — 22 days overdue, contact Natasha today</label></div>
+</div>
+<div class="cd2" style="border-top:3px solid var(--am)">
+<div class="cl">🟡 This Week (May 26–Jun 1)</div>
+<div class="ci"><input type="checkbox" id="c1e" onchange="ck(this)"><label for="c1e">Confirm Drums in Paradise ($1,786 · 2 sessions Jun 19) via Jorge Espinoza</label></div>
+<div class="ci"><input type="checkbox" id="c1f" onchange="ck(this)"><label for="c1f">Pay Loto Mehndi 50% deposit ($893.20 USD) to Palladium CM</label></div>
+<div class="ci"><input type="checkbox" id="c1g" onchange="ck(this)"><label for="c1g">Send GAMA decor RFP with full 5-event scope + inspiration images</label></div>
+<div class="ci"><input type="checkbox" id="c1h" onchange="ck(this)"><label for="c1h">Confirm Bhogali menu Sangeet + Reception with chaat station cost</label></div>
+<div class="ci"><input type="checkbox" id="c1i" onchange="ck(this)"><label for="c1i">Submit outstanding SAW documents to Natasha (see T8)</label></div>
+<div class="ci"><input type="checkbox" id="c1j" onchange="ck(this)"><label for="c1j">Get updated venue breakdown sheet from Natasha (requested May 5/11/13)</label></div>
+<div class="ci"><input type="checkbox" id="c1k" onchange="ck(this)"><label for="c1k">Send guest T-22 itinerary blast via Raj</label></div>
+</div>
+<div class="cd2" style="border-top:3px solid var(--ok)">
+<div class="cl">✅ Milestone Gates</div>
+<div class="ci"><input type="checkbox" id="c1l" onchange="ck(this)"><label for="c1l"><strong>Jun 1:</strong> All vendor contracts signed &amp; locked</label></div>
+<div class="ci"><input type="checkbox" id="c1m" onchange="ck(this)"><label for="c1m"><strong>Jun 7:</strong> Travel files verified, adjacent rooms confirmed with Raj</label></div>
+<div class="ci"><input type="checkbox" id="c1n" onchange="ck(this)"><label for="c1n"><strong>Jun 10:</strong> Pooja items checklist sent to Banu Prakash</label></div>
+<div class="ci"><input type="checkbox" id="c1o" onchange="ck(this)"><label for="c1o"><strong>Jun 14:</strong> Final day-of vendor calls complete</label></div>
+<div class="ci"><input type="checkbox" id="c1p" onchange="ck(this)"><label for="c1p"><strong>Jun 16:</strong> Couple arrive CUN · AC1810 · 06:50 YYZ → 09:50 CUN · TR37577</label></div>
+</div>
+<div class="cd2" style="border-top:3px solid var(--tl)">
+<div class="cl">📅 Event Week Snapshot</div>
+<div style="font-size:12px;line-height:2.1">
+<div><strong>Jun 16 Tue:</strong> Arrivals (7-day guests) · Bridal Mehndi evening</div>
+<div><strong>Jun 17 Wed:</strong> Welcome Party · Fizz Terrace · 5:00–8:00 PM</div>
+<div><strong>Jun 18 Thu:</strong> Mimosas &amp; Mehndi 9–11 AM · Sangeet CC Plaza 7–11 PM</div>
+<div><strong>Jun 19 Fri:</strong> Snathakam 7–9:30 AM · Maticoor 4 PM · Haldi Beach · Baraat Villages Deck 6 PM</div>
+<div><strong>Jun 20 Sat:</strong> <span class="td2" style="font-weight:700">CEREMONY 6:00 AM</span> · Glassroom · Subhamuhurtham 7:55 AM</div>
+<div><strong>Jun 20 Sat:</strong> Patravali Breakfast + Banana Leaf Lunch post-ceremony</div>
+<div><strong>Jun 21 Sun:</strong> Reception · Ballroom · 7 PM–Midnight · Bhogali</div>
+<div><strong>Jun 22–23:</strong> Departures · 7-day guests check out Jun 23</div>
+</div></div>
+</div>
+<div class="sh m24"><h2>7-Day Sprint · May 26 – Jun 1</h2></div>
+<div class="fl">
+<div class="sc"><h4>Baji</h4>
+<div class="si cr2">Sign Mills James AV<span class="bg bga">TMRW</span><div class="so">Due: May 27 · Quotes 279122+279827</div></div>
+<div class="si cr2">Majestic Films balance<div class="so">5 days overdue</div></div>
+<div class="si cr2">Palladium deposit #3<div class="so">22 days overdue</div></div>
+<div class="si wa">Confirm GAMA decor scope<div class="so">By May 28</div></div>
+</div>
+<div class="sc"><h4>Cath</h4>
+<div class="si cr2">Re-engage Zuniga OR activate GAMA<div class="so">Today — GAMA preferred</div></div>
+<div class="si wa">Loto Mehndi 50% deposit $893.20<div class="so">By May 28</div></div>
+<div class="si wa">Bhogali menu selections<div class="so">By Jun 1</div></div>
+<div class="si">Chair cushion color for Sangeet<div class="so">By May 29</div></div>
+</div>
+<div class="sc"><h4>Jennyfer (Beloved)</h4>
+<div class="si cr2">SAW submission — open slots<div class="so">May 27</div></div>
+<div class="si wa">Drums in Paradise confirm via Jorge<div class="so">May 27</div></div>
+<div class="si wa">Obtain updated venue breakdown<div class="so">May 28</div></div>
+<div class="si">Patravali outside vendor confirmation<div class="so">May 29</div></div>
+</div>
+<div class="sc"><h4>Raj (AbsoluteWed)</h4>
+<div class="si wa">Adjacent room blocking Bldg 16<div class="so">May 27</div></div>
+<div class="si wa">Flight release timeline update<div class="so">May 28</div></div>
+<div class="si">Land Only bus schedule<div class="so">May 29</div></div>
+<div class="si ok2">Crew travel bookings<div class="so">May 30</div></div>
+</div></div></div>
+<!-- T2 -->
+<div id="p2" class="pn">
+<div class="sh"><h2>Sprint Board · May 26 – Jun 16</h2><p>Full planning sprint to arrival</p></div>
+<div class="tw"><table><thead><tr><th>Task</th><th>Target</th><th>Owner</th><th>Status</th><th>Notes</th></tr></thead><tbody>
+<tr class="rr"><td><strong>Sign Mills James AV</strong></td><td>May 27</td><td>Baji</td><td><span class="st s2">EXPIRES TMRW</span></td><td>Quotes 279122+279827 · ~$16,652 USD</td></tr>
+<tr class="rr"><td><strong>Majestic Films balance</strong></td><td>ASAP</td><td>Baji</td><td><span class="st s2">5D OVERDUE</span></td><td>Send e-transfer + email receipt to Jennyfer</td></tr>
+<tr class="rr"><td><strong>Palladium Deposit #3</strong></td><td>ASAP</td><td>Baji</td><td><span class="st s2">22D OVERDUE</span></td><td>Contact Natasha immediately</td></tr>
+<tr class="rr"><td><strong>Zuniga re-engage / GAMA activate</strong></td><td>May 26</td><td>Cath</td><td><span class="st s2">EXPIRED</span></td><td>GAMA preferred — full 5-event RFP</td></tr>
+<tr class="ra"><td>Loto Mehndi 50% deposit</td><td>May 28</td><td>Baji/Cath</td><td><span class="st s3">PENDING</span></td><td>$893.20 to Palladium CM directly</td></tr>
+<tr class="ra"><td>Drums in Paradise confirm</td><td>May 27</td><td>Jennyfer</td><td><span class="st s3">AWAITING</span></td><td>Jorge Espinoza · hotel master account · $1,786</td></tr>
+<tr class="ra"><td>Bhogali menu — Sangeet + Reception</td><td>Jun 1</td><td>Cath</td><td><span class="st s3">OPEN</span></td><td>Chaat live counter cost to confirm</td></tr>
+<tr class="ra"><td>SAW document completion</td><td>May 27</td><td>Jennyfer</td><td><span class="st s3">PARTIAL</span></td><td>See T8 for open slots</td></tr>
+<tr class="ra"><td>Updated venue breakdown sheet</td><td>May 28</td><td>Natasha</td><td><span class="st s3">NOT RECEIVED</span></td><td>Requested May 5, 11, 13 — still outstanding</td></tr>
+<tr><td>GAMA decor quote received</td><td>Jun 1</td><td>Jennyfer/Cath</td><td><span class="st s4">RFP SENT</span></td><td>5-event scope</td></tr>
+<tr><td>Ruby Bridal Mehndi confirm</td><td>May 30</td><td>Cath</td><td><span class="st s3">UNCONFIRMED</span></td><td>$460 via Loto / Palladium · Jun 16</td></tr>
+<tr><td>Adjacent room blocking Bldg 16</td><td>May 27</td><td>Raj</td><td><span class="st s3">OPEN</span></td><td>Family grouping request</td></tr>
+<tr><td>Patravali outside vendor confirmation</td><td>May 29</td><td>Jennyfer</td><td><span class="st s5">OPEN</span></td><td>Natasha needs this answer</td></tr>
+<tr class="rg"><td>DJ Jethu AV rider</td><td>Done</td><td>Jennyfer</td><td><span class="st s1">APPROVED APR 14</span></td><td>Equipment confirmed compatible</td></tr>
+<tr class="rg"><td>Something Borrowed contract</td><td>Done</td><td>Cath</td><td><span class="st s1">SIGNED MAY 15</span></td><td>Photography contracted</td></tr>
+<tr style="background:var(--ink);color:#fff"><td colspan="5" style="font-weight:700;letter-spacing:.08em;font-size:11px;text-transform:uppercase">▶ MILESTONE: VENDORS LOCKED — Jun 1</td></tr>
+<tr><td>Guest final count to Natasha</td><td>Jun 5</td><td>Baji/Raj</td><td><span class="st s5">UPCOMING</span></td><td>131 PAX confirmed</td></tr>
+<tr><td>Ceremony photography brief</td><td>Jun 10</td><td>Cath</td><td><span class="st s5">UPCOMING</span></td><td>No photos before Subhamuhurtham 7:55 AM</td></tr>
+<tr><td>Pooja items checklist to priest</td><td>Jun 10</td><td>Cath/Baji</td><td><span class="st s5">UPCOMING</span></td><td>Banu Prakash Malur Venkatesh</td></tr>
+<tr style="background:var(--ink);color:#fff"><td colspan="5" style="font-weight:700;letter-spacing:.08em;font-size:11px;text-transform:uppercase">▶ MILESTONE: TRAVEL CONFIRMED — Jun 7</td></tr>
+<tr><td>Final day-of vendor calls</td><td>Jun 14</td><td>All</td><td><span class="st s5">UPCOMING</span></td><td>All vendors confirm day-of details</td></tr>
+<tr style="background:var(--ink);color:#fff"><td colspan="5" style="font-weight:700;letter-spacing:.08em;font-size:11px;text-transform:uppercase">▶ MILESTONE: FINAL CALLS — Jun 14</td></tr>
+<tr class="rg"><td>Couple depart YYZ</td><td>Jun 16</td><td>Baji+Cath</td><td><span class="st s4">AC1810</span></td><td>06:50 YYZ → 09:50 CUN · TR37577</td></tr>
+</tbody></table></div></div>
+<!-- T3 -->
+<div id="p3" class="pn">
+<div class="sh"><h2>Budget Control</h2><p>21 line items · Live FX · May 26, 2026</p></div>
+<div class="fx">
+<label>USD→CAD</label><input type="number" id="fxr" step="0.001" value="1.370" onchange="rb()">
+<span id="fxs" style="font-size:12px;color:var(--mu)">Manual</span>
+<button class="btn bo bs" onclick="getFX()">Fetch Live</button>
+<button class="btn bo bs" onclick="toggleC()">Toggle CAD/USD</button>
+<span id="fxd" style="font-size:13px;font-weight:600;color:var(--gold)">Showing: USD</span>
+<span style="margin-left:auto;font-size:11px;color:var(--mu)">Filter:</span>
+<button class="btn bo bs" onclick="rb('all')">ALL</button>
+<button class="btn bo bs" onclick="rb('open')">Open Only</button>
+<button class="btn bo bs" onclick="rb('ov')">Overdue</button>
+</div>
+<div class="tw"><table id="bt">
+<thead><tr><th>#</th><th>Item</th><th>Category</th><th id="ah">USD Amount</th><th>Status</th><th>Notes</th></tr></thead>
+<tbody id="bb"></tbody>
+<tfoot><tr style="background:var(--gp)"><td colspan="3" style="font-weight:700">TOTAL TRACKED</td><td id="btot" style="font-weight:700;color:var(--gold)"></td><td colspan="2"></td></tr></tfoot>
+</table></div>
+<div class="fl m16">
+<div class="cd2" style="flex:1;min-width:220px;border-top:3px solid var(--em)">
+<div class="cl">Scenario A — GAMA Decor (Preferred)</div>
+<div style="font-size:24px;font-weight:700;color:var(--em);font-family:'Cormorant Garamond',serif">~$83K USD</div>
+<div style="font-size:12px;color:var(--mu);margin-top:6px">GAMA 5-event decor (TBD) + separate florals + all confirmed vendors</div>
+</div>
+<div class="cd2" style="flex:1;min-width:220px;border-top:3px solid var(--tl)">
+<div class="cl">Scenario B — Zuniga Reference (Expired)</div>
+<div style="font-size:24px;font-weight:700;color:var(--tl);font-family:'Cormorant Garamond',serif">~$89K USD</div>
+<div style="font-size:12px;color:var(--mu);margin-top:6px">Zuniga $40,554 (4 events, expired) + florals TBD + all confirmed vendors</div>
+</div>
+<div class="cd2" style="flex:1;min-width:220px;border-top:3px solid var(--am)">
+<div class="cl">AV Decision</div>
+<div style="font-size:24px;font-weight:700;color:var(--am);font-family:'Cormorant Garamond',serif">$16,652 USD</div>
+<div style="font-size:12px;color:var(--mu);margin-top:6px">Mills James (expires May 27) OR AV del Caribe — same price</div>
+</div>
+</div></div>
+<!-- T4 -->
+<div id="p4" class="pn">
+<div class="sh"><h2>Payment Ledger</h2><p>Status as of May 26, 2026</p></div>
+<div class="tw"><table><thead><tr><th>Vendor</th><th>Description</th><th>Amount</th><th>CCY</th><th>Due</th><th>Status</th><th>Action Required</th></tr></thead><tbody>
+<tr class="rr"><td><strong>Grand Palladium CM</strong></td><td>Deposit Installment #3</td><td>TBD</td><td>USD</td><td>May 4</td><td><span class="st s2">22D OVERDUE</span></td><td>Call Natasha — confirm amount + pay now</td></tr>
+<tr class="rr"><td><strong>Majestic Films</strong></td><td>Balance payment</td><td>TBD</td><td>USD</td><td>May 21</td><td><span class="st s2">5D OVERDUE</span></td><td>Send e-transfer + email receipt to Jennyfer</td></tr>
+<tr class="rr"><td><strong>Zuniga Productions</strong></td><td>Quote validity</td><td>$40,553.60</td><td>USD</td><td>May 25</td><td><span class="st s2">EXPIRED</span></td><td>GAMA preferred — call Alejandra re: path forward</td></tr>
+<tr class="ra"><td><strong>Mills James AV</strong></td><td>Quotes 279122 + 279827</td><td>~$16,652</td><td>USD</td><td>May 27</td><td><span class="st s3">EXPIRES TOMORROW</span></td><td>Sign contract TODAY</td></tr>
+<tr class="ra"><td><strong>Loto Mehndi</strong></td><td>50% non-refundable deposit</td><td>$893.20</td><td>USD</td><td>ASAP</td><td><span class="st s3">PENDING</span></td><td>Pay to Palladium CM directly</td></tr>
+<tr class="ra"><td><strong>Drums in Paradise</strong></td><td>2 sessions Jun 19</td><td>$1,786.00</td><td>USD</td><td>TBD</td><td><span class="st s3">AWAITING CONFIRM</span></td><td>Via hotel master account through Jorge</td></tr>
+<tr class="ra"><td><strong>Ruby Bridal Mehndi</strong></td><td>Jun 16 bridal</td><td>$460.00</td><td>USD</td><td>ASAP</td><td><span class="st s3">CONFIRM DEPOSIT</span></td><td>Full palms, half forearm both sides, feet, 3" up legs</td></tr>
+<tr class="rg"><td><strong>Couple's Trip TR37577</strong></td><td>Baji+Cath Jun 16–23 · AC1810</td><td>$8,976.00</td><td>CAD</td><td>Paid</td><td><span class="st s1">PAID</span></td><td>Request Jacuzzi Loft room upgrade via Raj</td></tr>
+<tr class="rg"><td><strong>Majestic Films</strong></td><td>Prior deposit</td><td>TBD</td><td>USD</td><td>Paid</td><td><span class="st s1">PAID</span></td><td>3 crew rooms booked at group rate</td></tr>
+<tr class="rg"><td><strong>Something Borrowed</strong></td><td>Photography</td><td>TBD</td><td>USD</td><td>May 15</td><td><span class="st s1">CONTRACTED</span></td><td>Signed May 15 · room booked at group rate</td></tr>
+<tr class="rg"><td><strong>Groom's Parents TR37596</strong></td><td>AC Vacations · 4 pax · 7N</td><td>$9,952.00</td><td>CAD</td><td>Apr 10</td><td><span class="st s1">PAID IN FULL</span></td><td>Rukmini paid final Apr 10, 2026</td></tr>
+<tr class="rg"><td><strong>Transat TR37649</strong></td><td>Mohanathas + DJ Jethu · 5N</td><td>$4,220.00</td><td>CAD</td><td>Mar 5</td><td><span class="st s1">PAID IN FULL</span></td><td>Jun 17–22 · arrive late — miss welcome party</td></tr>
+<tr><td><strong>Grupo Gama Decor</strong></td><td>5-event scope</td><td>TBD</td><td>USD</td><td>Quote pending</td><td><span class="st s4">RFP ACTIVE</span></td><td>PREFERRED — awaiting quote</td></tr>
+<tr><td><strong>Beauty by Sharda HMUA</strong></td><td>Hair &amp; makeup</td><td>TBD</td><td>USD</td><td>TBD</td><td><span class="st s1">CONFIRMED</span></td><td>Room booked at group rate</td></tr>
+<tr><td><strong>Banu Prakash Priest</strong></td><td>Telugu ceremony</td><td>TBD</td><td>USD</td><td>TBD</td><td><span class="st s1">CONFIRMED</span></td><td>Room booked at group rate</td></tr>
+<tr><td><strong>Beloved Planners</strong></td><td>Planning</td><td>Included</td><td>—</td><td>—</td><td><span class="st s1">ACTIVE</span></td><td>Sunwing #152409712 · 4 staff · Bldg 16</td></tr>
+</tbody></table></div></div>
+<!-- T5 -->
+<div id="p5" class="pn">
+<div class="sh"><h2>Vendor Directory</h2><p>16 vendors · <span class="v1">■ Internal/Venue</span> &nbsp; <span class="v2">■ Local/Cancún</span> &nbsp; <span class="v3">■ External</span></p></div>
+<div class="cg">
+<div class="cd2"><div class="cl v1">Internal · Venue Coord</div><strong>Natasha Lima</strong> · Grand Palladium CM<br><span class="st s1">ACTIVE</span><div class="cr2"><span>📱 <a href="https://wa.me/529983482377">+52 998 348 2377</a></span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">SAW submissions · menus · setup · deposits · May 26 Meet 10AM CUN</div></div>
+<div class="cd2"><div class="cl v1">Internal · Lead Planner</div><strong>Jennyfer Reyes Tapia</strong> · Beloved Planners<br><span class="st s1">ACTIVE</span><div class="cr2"><span>📱 <a href="https://wa.me/529842158539">+52 984 215 8539</a></span><span>✉ <a href="mailto:info@jennyferreyesweddings.com">info@...</a></span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Lead planner · 4-person team · Sunwing #152409712 · Bldg 16</div></div>
+<div class="cd2"><div class="cl v1">Internal · Coord</div><strong>Jorge Muralidharan Espinoza</strong> · Beloved<br><span class="st s1">ACTIVE</span><div class="cr2"><span>✉ <a href="mailto:belovedcoordinator2@gmail.com">belovedcoordinator2@gmail.com</a></span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Drums in Paradise · vendor logistics</div></div>
+<div class="cd2"><div class="cl v1">Internal · AV <span class="bg bga">SIGN TODAY</span></div><strong>Mills James AV</strong><br><span class="st s3">EXPIRES TOMORROW</span><div class="cr2"><span>✉ <a href="mailto:jmochoa@millsjames.com.mx">jmochoa@millsjames.com.mx</a></span><span>📱 +52 998 158 1628</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">~$16,652 USD · 6 events Jun 17–21 · Quotes 279122 + 279827</div></div>
+<div class="cd2"><div class="cl v1">Internal · Mehndi</div><strong>Loto Mehndi by CB&amp;Co.</strong><br><span class="st s3">DEPOSIT PENDING</span><div class="cr2"><span>Via Palladium · <a href="https://wa.me/529983482377">Natasha</a></span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Jun 18 · 3 artists · 2hrs · 72 designs · $1,080 · Deposit $893.20</div></div>
+<div class="cd2"><div class="cl v1">Internal · Entertainment</div><strong>Drums in Paradise</strong><br><span class="st s3">AWAITING CONFIRM</span><div class="cr2"><span>📱 (998) 240-2834 · Ana Isabel Curiel</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Villages Deck · 4PM + 6PM · Jun 19 · $893/session = $1,786 · Valid Jun 12</div></div>
+<div class="cd2"><div class="cl v1">Internal · Catering</div><strong>Patravali South Asian</strong><br><span class="st s1">CONTRACTED</span><div class="cr2"><span>Via Natasha / Beloved</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Jun 20 breakfast (dosa/idli/chai/pani puri) + banana leaf vegetarian lunch</div></div>
+<div class="cd2"><div class="cl v2">Local · Decor <span class="bg bgp">PREFERRED</span></div><strong>Grupo Gama</strong><br><span class="st s4">RFP ACTIVE</span><div class="cr2"><span>Quote pending · Contact via Beloved</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">5-event scope · Welcome/Sangeet/Haldi/Ceremony/Reception · Quote awaited</div></div>
+<div class="cd2"><div class="cl v2">Local · Decor Reference <span class="bg bgr">EXPIRED</span></div><strong>Zuniga Productions</strong> · Alejandra Galindo<br><span class="st s2">QUOTE EXPIRED MAY 25</span><div class="cr2"><span>✉ <a href="mailto:alejandra@decocancun.com">alejandra@decocancun.com</a></span><span>📱 998 192 8070</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Ref: $40,554 USD for 4 events (Sangeet $13,201 · Haldi $2,813 · Ceremony $6,722 · Reception $17,818)</div></div>
+<div class="cd2"><div class="cl v2">Local · AV Alt</div><strong>AV del Caribe</strong><br><span class="st s4">EVALUATING</span><div class="cr2"><span>✉ <a href="mailto:paulino-audiovisual.cancun@outlook.es">paulino-av…</a></span><span>📱 +52 998 300 5112</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">$16,652 USD · 8 events · Same rate as Mills James</div></div>
+<div class="cd2"><div class="cl v2">Local · Photo (Silent)</div><strong>AL Studio · Armando</strong><br><span class="st s5">SILENT</span><div class="cr2"><span>Last contact May 15 · Inspiration images sent · No response</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Pursue or drop · Something Borrowed already contracted</div></div>
+<div class="cd2"><div class="cl v3">External · Videography</div><strong>Majestic Films</strong> · Toronto<br><span class="st s2">BALANCE OVERDUE</span><div class="cr2"><span>3 crew rooms at group rate</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Balance 5 days overdue · Prior deposit PAID · Send payment now</div></div>
+<div class="cd2"><div class="cl v3">External · Photography</div><strong>Something Borrowed Studios</strong><br><span class="st s1">CONTRACTED</span><div class="cr2"><span>Signed May 15 · Room booked at group rate</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Brief: no photos before Subhamuhurtham 7:55 AM Jun 20</div></div>
+<div class="cd2"><div class="cl v3">External · DJ/MC</div><strong>DJ Jethu · Sharan Jeyarajah</strong><br><span class="st s1">CONFIRMED</span><div class="cr2"><span>✉ <a href="mailto:djjetinquiries@gmail.com">djjetinquiries@gmail.com</a></span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">AV rider approved Apr 14 · Room booked (Transat TR37649)</div></div>
+<div class="cd2"><div class="cl v3">External · HMUA</div><strong>Beauty by Sharda</strong><br><span class="st s1">CONFIRMED</span><div class="cr2"><span>Room booked at group rate</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Full wedding week coverage</div></div>
+<div class="cd2"><div class="cl v3">External · Officiant</div><strong>Banu Prakash Malur Venkatesh</strong><br><span class="st s1">CONFIRMED</span><div class="cr2"><span>Room booked at group rate</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Subhamuhurtham 7:55 AM Jun 20 · Pooja items checklist by Jun 10</div></div>
+<div class="cd2"><div class="cl v3">External · Bridal Mehndi</div><strong>Ruby Bridal Mehndi</strong><br><span class="st s3">CONFIRM DEPOSIT</span><div class="cr2"><span>Via Loto / Palladium · $460 USD</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Jun 16 evening · Full palms, half forearm, feet, 3" up legs</div></div>
+</div></div>
+<!-- T6 -->
+<div id="p6" class="pn">
+<div class="sh"><h2>Natasha SAW Tracker</h2><p>12-slot submission matrix · email template ready</p></div>
+<div class="tw"><table><thead><tr><th>#</th><th>Category</th><th>Vendor</th><th>Submitted</th><th>Status</th><th>Open Item</th></tr></thead><tbody>
+<tr class="rg"><td>1</td><td>Photography</td><td>Something Borrowed Studios</td><td><input type="checkbox" id="s1" onchange="ck(this)"></td><td><span class="st s1">CONTRACTED</span></td><td>Brief: no shots before 7:55 AM ceremony</td></tr>
+<tr class="ra"><td>2</td><td>Videography</td><td>Majestic Films</td><td><input type="checkbox" id="s2" onchange="ck(this)"></td><td><span class="st s3">BALANCE OVERDUE</span></td><td>Submit SAW once balance paid</td></tr>
+<tr class="ra"><td>3</td><td>DJ/MC</td><td>DJ Jethu (Sharan Jeyarajah)</td><td><input type="checkbox" id="s3" onchange="ck(this)"></td><td><span class="st s4">SUBMIT</span></td><td>AV rider approved — submit to Natasha</td></tr>
+<tr class="ra"><td>4</td><td>Dhol/Entertainment</td><td>Drums in Paradise</td><td><input type="checkbox" id="s4" onchange="ck(this)"></td><td><span class="st s3">CONFIRM FIRST</span></td><td>Confirm booking via Jorge, then submit</td></tr>
+<tr class="ra"><td>5</td><td>Guest Mehndi</td><td>Loto Mehndi</td><td><input type="checkbox" id="s5" onchange="ck(this)"></td><td><span class="st s3">DEPOSIT PENDING</span></td><td>⚠ Paulina asked "no mehndi?" — submit once deposit paid</td></tr>
+<tr class="ra"><td>6</td><td>Decor</td><td>Grupo Gama (preferred)</td><td><input type="checkbox" id="s6" onchange="ck(this)"></td><td><span class="st s4">RFP ACTIVE</span></td><td>Submit GAMA once quote confirmed</td></tr>
+<tr class="rr"><td>7</td><td>Florals</td><td>TBD — separate florist</td><td><input type="checkbox" id="s7" onchange="ck(this)"></td><td><span class="st s2">OPEN GAP</span></td><td>Florals NOT included in GAMA or Zuniga scope</td></tr>
+<tr class="ra"><td>8</td><td>Menu — Sangeet Jun 18</td><td>Bhogali Restaurant</td><td><input type="checkbox" id="s8" onchange="ck(this)"></td><td><span class="st s3">MENU PENDING</span></td><td>Confirm chaat live station + full menu selections</td></tr>
+<tr class="rg"><td>9</td><td>Menu — Reception Jun 21</td><td>Bhogali Restaurant</td><td><input type="checkbox" id="s9" onchange="ck(this)"></td><td><span class="st s1">CONFIRMED</span></td><td>Bhogali confirmed (NOT Mexican buffet) · 4hr open bar</td></tr>
+<tr class="rg"><td>10</td><td>Priest/Officiant</td><td>Banu Prakash Malur Venkatesh</td><td><input type="checkbox" id="s10" onchange="ck(this)"></td><td><span class="st s1">CONFIRMED</span></td><td>Submit details to Natasha</td></tr>
+<tr class="rg"><td>11</td><td>HMUA</td><td>Beauty by Sharda</td><td><input type="checkbox" id="s11" onchange="ck(this)"></td><td><span class="st s1">CONFIRMED</span></td><td>Submit details to Natasha</td></tr>
+<tr class="ra"><td>12</td><td>Bridal Mehndi</td><td>Ruby Bridal Mehndi</td><td><input type="checkbox" id="s12" onchange="ck(this)"></td><td><span class="st s3">CONFIRM DEPOSIT</span></td><td>Jun 16 · $460 · confirm booking first</td></tr>
+</tbody></table></div>
+<div class="mc"><div class="mh"><strong>SAW Master Email → Natasha</strong><span class="mtg">m6 · Full Submission</span></div>
+<div class="mb2" id="mg6">Subject: SAW Vendor Submission — Catherina &amp; Baji Wedding June 2026
+
+Hi Natasha,
+
+Below is our complete external vendor submission for SAW documentation. Wedding: June 16–21, 2026 at Grand Palladium Costa Mujeres.
+
+PHOTOGRAPHY: Something Borrowed Studios — contract signed May 15
+VIDEOGRAPHY: Majestic Films (Toronto) — 3 crew members
+DJ/MC: Sharan Jeyarajah (DJ Jethu) — AV rider confirmed Apr 14
+DHOL: Drums in Paradise — 2 sessions June 19, Villages Deck, $1,786
+GUEST MEHNDI: Loto Mehndi — June 18, 9–11 AM, 3 artists, $1,080
+BRIDAL MEHNDI: Ruby Bridal — June 16 evening, $460
+DECOR: Grupo Gama — 5-event scope (preferred vendor, quote pending)
+FLORALS: TBD — separate florist required (not included in decor scope)
+MENU SANGEET: Bhogali Restaurant — June 18 (finalizing menu + chaat cost)
+MENU RECEPTION: Bhogali confirmed — June 21 (NOT Mexican buffet), 4hr open bar
+PRIEST: Banu Prakash Malur Venkatesh — Telugu Hindu ceremony
+HMUA: Beauty by Sharda — full wedding week
+
+Action still needed from your end:
+- Updated venue breakdown sheet with all changes from April visit (requested May 5, 11, 13)
+- Confirmation of Drums in Paradise booking via Jorge
+- Bhogali chaat station pricing
+
+Thank you,
+Bharadwaj &amp; Catherina Madduluri</div>
+<div class="ma">
+<button class="btn bc bs" onclick="cp('mg6',this)">Copy</button>
+<a href="mailto:?subject=SAW%20Vendor%20Submission&body=" class="btn bm bs">Open Email</a>
+</div></div></div>
+<!-- T7 -->
+<div id="p7" class="pn">
+<div class="sh"><h2>Rooming &amp; Travel</h2><p>131 PAX · 5 supplier groups · Jun 16–23, 2026</p></div>
+<div class="cd2" style="background:#fff8f0;border:1px solid var(--am);margin-bottom:20px;padding:12px 16px">
+<strong style="color:var(--am)">⚠ Coverage Gap Alert:</strong> Transat guests arrive <strong>June 17</strong> — they MISS the Welcome Party (June 17, 5–8 PM). Confirm whether they are intentionally excluded or if alternate arrangements needed.
+</div>
+<div class="tw"><table><thead><tr><th>Supplier</th><th>Nights</th><th>Check-in</th><th>Check-out</th><th>PAX</th><th>Rooms</th><th>Flight</th><th>Status</th></tr></thead><tbody>
+<tr class="rg"><td><strong>Air Canada Vacations</strong></td><td>7N</td><td>Jun 16</td><td>Jun 23</td><td>~38</td><td>~19</td><td>AC1810 06:50 YYZ→CUN</td><td><span class="st s1">BOOKED</span></td></tr>
+<tr class="ra"><td><strong>Transat Holidays</strong></td><td>5N</td><td>Jun 17</td><td>Jun 22</td><td>~30 + 2 inf</td><td>~16</td><td>TS326 07:00 YYZ→CUN</td><td><span class="st s3">⚠ MISS WELCOME PARTY</span></td></tr>
+<tr><td><strong>Sunwing / WestJet</strong></td><td>7N</td><td>Jun 16</td><td>Jun 23</td><td>~20</td><td>~10</td><td>WS2776 15:15 YYZ→CUN</td><td><span class="st s1">BOOKED</span></td></tr>
+<tr><td><strong>Land Only (Travel Brands)</strong></td><td>7N</td><td>Jun 16</td><td>Jun 23</td><td>~37</td><td>~18</td><td>Own flights</td><td><span class="st s4">BUS SCHEDULE TBD</span></td></tr>
+<tr><td><strong>Deviations</strong></td><td>varies</td><td>varies</td><td>varies</td><td>8</td><td>4</td><td>Own flights</td><td><span class="st s5">CONFIRMED</span></td></tr>
+</tbody></table></div>
+<div class="sh m16"><h2>Couple's Trip</h2></div>
+<div class="cd2" style="max-width:500px">
+<div class="cl">TR37577 · PAID IN FULL</div>
+<div style="font-size:13px;line-height:1.9">
+<strong>Guests:</strong> Bharadwaj Madduluri + Catherina Khadoo<br>
+<strong>Supplier:</strong> Air Canada Vacations<br>
+<strong>Flight:</strong> AC1810 · Jun 16, 06:50 YYZ → 09:50 CUN<br>
+<strong>Return:</strong> AC1811 · Jun 23, 09:50 CUN → 10:50 YYZ<br>
+<strong>Hotel:</strong> Grand Palladium Select Costa Mujeres<br>
+<strong>Stay:</strong> Jun 16–23 · 7 nights · All Inclusive<br>
+<strong>Amount:</strong> C$8,976.00 · <span class="st s1">PAID</span><br>
+<strong>Insurance:</strong> Declined<br>
+<strong>Room Upgrade:</strong> Request Jacuzzi Loft (open item with Raj)
+</div></div>
+<div class="sh m24"><h2>Vendor Crew Rooms</h2></div>
+<div class="tw"><table><thead><tr><th>Name</th><th>Role</th><th>Travel File</th><th>Room Status</th></tr></thead><tbody>
+<tr class="rg"><td>Sharan Jeyarajah (DJ Jethu)</td><td>DJ</td><td>TR37649 (Transat)</td><td><span class="st s1">BOOKED</span></td></tr>
+<tr class="rg"><td>Banu Prakash Malur Venkatesh</td><td>Priest</td><td>Group rate</td><td><span class="st s1">BOOKED</span></td></tr>
+<tr class="rg"><td>Beauty by Sharda</td><td>HMUA</td><td>Group rate</td><td><span class="st s1">BOOKED</span></td></tr>
+<tr class="rg"><td>Majestic Films (3 crew)</td><td>Videography</td><td>Group rate</td><td><span class="st s1">BOOKED</span></td></tr>
+<tr class="rg"><td>Something Borrowed Studios</td><td>Photography</td><td>Group rate</td><td><span class="st s1">BOOKED</span></td></tr>
+<tr class="rg"><td>Taaha Javed</td><td>Crew</td><td>FP TR37755</td><td><span class="st s1">BOOKED</span></td></tr>
+<tr class="rg"><td>Gursimran Kainth</td><td>Crew</td><td>FP TR37596</td><td><span class="st s1">BOOKED</span></td></tr>
+<tr class="rg"><td>Rohit Bharadwaj</td><td>Crew</td><td>FP TR37596</td><td><span class="st s1">BOOKED</span></td></tr>
+<tr class="rg"><td>Rahul Mehra</td><td>Crew</td><td>FP TR37677</td><td><span class="st s1">BOOKED</span></td></tr>
+<tr class="rg"><td>Anurag Sandhu</td><td>Crew</td><td>FP TR37759 REVISED</td><td><span class="st s1">BOOKED</span></td></tr>
+</tbody></table></div>
+<div class="sh m16"><h2>Beloved Planners — Booking</h2></div>
+<div class="cd2" style="max-width:500px">
+<div style="font-size:13px;line-height:1.9">
+<strong>Confirmation #:</strong> 152409712 (Sunwing Vacations)<br>
+<strong>Supplier:</strong> AbsoluteWed / Raj Pahwa<br>
+<strong>Hotel:</strong> Grand Palladium Select Costa Mujeres<br>
+<strong>Building:</strong> 16 (requested)<br>
+<strong>Room Type:</strong> JR Suite Garden Lagoon View, All Inclusive<br>
+<strong>Stay:</strong> Jun 17–22 · 5 nights · Double occupancy<br>
+<strong>Room 1:</strong> Liliana Cruz Rosas + Jennyfer Reyes Tapia<br>
+<strong>Room 2:</strong> Jorge Muralidharan Espinoza + Ekaterina Nikulina
+</div></div>
+<div class="cd2" style="background:#fef4e0;border:1px solid var(--am);margin-top:16px;max-width:500px">
+<strong>⚠ Open Items:</strong><br>
+<div style="font-size:12px;margin-top:6px">• Adjacent-room blocking for families in Bldg 16 area — open with Raj<br>
+• External Drums in Paradise crew — not yet booked<br>
+• Groom's parents TR37596: Bldg/room assignment TBD</div>
+</div></div>
+<!-- T8 -->
+<div id="p8" class="pn">
+<div class="sh"><h2>SAW Document Completion Map</h2><p>8 sections · Ready / Partial / Open</p></div>
+<div class="cg">
+<div class="cd2" style="border-top:3px solid var(--ok)"><div class="cl">Venue &amp; Setup</div><span class="st s1">READY</span><p style="font-size:12px;margin-top:8px">Venue assignments confirmed: Fizz Terrace (Welcome), Ballroom (Mehndi/Reception), CC Plaza (Sangeet), Village Deck/Beach (Haldi/Baraat), Glassroom (Ceremony)</p></div>
+<div class="cd2" style="border-top:3px solid var(--ok)"><div class="cl">Photography</div><span class="st s1">CONTRACTED</span><p style="font-size:12px;margin-top:8px">Something Borrowed Studios · Signed May 15 · SAW submission pending. Brief: No photography before Subhamuhurtham 7:55 AM.</p></div>
+<div class="cd2" style="border-top:3px solid var(--am)"><div class="cl">Videography</div><span class="st s3">PARTIAL</span><p style="font-size:12px;margin-top:8px">Majestic Films contracted. Balance 5 days overdue. SAW not submitted until payment cleared.</p></div>
+<div class="cd2" style="border-top:3px solid var(--am)"><div class="cl">Entertainment</div><span class="st s3">PARTIAL</span><p style="font-size:12px;margin-top:8px">DJ Jethu confirmed (AV rider approved). Drums in Paradise awaiting confirmation. Submit both once finalized.</p></div>
+<div class="cd2" style="border-top:3px solid var(--cr)"><div class="cl">Food &amp; Catering</div><span class="st s2">PARTIAL — ACTION</span><p style="font-size:12px;margin-top:8px">Patravali contracted (Jun 20). Bhogali confirmed for Reception. OPEN: Sangeet menu not finalized. Chaat station cost pending.</p></div>
+<div class="cd2" style="border-top:3px solid var(--am)"><div class="cl">Beauty &amp; HMUA</div><span class="st s3">PARTIAL</span><p style="font-size:12px;margin-top:8px">Beauty by Sharda confirmed. Loto Mehndi deposit pending. Ruby Bridal Mehndi confirm deposit. All 3 need SAW submission.</p></div>
+<div class="cd2" style="border-top:3px solid var(--ok)"><div class="cl">Officiant</div><span class="st s1">CONFIRMED</span><p style="font-size:12px;margin-top:8px">Banu Prakash Malur Venkatesh confirmed. SAW submission pending. Room booked at group rate.</p></div>
+<div class="cd2" style="border-top:3px solid var(--cr)"><div class="cl">Florals &amp; Decor</div><span class="st s2">OPEN GAP</span><p style="font-size:12px;margin-top:8px">Decor: GAMA RFP active (preferred). Zuniga quote expired. CRITICAL: Florals are NOT included in any decor scope — separate florist needed.</p></div>
+</div>
+<div class="sh m16"><h2>Outstanding Actions for SAW Completion</h2></div>
+<div class="ci"><input type="checkbox" id="d1" onchange="ck(this)"><label for="d1">Submit Something Borrowed photography SAW to Natasha</label></div>
+<div class="ci"><input type="checkbox" id="d2" onchange="ck(this)"><label for="d2">Pay Majestic Films balance → then submit videography SAW</label></div>
+<div class="ci"><input type="checkbox" id="d3" onchange="ck(this)"><label for="d3">Submit DJ Jethu SAW (AV rider already approved)</label></div>
+<div class="ci"><input type="checkbox" id="d4" onchange="ck(this)"><label for="d4">Confirm + submit Drums in Paradise SAW via Jorge</label></div>
+<div class="ci"><input type="checkbox" id="d5" onchange="ck(this)"><label for="d5">Pay Loto Mehndi deposit → submit mehndi SAW</label></div>
+<div class="ci"><input type="checkbox" id="d6" onchange="ck(this)"><label for="d6">Finalize GAMA decor quote → submit decor SAW</label></div>
+<div class="ci"><input type="checkbox" id="d7" onchange="ck(this)"><label for="d7">Source separate florist → submit florals SAW</label></div>
+<div class="ci"><input type="checkbox" id="d8" onchange="ck(this)"><label for="d8">Finalize Bhogali Sangeet menu + chaat cost → submit menu SAW</label></div>
+<div class="ci"><input type="checkbox" id="d9" onchange="ck(this)"><label for="d9">Submit Banu Prakash officiant SAW to Natasha</label></div>
+<div class="ci"><input type="checkbox" id="d10" onchange="ck(this)"><label for="d10">Submit Beauty by Sharda HMUA SAW to Natasha</label></div>
+</div>
+<!-- T9 -->
+<div id="p9" class="pn">
+<div class="sh"><h2>Communications Hub</h2><p>20 pre-drafted messages · Copy to clipboard or open directly</p></div>
+<div class="mc"><div class="mh"><strong>m1 · Baraat Boat Booking</strong><span class="mtg">Natasha · WA</span></div>
+<div class="mb2" id="mg1">Hi Natasha, we need to confirm the baraat boat for June 19 — can you please book one boat for approximately 8 guests at the $150/boat/hour rate? We'll need it for the Baraat procession around 6 PM from the Villages Deck. Please confirm availability and add to our master account. Thank you!</div>
+<div class="ma"><button class="btn bc bs" onclick="cp('mg1',this)">Copy</button><a href="https://wa.me/529983482377" class="btn bw bs" target="_blank">WhatsApp</a></div></div>
+
+<div class="mc"><div class="mh"><strong>m2 · Raj — Guest Itinerary Blast (T-22)</strong><span class="mtg">Raj · WhatsApp</span></div>
+<div class="mb2" id="mg2">Hi Raj, we are T-22 days out! Can you please send an updated itinerary to all guests with the following:
+- Arrival: June 16 (7-night guests), June 17 (5-night guests)
+- Events: Welcome Party Jun 17 5-8PM, Mehndi Jun 18 9-11AM, Sangeet Jun 18 7-11PM, Haldi Jun 19, Baraat Jun 19 6PM, Ceremony Jun 20 from 6AM, Reception Jun 21 7PM-midnight
+- Departure: June 22-23
+Also: Please confirm the adjacent room blocking request for the family groups in Building 16 area — still open. And can you advise on the Land Only bus schedule from airport to resort? Thank you!</div>
+<div class="ma"><button class="btn bc bs" onclick="cp('mg2',this)">Copy</button><a href="https://wa.me/" class="btn bw bs" target="_blank">WhatsApp Raj</a></div></div>
+
+<div class="mc"><div class="mh"><strong>m3 · Majestic Films — Payment Receipt</strong><span class="mtg">Jennyfer · Email</span></div>
+<div class="mb2" id="mg3">Hi Jennyfer, just wanted to let you know we have sent the balance payment to Majestic Films today. Please find the e-transfer confirmation attached. Their balance was 5 days overdue and this should now clear the account. Please follow up with them to confirm receipt and ensure their SAW documentation is submitted to Natasha ASAP. Thank you!</div>
+<div class="ma"><button class="btn bc bs" onclick="cp('mg3',this)">Copy</button><a href="mailto:info@jennyferreyesweddings.com" class="btn bm bs">Email Jennyfer</a></div></div>
+
+<div class="mc"><div class="mh"><strong>m4 · Beloved — AL Studio / GAMA Follow-up</strong><span class="mtg">Jennyfer · Email</span></div>
+<div class="mb2" id="mg4">Hi Jennyfer, an update on decor: We have decided that Grupo Gama is our preferred decor vendor for all 5 events. The Zuniga quote expired on May 25. AL Studio has been silent since May 15. Please proceed with GAMA as follows:
+1. Confirm GAMA can cover: Welcome Party (Jun 17), Sangeet (Jun 18), Haldi (Jun 19), Ceremony (Jun 20), Reception (Jun 21)
+2. Request an itemized quote for all 5 events
+3. Note: florals are NOT included in their scope — we will need a separate florist
+Please send GAMA contact details and draft quote by May 28. Thank you!</div>
+<div class="ma"><button class="btn bc bs" onclick="cp('mg4',this)">Copy</button><a href="mailto:info@jennyferreyesweddings.com" class="btn bm bs">Email Jennyfer</a></div></div>
+
+<div class="mc"><div class="mh"><strong>m5 · Loto Mehndi — Deposit Confirmation</strong><span class="mtg">Natasha · WA</span></div>
+<div class="mb2" id="mg5">Hi Natasha, we'd like to confirm and pay the deposit for Loto Mehndi. We understand the 50% deposit is $893.20 USD payable to Palladium CM directly. Could you please confirm: (1) the exact payment method and reference, (2) that this secures both the June 16 bridal session AND the June 18 guest mehndi (3 artists, 2 hours, 72 designs)? Also please confirm Ruby Bridal Mehndi for June 16 evening ($460) is included. Thank you!</div>
+<div class="ma"><button class="btn bc bs" onclick="cp('mg5',this)">Copy</button><a href="https://wa.me/529983482377" class="btn bw bs" target="_blank">WhatsApp Natasha</a></div></div>
+
+<div class="mc"><div class="mh"><strong>m7 · GAMA Decor RFP</strong><span class="mtg">GAMA · Email RFP</span></div>
+<div class="mb2" id="mg7">Subject: Decor RFP — Catherina &amp; Baji Wedding, Grand Palladium Costa Mujeres, June 2026
+
+Dear Grupo Gama team,
+
+We are reaching out for a decor quote for our wedding at Grand Palladium Costa Mujeres, June 16–21, 2026.
+
+We are looking for decor coverage across 5 events:
+1. Welcome Party — June 17, Fizz Terrace, ~131 guests, 5:00–8:00 PM
+2. Sangeet — June 18, Convention Centre Plaza, ~131 guests, 7:00–11:00 PM
+3. Haldi — June 19, Village Deck/Beach, ~131 guests, 11:00 AM
+4. Ceremony — June 20, Glassroom, ~131 guests, 6:00 AM start
+5. Reception — June 21, Ballroom, ~131 guests, 7:00 PM–midnight
+
+Note: Florals are a separate category and are NOT required from you.
+
+We have been working with Zuniga Productions as a reference (their quote was $40,554 for 4 events) but are now exploring alternatives. We can share their event-by-event proposals as a reference brief.
+
+Please provide:
+- Itemized quote per event
+- Your portfolio / examples for resort weddings
+- Timeline for finalizing
+
+Our planner contact is Jennyfer Reyes at Beloved Planners. Please feel free to coordinate through her as well.
+
+Thank you,
+Bharadwaj &amp; Catherina Madduluri</div>
+<div class="ma"><button class="btn bc bs" onclick="cp('mg7',this)">Copy</button></div></div>
+
+<div class="mc"><div class="mh"><strong>m8 · Mills James — Sign AV Contract Today</strong><span class="mtg">Jimena · Email</span></div>
+<div class="mb2" id="mg8">Hi Jimena, we are ready to proceed with Mills James for AV services for our wedding June 17–21, 2026 at Grand Palladium Costa Mujeres. Please send us the final contracts for Quotes 279122 and 279827 for signature today. As per our discussions, the total is approximately $16,652 USD covering all 6 events. We understand the quote expires May 27 so please send ASAP. Thank you!
+
+Jimena Ochoa · jmochoa@millsjames.com.mx · +52 998 158 1628
+Silvestre Naal · snaal@millsjames.com.mx</div>
+<div class="ma"><button class="btn bc bs" onclick="cp('mg8',this)">Copy</button><a href="mailto:jmochoa@millsjames.com.mx" class="btn bm bs">Email Jimena</a></div></div>
+
+<div class="mc"><div class="mh"><strong>m9 · AbsoluteWed — Flight Release + Adjacent Rooms</strong><span class="mtg">Raj · Email</span></div>
+<div class="mb2" id="mg9">Hi Raj, two outstanding items we need resolved:
+1. FLIGHT RELEASE TIMELINE: Can you advise when group flight seats will be released? We have guests still trying to book and need to know if any seats will open up.
+2. ADJACENT ROOM BLOCKING: We'd like to request that family groups be blocked together in Building 16 area. Specifically: Madduluri family (groom's side), Khadoo family (bride's side). Can you flag this with the resort? 
+3. LAND ONLY BUS: What is the ground transfer schedule for Land Only guests arriving at CUN? When does the bus depart and what is the resort meeting point?
+Please advise on all three by May 28.
+Thank you, Baji</div>
+<div class="ma"><button class="btn bc bs" onclick="cp('mg9',this)">Copy</button></div></div>
+
+<div class="mc"><div class="mh"><strong>m10 · Zuniga — Re-engage (Quote Expired)</strong><span class="mtg">Alejandra · Email</span></div>
+<div class="mb2" id="mg10">Subject: RE: Decor Quote — Catherina &amp; Baji Wedding June 2026
+
+Hi Alejandra, I hope you're well. We realize our quote from Zuniga Productions (dated May 2026) expired on May 25. We are actively reviewing our decor vendor options and would appreciate a conversation about whether you can:
+1. Re-issue the quote with updated pricing for 4-5 events
+2. Advise on availability for our June dates
+
+For reference our events are: Welcome Party (Jun 17), Sangeet (Jun 18), Haldi (Jun 19), Ceremony (Jun 20), Reception (Jun 21) at Grand Palladium Costa Mujeres.
+
+Please respond by May 28 so we can make a decision. Thank you,
+Catherina &amp; Bharadwaj Madduluri
+
+Alejandra Galindo · alejandra@decocancun.com · 998 192 8070</div>
+<div class="ma"><button class="btn bc bs" onclick="cp('mg10',this)">Copy</button><a href="mailto:alejandra@decocancun.com" class="btn bm bs">Email Alejandra</a></div></div>
+
+<div class="mc"><div class="mh"><strong>m11 · Natasha — Status Update WA</strong><span class="mtg">Natasha · WhatsApp</span></div>
+<div class="mb2" id="mg11">Hi Natasha! Quick update from our end:
+- We're signing Mills James AV today (expires tomorrow)
+- Sending Majestic Films balance today (overdue)
+- Working on Palladium deposit #3 — can you confirm the exact amount due?
+- GAMA is our preferred decor vendor — activating RFP
+- Still waiting on updated venue breakdown sheet (requested May 5/11/13)
+Can we confirm: the May 26 Google Meet at 10 AM Cancun time is still on? Looking forward to finalizing everything! 🙏</div>
+<div class="ma"><button class="btn bc bs" onclick="cp('mg11',this)">Copy</button><a href="https://wa.me/529983482377" class="btn bw bs" target="_blank">WhatsApp</a></div></div>
+</div>
+<!-- T10 -->
+<div id="p10" class="pn">
+<div class="sh"><h2>Decor War Room</h2><p>Vendor path decision · GAMA preferred · Zuniga expired</p></div>
+<div class="cd2" style="background:#e8f5ed;border:1px solid var(--ok);margin-bottom:20px">
+<strong style="color:var(--ok)">✦ ACTIVE PATH: Grupo Gama (Preferred)</strong>
+<p style="font-size:12px;margin-top:6px">RFP sent · Quote pending · 5-event scope · Proceed with GAMA as primary decor vendor. Florals separate.</p>
+</div>
+<div class="fl" style="margin-bottom:24px">
+<div class="cd2" style="flex:1;min-width:220px;border-top:3px solid var(--em)">
+<div class="cl">Path A — GAMA (Preferred)</div>
+<span class="st s4">RFP ACTIVE</span>
+<div style="font-size:12px;margin-top:8px;line-height:1.8">
+Events: Welcome · Sangeet · Haldi · Ceremony · Reception<br>
+Quote: TBD (pending)<br>
+Florals: Separate vendor needed<br>
+<strong>Action:</strong> Receive quote by Jun 1
+</div></div>
+<div class="cd2" style="flex:1;min-width:220px;border-top:3px solid var(--cr)">
+<div class="cl">Path B — Zuniga Reference <span class="bg bgr">EXPIRED</span></div>
+<span class="st s2">QUOTE EXPIRED MAY 25</span>
+<div style="font-size:12px;margin-top:8px;line-height:1.8">
+Contact: Alejandra Galindo<br>
+alejandra@decocancun.com · 998 192 8070<br>
+Last quote total: $40,553.60 USD (4 events)<br>
+Florals: NOT included
+</div></div>
+<div class="cd2" style="flex:1;min-width:220px;border-top:3px solid var(--mu)">
+<div class="cl">Path C — AL Studio (Silent)</div>
+<span class="st s5">SILENT</span>
+<div style="font-size:12px;margin-top:8px;line-height:1.8">
+Last contact: May 15<br>
+Inspiration images sent<br>
+No response received<br>
+<strong>Action:</strong> Chase or drop
+</div></div>
+</div>
+<div class="sh m16"><h2>Zuniga Reference — 4-Event Breakdown</h2><p>For comparison only · Quote expired May 25</p></div>
+<div class="tw"><table><thead><tr><th>Event</th><th>Date</th><th>Venue</th><th>Key Items</th><th>Subtotal</th><th>Tax 16%</th><th>Total USD</th></tr></thead><tbody>
+<tr><td>Welcome Party</td><td>Jun 17</td><td>Fizz Terrace</td><td>Lighting + decor</td><td>~$2,920</td><td>~$467</td><td>~$3,387</td></tr>
+<tr><td>Sangeet</td><td>Jun 18</td><td>CC Plaza</td><td>Bistro lights · Stage · Dance floor · Bangle station</td><td>$11,380.00</td><td>$1,820.80</td><td><strong>$13,200.80</strong></td></tr>
+<tr><td>Haldi</td><td>Jun 19</td><td>Village Deck</td><td>Shading structure · Moroccan chairs · Havan</td><td>$2,425.00</td><td>$388.00</td><td><strong>$2,813.00</strong></td></tr>
+<tr><td>Ceremony</td><td>Jun 20</td><td>Glassroom</td><td>Wooden stage · Mirror platform · Ganesh statue</td><td>$5,795.00</td><td>$927.20</td><td><strong>$6,722.20</strong></td></tr>
+<tr><td>Reception</td><td>Jun 21</td><td>Ballroom</td><td>Pipe &amp; drape · Dance floor · Stage · Acrylic chairs (120) · Mirror bar</td><td>$15,360.00</td><td>$2,457.60</td><td><strong>$17,817.60</strong></td></tr>
+<tr style="background:var(--gp);font-weight:700"><td colspan="6">ZUNIGA TOTAL (5 events ref)</td><td>~$43,941</td></tr>
+</tbody></table></div>
+<div class="sh m16"><h2>Florals — Critical Gap</h2></div>
+<div class="cd2" style="background:#fff8f0;border:1px solid var(--am)">
+<strong style="color:var(--cr)">⚠ Florals Not Included in Any Decor Scope</strong>
+<p style="font-size:12px;margin-top:8px">Neither Zuniga Productions nor Grupo Gama includes florals in their decor quotes. A separate florist must be sourced and submitted via SAW. Blossom and Latin Event Design are options to explore. This is currently an open gap in SAW documentation.</p>
+<div class="ci m8"><input type="checkbox" id="f1" onchange="ck(this)"><label for="f1">Source separate florist — request quote from Blossom or Latin Event Design</label></div>
+<div class="ci"><input type="checkbox" id="f2" onchange="ck(this)"><label for="f2">Submit florist SAW to Natasha once confirmed</label></div>
+</div></div>
+<!-- T11 -->
+<div id="p11" class="pn">
+<div class="sh"><h2>Evidence Vault</h2><p>Source document registry · 35+ files</p></div>
+<div class="sh m16"><h2>Master Contracts &amp; Venue</h2></div>
+<div class="tw"><table><thead><tr><th>Document</th><th>Type</th><th>Status</th><th>Notes</th></tr></thead><tbody>
+<tr class="rg"><td>CatherinaBajiPalladiumCM.pdf</td><td>Venue / Loto Mehndi PO</td><td><span class="st s1">ON FILE</span></td><td>Mehndi services purchase order · $1,786.40 USD</td></tr>
+<tr class="rg"><td>GPCM_Cath__Bhaji_Ceremony.pdf</td><td>Venue proposal</td><td><span class="st s1">ON FILE</span></td><td>Zuniga Ceremony · $6,722.20 · Glassroom Jun 20</td></tr>
+<tr class="rg"><td>GPCM_Cath__Bhaji_Haldi.pdf</td><td>Venue proposal</td><td><span class="st s1">ON FILE</span></td><td>Zuniga Haldi · $2,813.00 · Village Deck Jun 19</td></tr>
+<tr class="rg"><td>GPCM_Cath__Bhaji_Reception.pdf</td><td>Venue proposal</td><td><span class="st s1">ON FILE</span></td><td>Zuniga Reception · $17,817.60 · Ballroom Jun 21</td></tr>
+<tr class="rg"><td>GPCM_Cath__Bhaji_Sangeet.pdf</td><td>Venue proposal</td><td><span class="st s1">ON FILE</span></td><td>Zuniga Sangeet · $13,200.80 · CC Plaza Jun 18</td></tr>
+<tr class="rg"><td>20260619_DRUMS_IN_PARADISE_PCM_DH.pdf</td><td>Vendor quote</td><td><span class="st s1">ON FILE</span></td><td>$1,786 USD · 2 sessions · Valid Jun 12</td></tr>
+<tr class="rg"><td>AV_Vendor__ITEMIZED_FINAL.pdf</td><td>AV quote</td><td><span class="st s1">ON FILE</span></td><td>AV del Caribe · $16,652 USD · 8 events</td></tr>
+<tr class="rg"><td>AV_Equipment_email.pdf</td><td>DJ rider approval</td><td><span class="st s1">ON FILE</span></td><td>DJ Jethu confirmed AV list Apr 14</td></tr>
+<tr class="rg"><td>AV_EQUIPMENT_machote.xlsx</td><td>AV specs</td><td><span class="st s1">ON FILE</span></td><td>Per-event equipment requirements</td></tr>
+<tr class="rg"><td>Gmail__AUDIOVISUAL_VENDOR.pdf</td><td>Email thread</td><td><span class="st s1">ON FILE</span></td><td>Mills James price-match confirmation</td></tr>
+<tr class="rg"><td>EntertainmentHappeningsEXTRAS.pdf</td><td>Entertainment options</td><td><span class="st s1">ON FILE</span></td><td>WowFX + Romanza catalogs referenced</td></tr>
+<tr class="rg"><td>Gmail__Vendors_room_reservation.pdf</td><td>Room bookings</td><td><span class="st s1">ON FILE</span></td><td>Beloved Planners + vendor rooms confirmed</td></tr>
+</tbody></table></div>
+<div class="sh m16"><h2>Travel Files</h2></div>
+<div class="tw"><table><thead><tr><th>File</th><th>Trip #</th><th>Supplier</th><th>Pax</th><th>Total CAD</th><th>Status</th></tr></thead><tbody>
+<tr class="rg"><td>FP_TR37577</td><td>37577</td><td>Air Canada Vacations</td><td>Baji + Cath</td><td>$8,976</td><td><span class="st s1">PAID</span></td></tr>
+<tr class="rg"><td>FP_TR37596</td><td>37596</td><td>Air Canada Vacations</td><td>Groom's parents + Rohit + Ramakrishna</td><td>$9,952</td><td><span class="st s1">PAID</span></td></tr>
+<tr class="rg"><td>FP_TR37649</td><td>37649</td><td>Transat Holidays</td><td>Mohanathas + DJ Jethu</td><td>$4,220</td><td><span class="st s1">PAID</span></td></tr>
+<tr><td>FP_TR37677</td><td>37677</td><td>TBD</td><td>Vendor crew</td><td>TBD</td><td><span class="st s5">ON FILE</span></td></tr>
+<tr><td>FP_TR37755</td><td>37755</td><td>TBD</td><td>Vendor crew</td><td>TBD</td><td><span class="st s5">ON FILE</span></td></tr>
+<tr><td>FP_TR37759_REVISED</td><td>37759</td><td>TBD</td><td>Vendor crew</td><td>TBD</td><td><span class="st s5">ON FILE</span></td></tr>
+</tbody></table></div>
+<div class="sh m16"><h2>Planning Documents</h2></div>
+<div class="tw"><table><thead><tr><th>Document</th><th>Description</th><th>Status</th></tr></thead><tbody>
+<tr><td>CB_WeddingOS_v5.html</td><td>Previous command center (v5 baseline)</td><td><span class="st s5">SUPERSEDED BY V6</span></td></tr>
+<tr><td>CB_Wedding_Command_Center.xlsx</td><td>Master planning spreadsheet</td><td><span class="st s1">SOURCE</span></td></tr>
+<tr><td>build_rooming_matrix_v3.ps1</td><td>131 PAX guest manifest</td><td><span class="st s1">SOURCE</span></td></tr>
+<tr><td>MASTER_WEDDING_PLANNER.pdf</td><td>Master planning guide</td><td><span class="st s1">ON FILE</span></td></tr>
+<tr><td>CB_Master_Rooming_Matrix_v01.xlsx</td><td>Rooming assignments</td><td><span class="st s1">ON FILE</span></td></tr>
+<tr><td>WhatsApp_Chat_Hotel_group.txt</td><td>Hotel group WhatsApp history</td><td><span class="st s1">ANALYZED</span></td></tr>
+<tr><td>CATHERINA__BHARADWAJ_FINAL_ROOMING_LISTS.pdf</td><td>Per-supplier rooming April 9</td><td><span class="st s1">ON FILE</span></td></tr>
+<tr><td>ChromaticRitual_DesignPhilosophy.md</td><td>Design guidelines</td><td><span class="st s1">REFERENCE</span></td></tr>
+</tbody></table></div></div>
+<!-- T12 -->
+<div id="p12" class="pn">
+<div class="sh"><h2>Guest Site Mirror</h2><p>Live view of guest-facing wedding website</p></div>
+<div style="margin-bottom:16px;font-size:12px;color:var(--mu)">Live site: <a href="https://ckwedsbm.netlify.app" target="_blank" style="color:var(--tl)">ckwedsbm.netlify.app</a> · <a href="https://ckwedsbm.netlify.app" target="_blank" class="btn bp bs">Open in New Tab</a></div>
+<div style="border:2px solid var(--line);background:var(--card);padding:12px;margin-bottom:16px;font-size:12px;color:var(--mu)">
+<strong>Refresh Protocol:</strong> The iframe below loads the live guest site. If content appears stale, open directly in a new tab. The guest site is deployed to Netlify from the same GitHub repo.
+</div>
+<iframe src="https://ckwedsbm.netlify.app" style="width:100%;height:700px;border:1px solid var(--line);" title="C&B Guest Site"></iframe>
+</div>
+<!-- T13 -->
+<div id="p13" class="pn">
+<div class="sh"><h2>Ceremony SOP — June 20, 2026</h2><p>Telugu Hindu wedding · Glassroom · Grand Palladium Costa Mujeres · Priest: Banu Prakash Malur Venkatesh</p></div>
+<div class="cd2" style="background:#fff8f0;border:1px solid var(--am);margin-bottom:20px">
+<strong style="color:var(--cr)">⚠ Photography Rule:</strong> NO photography or videography before <strong>7:55 AM Subhamuhurtham</strong>. Brief all photo/video vendors. Curtain removal is the signal.
+</div>
+<div class="tw"><table><thead><tr><th>Time</th><th>Ritual</th><th>Who</th><th>Notes</th></tr></thead><tbody>
+<tr><td><strong>6:00 AM</strong></td><td>All family present at venue</td><td>Both families</td><td>Hard deadline — all items must be at venue by this time</td></tr>
+<tr><td>6:15 AM</td><td>Ganapati Puja (Bride's side)</td><td>Khadoo family</td><td>Bride's maternal side initiates</td></tr>
+<tr><td>6:30 AM</td><td>Gauri Kankana + Groom's Ganapati Puja</td><td>Both families</td><td>Simultaneous · Separate spaces</td></tr>
+<tr><td>7:00 AM</td><td>Mangala Snanam (Sacred bath preparation)</td><td>Bride + Groom (separate)</td><td>Family-assisted</td></tr>
+<tr><td>7:35 AM</td><td>Arrival of Bride</td><td>Bride + maternal uncles</td><td>Bamboo basket — Dan Khadoo + Paul Khadoo carrying bride</td></tr>
+<tr style="background:var(--gp)"><td><strong>7:55 AM</strong></td><td><strong>SUBHAMUHURTHAM</strong></td><td>Bride + Groom + Priest</td><td>Jeera + Bellam exchange · Curtain removed · <strong>CAMERAS ON</strong></td></tr>
+<tr><td>8:10 AM</td><td>Madhuparkam</td><td>Groom + Priest</td><td>Honey and curd ritual · Groom receives bride's family</td></tr>
+<tr><td>8:30 AM</td><td>Kanya Daanam</td><td>Bride's parents + Priest</td><td>Giving of the bride · Hasta Milaapanam (joining of hands)</td></tr>
+<tr><td>9:00 AM</td><td>Mangalasutra Dharana</td><td>Groom</td><td>3 knots · Gold + black beads · Auspicious thread</td></tr>
+<tr><td>9:10 AM</td><td>Talambralu</td><td>Bride + Groom + families</td><td>Yellow rice shower · Both pour rice on each other's heads</td></tr>
+<tr><td>9:30 AM</td><td>Saptapadi (7 Steps)</td><td>Bride + Groom + Priest</td><td>7 steps around sacred fire · Each step = one vow</td></tr>
+<tr><td>9:50 AM</td><td>Aashirvadams</td><td>All elders</td><td>Blessings from elders · Couple touches feet of elders</td></tr>
+<tr><td>10:00 AM</td><td>Laaja Homam</td><td>Bride + Groom + Priest</td><td>Puffed rice offering to fire</td></tr>
+<tr><td>10:15 AM</td><td>Naandi (Post-ceremony blessings)</td><td>All family</td><td>Group blessings · Flowers</td></tr>
+<tr><td>10:30 AM</td><td>Exit procession</td><td>All guests</td><td>Photography golden window · Petals/flower shower</td></tr>
+<tr style="background:var(--ink);color:#fff"><td colspan="4" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">BREAKFAST FOLLOWS: Patravali South Asian · 11:00 AM</td></tr>
+<tr><td>11:00 AM</td><td>Patravali Breakfast</td><td>All guests</td><td>Dosa, Idli, Medu Vada, Pani Puri, Chai · Live stations</td></tr>
+<tr><td>1:00 PM</td><td>Patravali Banana Leaf Lunch</td><td>All guests</td><td>Vegetarian · No onion/garlic · Coconut payasam, Tamarind rice, Yogurt rice</td></tr>
+</tbody></table></div>
+<div class="sh m16"><h2>Pooja Items Checklist</h2></div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;font-size:12px">
+<div class="ci"><input type="checkbox" id="po1" onchange="ck(this)"><label for="po1">Yellow rice (turmeric)</label></div>
+<div class="ci"><input type="checkbox" id="po2" onchange="ck(this)"><label for="po2">Fresh flowers (marigold, jasmine)</label></div>
+<div class="ci"><input type="checkbox" id="po3" onchange="ck(this)"><label for="po3">Turmeric paste (kumkum)</label></div>
+<div class="ci"><input type="checkbox" id="po4" onchange="ck(this)"><label for="po4">Fresh coconut (2)</label></div>
+<div class="ci"><input type="checkbox" id="po5" onchange="ck(this)"><label for="po5">Banana leaves (12+)</label></div>
+<div class="ci"><input type="checkbox" id="po6" onchange="ck(this)"><label for="po6">Sacred thread (mangalasutra)</label></div>
+<div class="ci"><input type="checkbox" id="po7" onchange="ck(this)"><label for="po7">Ghee lamp + oil</label></div>
+<div class="ci"><input type="checkbox" id="po8" onchange="ck(this)"><label for="po8">Camphor (kapoor)</label></div>
+<div class="ci"><input type="checkbox" id="po9" onchange="ck(this)"><label for="po9">Bamboo basket (for bride's arrival)</label></div>
+<div class="ci"><input type="checkbox" id="po10" onchange="ck(this)"><label for="po10">Jeera (cumin) + Bellam (jaggery)</label></div>
+<div class="ci"><input type="checkbox" id="po11" onchange="ck(this)"><label for="po11">Havan materials (fire sticks, kindling)</label></div>
+<div class="ci"><input type="checkbox" id="po12" onchange="ck(this)"><label for="po12">Puffed rice (laaja) for Homam</label></div>
+<div class="ci"><input type="checkbox" id="po13" onchange="ck(this)"><label for="po13">Copper/brass vessels (kalash)</label></div>
+<div class="ci"><input type="checkbox" id="po14" onchange="ck(this)"><label for="po14">Incense sticks (agarbatti)</label></div>
+<div class="ci"><input type="checkbox" id="po15" onchange="ck(this)"><label for="po15">Ganesh idol (from Zuniga/GAMA decor)</label></div>
+</div></div>
+<!-- T14 -->
+<div id="p14" class="pn">
+<div class="sh"><h2>Beloved Hub</h2><p>Beloved Planners team · Jennyfer Reyes Tapia</p></div>
+<div class="cg">
+<div class="cd2"><div class="cl">Team Lead</div><strong>Jennyfer Reyes Tapia</strong><div class="cr2"><span>📱 <a href="https://wa.me/529842158539">+52 984 215 8539</a></span><span>✉ <a href="mailto:info@jennyferreyesweddings.com">info@jennyferreyesweddings.com</a></span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Lead planner · All vendor coordination · SAW submission responsibility</div></div>
+<div class="cd2"><div class="cl">Coordinator</div><strong>Jorge Muralidharan Espinoza</strong><div class="cr2"><span>✉ <a href="mailto:belovedcoordinator2@gmail.com">belovedcoordinator2@gmail.com</a></span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Entertainment logistics · Drums in Paradise · vendor reach-outs</div></div>
+<div class="cd2"><div class="cl">Coordinator</div><strong>Liliana Cruz Rosas</strong><div style="font-size:11px;color:var(--mu);margin-top:8px">On-site coordination support</div></div>
+<div class="cd2"><div class="cl">Coordinator</div><strong>Ekaterina Nikulina</strong><div style="font-size:11px;color:var(--mu);margin-top:8px">On-site coordination support</div></div>
+</div>
+<div class="sh m16"><h2>Booking Details</h2></div>
+<div class="cd2" style="max-width:500px">
+<div style="font-size:13px;line-height:1.9">
+<strong>Confirmation #:</strong> 152409712 (Sunwing Vacations)<br>
+<strong>Booked by:</strong> AbsoluteWed / Raj Pahwa<br>
+<strong>Hotel:</strong> Grand Palladium Select Costa Mujeres<br>
+<strong>Building:</strong> 16 (requested)<br>
+<strong>Room Type:</strong> JR Suite Garden Lagoon View, All Inclusive<br>
+<strong>Stay:</strong> June 17–22, 2026 · 5 nights · Double occupancy<br>
+<strong>Room 1:</strong> Liliana Cruz Rosas + Jennyfer Reyes Tapia<br>
+<strong>Room 2:</strong> Jorge Muralidharan Espinoza + Ekaterina Nikulina
+</div></div>
+<div class="sh m24"><h2>Open Items / Escalations</h2></div>
+<div class="ci"><input type="checkbox" id="b1" onchange="ck(this)"><label for="b1">SAW document submission — all open slots (see T8) — due May 27</label></div>
+<div class="ci"><input type="checkbox" id="b2" onchange="ck(this)"><label for="b2">Confirm Drums in Paradise booking via Jorge — $1,786 USD via hotel master account</label></div>
+<div class="ci"><input type="checkbox" id="b3" onchange="ck(this)"><label for="b3">Activate GAMA decor RFP — 5-event scope — quote by Jun 1</label></div>
+<div class="ci"><input type="checkbox" id="b4" onchange="ck(this)"><label for="b4">Patravali outside vendor confirmation to Natasha (she needs this)</label></div>
+<div class="ci"><input type="checkbox" id="b5" onchange="ck(this)"><label for="b5">⚠ MEHNDI GAP: Paulina asked "you don't have mehndi, correct?" — confirm Loto Mehndi once deposit paid</label></div>
+<div class="ci"><input type="checkbox" id="b6" onchange="ck(this)"><label for="b6">Updated venue breakdown sheet — chase Natasha (requested May 5/11/13)</label></div>
+<div class="ci"><input type="checkbox" id="b7" onchange="ck(this)"><label for="b7">Florals — source separate florist, submit to Natasha via SAW</label></div>
+<div class="ci"><input type="checkbox" id="b8" onchange="ck(this)"><label for="b8">Confirm Building 16 room assignments with AbsoluteWed</label></div>
+<div class="sh m24"><h2>Quick Messages to Jennyfer</h2></div>
+<div class="mc"><div class="mh"><strong>WA: SAW + Drums Urgent</strong><span class="mtg">Jennyfer · WhatsApp</span></div>
+<div class="mb2" id="mgb1">Hi Jennyfer! Two urgent items for today:
+1. SAW: Can you please submit all outstanding vendor docs to Natasha by tomorrow? Key open slots: DJ Jethu, Decor (GAMA), Mehndi, Officiant, HMUA.
+2. DRUMS: Can you please confirm with Jorge that he's reached out to Drums in Paradise to confirm the 2 dhol sessions for June 19? We want to lock this in ASAP. The quote is valid until June 12.
+Also: we're going with GAMA as our preferred decor vendor. Can you please initiate the RFP with them for all 5 events? Zuniga quote expired May 25. Thank you! 🙏</div>
+<div class="ma"><button class="btn bc bs" onclick="cp('mgb1',this)">Copy</button><a href="https://wa.me/529842158539" class="btn bw bs" target="_blank">WhatsApp</a></div></div>
+<div class="sh m16"><h2>Incentive Structure Note</h2></div>
+<div class="cd2" style="background:var(--gp);border:1px solid var(--line)">
+<p style="font-size:12px;color:var(--mu)">Beloved Planners may receive a percentage of vendor fees for vendors they source and/or manage. This creates alignment on vendor quality but means they may have preferences. When selecting between vendors (e.g., GAMA vs. others), confirm alignment on budget and quality independently.</p>
+</div></div>
+<!-- T15 -->
+<div id="p15" class="pn">
+<div class="sh"><h2>AbsoluteWed Hub</h2><p>Raj Pahwa &amp; Jean Teodoro · Travel agency</p></div>
+<div class="fl" style="margin-bottom:20px">
+<div class="cd2" style="flex:1;min-width:200px"><div class="cl">Primary Contact</div><strong>Raj Pahwa (Raj Virk Pahwa)</strong><div class="cr2"><span>AbsoluteWed</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Group travel coordination · Rooming assignments · Flight release</div></div>
+<div class="cd2" style="flex:1;min-width:200px"><div class="cl">Secondary Contact</div><strong>Jean W Teodoro (Jean Teodoro)</strong><div class="cr2"><span>AbsoluteWed</span></div><div style="font-size:11px;color:var(--mu);margin-top:6px">Booking admin · Beloved Planners room #152409712</div></div>
+</div>
+<div class="sh m8"><h2>Travel Files Summary</h2></div>
+<div class="tw"><table><thead><tr><th>File</th><th>Supplier</th><th>Key Pax</th><th>Dates</th><th>Amount</th><th>Status</th></tr></thead><tbody>
+<tr class="rg"><td>TR37577</td><td>Air Canada Vacations</td><td>Baji + Cath (couple)</td><td>Jun 16–23</td><td>C$8,976</td><td><span class="st s1">PAID</span></td></tr>
+<tr class="rg"><td>TR37596</td><td>Air Canada Vacations</td><td>Groom's parents + family (4 pax)</td><td>Jun 16–23</td><td>C$9,952</td><td><span class="st s1">PAID IN FULL</span></td></tr>
+<tr class="rg"><td>TR37649</td><td>Transat Holidays</td><td>Mohanathas + DJ Jethu</td><td>Jun 17–22</td><td>C$4,220</td><td><span class="st s1">PAID IN FULL</span></td></tr>
+<tr><td>TR37677</td><td>TBD</td><td>Vendor crew</td><td>TBD</td><td>TBD</td><td><span class="st s5">ON FILE</span></td></tr>
+<tr><td>TR37755</td><td>TBD</td><td>Vendor crew</td><td>TBD</td><td>TBD</td><td><span class="st s5">ON FILE</span></td></tr>
+<tr><td>TR37759 REVISED</td><td>TBD</td><td>Vendor crew</td><td>TBD</td><td>TBD</td><td><span class="st s5">ON FILE</span></td></tr>
+</tbody></table></div>
+<div class="sh m16"><h2>Flight Schedule</h2></div>
+<div class="tw"><table><thead><tr><th>Airline</th><th>Flight</th><th>Direction</th><th>Date</th><th>Departure</th><th>Arrival</th><th>Group</th></tr></thead><tbody>
+<tr class="rg"><td>Air Canada</td><td>AC1810</td><td>YYZ→CUN</td><td>Jun 16</td><td>06:50</td><td>09:50</td><td>AC group (38) + Couple + Parents</td></tr>
+<tr class="rg"><td>Air Canada</td><td>AC1811</td><td>CUN→YYZ</td><td>Jun 23</td><td>09:50</td><td>10:50</td><td>AC group return</td></tr>
+<tr class="ra"><td>Air Transat</td><td>TS326</td><td>YYZ→CUN</td><td>Jun 17</td><td>07:00</td><td>11:05</td><td>Transat group (~30) ⚠ MISS WELCOME</td></tr>
+<tr class="ra"><td>Air Transat</td><td>TS327</td><td>CUN→YYZ</td><td>Jun 22</td><td>11:15</td><td>16:10</td><td>Transat return</td></tr>
+<tr><td>WestJet (Sunwing)</td><td>WS2776</td><td>YYZ→CUN</td><td>Jun 16</td><td>15:15</td><td>18:30</td><td>Sunwing group (20)</td></tr>
+<tr><td>WestJet (Sunwing)</td><td>WS2777</td><td>CUN→YYZ</td><td>Jun 23</td><td>19:30</td><td>00:35+1</td><td>Sunwing return</td></tr>
+</tbody></table></div>
+<div class="sh m16"><h2>Open Escalations</h2></div>
+<div class="ci"><input type="checkbox" id="a1" onchange="ck(this)"><label for="a1">Flight release timeline — when will group seats open?</label></div>
+<div class="ci"><input type="checkbox" id="a2" onchange="ck(this)"><label for="a2">Adjacent room blocking — Bldg 16 families grouped — open request</label></div>
+<div class="ci"><input type="checkbox" id="a3" onchange="ck(this)"><label for="a3">Land Only bus schedule — CUN airport to resort, departure time, rep contact</label></div>
+<div class="ci"><input type="checkbox" id="a4" onchange="ck(this)"><label for="a4">Couple room upgrade — TR37577 — request Jacuzzi Loft</label></div>
+<div class="ci"><input type="checkbox" id="a5" onchange="ck(this)"><label for="a5">Vendor crew travel bookings — confirm all TR files finalized</label></div>
+<div class="ci"><input type="checkbox" id="a6" onchange="ck(this)"><label for="a6">Transat gap — Jun 17 arrival misses Welcome Party — confirm intentional or fix</label></div>
+<div class="sh m24"><h2>Pre-drafted Escalation Messages</h2></div>
+<div class="mc"><div class="mh"><strong>Raj — Full Escalation Email</strong><span class="mtg">Raj · Email</span></div>
+<div class="mb2" id="mga1">Subject: C&B Wedding June 2026 — 5 Open Items
+
+Hi Raj, we're T-22 days out and have 5 items that need resolution before end of week:
+
+1. FLIGHT RELEASE: When will unsold group flight seats be released to the public? We have guests still looking to book.
+
+2. ADJACENT ROOMS: Can you please flag with the resort that we'd like family groups blocked together in Building 16? Madduluri family (groom) + Khadoo family (bride). This is important for the wedding week experience.
+
+3. LAND ONLY BUS: What is the ground transfer schedule for our Land Only guests? When does the bus depart CUN and what's the airport meeting point?
+
+4. COUPLE ROOM UPGRADE: For TR37577 (Baji + Cath, Jun 16-23) — can you request a Jacuzzi Loft suite upgrade? Please advise on availability and any additional cost.
+
+5. TRANSAT GAP: We notice Transat guests (TR37649 + group) arrive June 17, which means they miss our Welcome Party (June 17, 5-8 PM). Is this intentional? Options: (a) advise them it's intentional, (b) arrange a day pass for June 17 at $120/person.
+
+Please respond to all 5 items by May 28.
+
+Thank you,
+Baji &amp; Cath</div>
+<div class="ma"><button class="btn bc bs" onclick="cp('mga1',this)">Copy</button></div></div>
+<div class="sh m16"><h2>Land Only Rate</h2></div>
+<div class="cd2" style="max-width:400px">
+<div style="font-size:13px;line-height:1.9">
+<strong>Rate:</strong> C$1,725 per person / 7 nights<br>
+<strong>Includes:</strong> All Inclusive accommodation only<br>
+<strong>Excludes:</strong> Flights, airport transfers (separate)<br>
+<strong>Open:</strong> Bus schedule, rep contact, meeting point
+</div></div>
+</div>
+</div><!-- end #app -->
+<script>
+const H={cmd:'eced9d4e7f00ebda7310b580da3c96b3811bce80c69187c62e3558c3c1be0a46',vendor:'19cb4d4a1923799f7ca285865da69b3735d9098fe8b0b00a6499c8ce9542307d',contracts:'e7c79c5181cbac17826dd467367f3fca8bda06745c6ec8bca3ce88b5d6e9954b',comms:'e67ea6467b5d8a94be72d6f0fe0f09d25cee6b72dfc445fe1cce33f104edcf01'};
+async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+async function checkPw(){const v=document.getElementById('pi').value.trim();const h=await sha(v);if(Object.values(H).includes(h)){unlock(h);}else{document.getElementById('ge').textContent='Incorrect access code';}}
+function unlock(h){document.getElementById('gate').style.display='none';document.getElementById('app').style.display='block';localStorage.setItem('cbos6_auth',h);init();}
+(async()=>{const c=localStorage.getItem('cbos6_auth');if(c&&Object.values(H).includes(c)){document.getElementById('gate').style.display='none';document.getElementById('app').style.display='block';init();}})();
+function sw(n){document.querySelectorAll('.pn').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));document.getElementById('p'+n).classList.add('on');document.querySelectorAll('.tb')[n-1].classList.add('on');}
+function countdown(){const t=new Date('2026-06-16T00:00:00');const d=Math.ceil((t-new Date())/(864e5));const el=document.getElementById('countdown');if(el)el.textContent=d>0?d:'HERE!';}
+function ck(el){const v=el.checked?'1':'0';localStorage.setItem('cbos6_'+el.id,v);const r=el.closest('.ci');if(r)r.classList.toggle('dn',el.checked);}
+function loadCks(){document.querySelectorAll('input[type=checkbox][id]').forEach(el=>{const v=localStorage.getItem('cbos6_'+el.id);if(v==='1'){el.checked=true;const r=el.closest('.ci');if(r)r.classList.add('dn');}});}
+function cp(id,btn){const el=document.getElementById(id);if(!el)return;navigator.clipboard.writeText(el.textContent.trim()).then(()=>{const t=btn.textContent;btn.textContent='Copied!';btn.classList.add('cp');setTimeout(()=>{btn.textContent=t;btn.classList.remove('cp');},2000);});}
+let FX=1.370,CAD=false;
+const BD=[
+  [1,"Couple's Trip TR37577","Travel",6550,8976,"PAID","AC1810 Jun 16 · Couple-paid"],
+  [2,"Palladium Wedding Package","Venue",null,null,"DUE","Full package · deposit 22d overdue"],
+  [3,"Palladium Deposit #3","Venue",null,null,"OVERDUE","22 days overdue — call Natasha"],
+  [4,"Majestic Films – Balance","Videography",null,null,"OVERDUE","5 days overdue — send now"],
+  [5,"Majestic Films – Prior Deposit","Videography",null,null,"PAID","Contract on file"],
+  [6,"Mills James AV (279122+279827)","AV",16652,null,"EXPIRES TOMORROW","Sign today · expires May 27"],
+  [7,"AV del Caribe (Alternative)","AV",16652,null,"EVALUATING","Same rate as Mills James"],
+  [8,"Grupo Gama – Decor (PREFERRED)","Decor",null,null,"RFP ACTIVE","5-event scope · quote pending"],
+  [9,"Zuniga Productions – Reference","Decor",40554,null,"EXPIRED","4 events · expired May 25"],
+  [10,"Drums in Paradise","Entertainment",1786,null,"QUOTED","Jun 19 · 2 sessions · valid Jun 12"],
+  [11,"Loto Mehndi (Guest – Jun 18)","Beauty",1080,null,"DEPOSIT PENDING","50% deposit $893.20 due"],
+  [12,"Ruby Bridal Mehndi (Jun 16)","Beauty",460,null,"CONFIRM","Full palms + forearm + feet"],
+  [13,"DJ Jethu","Entertainment",null,null,"CONFIRMED","AV rider approved Apr 14"],
+  [14,"Patravali South Asian","Catering",null,null,"CONTRACTED","Jun 20 ceremony day"],
+  [15,"Something Borrowed Photography","Photography",null,null,"CONTRACTED","Signed May 15"],
+  [16,"Beauty by Sharda (HMUA)","Beauty",null,null,"CONFIRMED","Full wedding week"],
+  [17,"Banu Prakash – Priest","Officiant",null,null,"CONFIRMED","Room booked at group rate"],
+  [18,"Beloved Planners","Planning",null,null,"ACTIVE","4 staff · Sunwing #152409712"],
+  [19,"Baraat Boat","Logistics",150,null,"OPEN","$150/8 pax · 1 hr · Jun 19"],
+  [20,"Tasting Apr 27","Venue",350,null,"PAID","$150/couple + $100/extra"],
+  [21,"Misc / Gratuities","Other",2000,null,"OPEN","Tips + sundry"]
+];
+const SC={'PAID':'s1','CONTRACTED':'s1','CONFIRMED':'s1','ACTIVE':'s1','OVERDUE':'s2','EXPIRES TOMORROW':'s3','DEPOSIT PENDING':'s3','QUOTED':'s3','RFP ACTIVE':'s4','EVALUATING':'s4','OPEN':'s5','DUE':'s3','EXPIRED':'s2','CONFIRM':'s3','UNCONFIRMED':'s3'};
+const RC={'PAID':'rg','CONTRACTED':'rg','CONFIRMED':'rg','ACTIVE':'rg','OVERDUE':'rr','EXPIRED':'rr','EXPIRES TOMORROW':'ra','DEPOSIT PENDING':'ra'};
+function rb(f='all'){
+  FX=parseFloat(document.getElementById('fxr').value)||1.370;
+  const tb=document.getElementById('bb');if(!tb)return;
+  let rows='',tot=0;
+  BD.forEach(b=>{
+    const[id,nm,cat,usd,cad,st,note]=b;
+    if(f==='open'&&['PAID','CONTRACTED','CONFIRMED','ACTIVE'].includes(st))return;
+    if(f==='ov'&&!['OVERDUE','EXPIRES TOMORROW','DEPOSIT PENDING'].includes(st))return;
+    const amt=CAD?(cad||(usd?Math.round(usd*FX):null)):(usd||(cad?Math.round(cad/FX):null));
+    if(amt)tot+=amt;
+    const sc=SC[st]||'s5';const rc=RC[st]||'';
+    rows+=`<tr class="${rc}"><td>${id}</td><td>${nm}</td><td>${cat}</td><td>${amt?'$'+amt.toLocaleString():'TBD'}</td><td><span class="st ${sc}">${st}</span></td><td style="font-size:11px;color:var(--mu)">${note}</td></tr>`;
+  });
+  tb.innerHTML=rows;
+  const tot_el=document.getElementById('btot');if(tot_el)tot_el.textContent=tot?'$'+tot.toLocaleString()+' '+(CAD?'CAD':'USD'):'—';
+  const ah=document.getElementById('ah');if(ah)ah.textContent=CAD?'CAD Amount':'USD Amount';
+  const fd=document.getElementById('fxd');if(fd)fd.textContent='Showing: '+(CAD?'CAD':'USD');
+}
+function toggleC(){CAD=!CAD;rb();}
+async function getFX(){
+  const s=document.getElementById('fxs');if(s)s.textContent='Fetching…';
+  try{const r=await fetch('https://open.er-api.com/v6/latest/USD');const d=await r.json();if(d?.rates?.CAD){FX=d.rates.CAD;document.getElementById('fxr').value=FX.toFixed(3);if(s)s.textContent='Live (open.er-api)';rb();return;}}catch(e){}
+  try{const r=await fetch('https://api.frankfurter.app/latest?from=USD&to=CAD');const d=await r.json();if(d?.rates?.CAD){FX=d.rates.CAD;document.getElementById('fxr').value=FX.toFixed(3);if(s)s.textContent='Live (frankfurter)';rb();return;}}catch(e){}
+  if(s)s.textContent='Fetch failed';
+}
+function init(){countdown();loadCks();rb();}
+</script>
+</body></html>

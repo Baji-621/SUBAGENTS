@@ -1,0 +1,18 @@
+[build]
+  publish = "wedding"
+
+[[redirects]]
+  from = "/ops"
+  to = "/CB_WeddingOS_v6.html"
+  status = 302
+
+[[redirects]]
+  from = "/v6"
+  to = "/CB_WeddingOS_v6.html"
+  status = 302
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
