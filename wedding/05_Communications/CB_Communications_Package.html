@@ -1,0 +1,827 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C&B Wedding — Communications Package</title>
+<style>
+  :root {
+    --navy: #1F3864;
+    --gold: #C9993A;
+    --red: #C00000;
+    --green: #006B3C;
+    --amber: #B8600A;
+    --bg: #F5F5F0;
+    --white: #FFFFFF;
+    --light: #EEF2F8;
+    --border: #D0D5E0;
+    --text: #2C2C2C;
+    --muted: #666;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; }
+
+  /* ── NAV ── */
+  .nav { background: var(--navy); display: flex; flex-wrap: wrap; gap: 4px; padding: 10px 16px; position: sticky; top: 0; z-index: 100; }
+  .nav button { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #ccc; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: all .2s; }
+  .nav button:hover, .nav button.active { background: var(--gold); border-color: var(--gold); color: #fff; font-weight: bold; }
+  .nav-title { color: var(--gold); font-weight: bold; font-size: 14px; line-height: 32px; margin-right: 12px; white-space: nowrap; }
+
+  /* ── TABS ── */
+  .tab { display: none; padding: 24px 20px; max-width: 900px; margin: 0 auto; }
+  .tab.active { display: block; }
+
+  /* ── CARDS ── */
+  .card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,.07); }
+  .card-header { padding: 12px 18px; font-weight: bold; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+  .card-header.navy { background: var(--navy); color: #fff; }
+  .card-header.gold { background: var(--gold); color: #fff; }
+  .card-header.red { background: var(--red); color: #fff; }
+  .card-header.green { background: var(--green); color: #fff; }
+  .card-header.amber { background: var(--amber); color: #fff; }
+  .card-body { padding: 18px; }
+
+  /* ── ALERT BADGES ── */
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-left: 8px; }
+  .badge-red { background: #FFCCCC; color: var(--red); }
+  .badge-amber { background: #FFF3CD; color: var(--amber); }
+  .badge-green { background: #D4EDDA; color: var(--green); }
+
+  /* ── EMAIL / WHATSAPP BLOCKS ── */
+  .msg-box { background: var(--light); border-left: 4px solid var(--navy); border-radius: 0 6px 6px 0; padding: 16px 18px; font-size: 13px; line-height: 1.7; white-space: pre-wrap; font-family: Arial, sans-serif; position: relative; }
+  .msg-box.whatsapp { border-left-color: #25D366; background: #F0FAF2; }
+  .msg-box.urgent { border-left-color: var(--red); background: #FFF5F5; }
+
+  .copy-btn { position: absolute; top: 10px; right: 10px; background: var(--navy); color: #fff; border: none; border-radius: 4px; padding: 5px 12px; font-size: 11px; cursor: pointer; transition: background .2s; }
+  .copy-btn:hover { background: var(--gold); }
+  .copy-btn.copied { background: var(--green); }
+
+  /* ── META ROW ── */
+  .meta-row { display: flex; gap: 16px; margin-bottom: 10px; flex-wrap: wrap; }
+  .meta-item { background: var(--light); border-radius: 4px; padding: 5px 12px; font-size: 12px; }
+  .meta-item strong { color: var(--navy); }
+
+  /* ── SECTION DIVIDERS ── */
+  h2 { color: var(--navy); font-size: 15px; border-bottom: 2px solid var(--gold); padding-bottom: 6px; margin: 24px 0 14px; }
+  h3 { color: var(--navy); font-size: 13px; margin: 14px 0 8px; }
+
+  /* ── CONTEXT BOXES ── */
+  .context { background: #FFFBF0; border: 1px solid #F0D080; border-radius: 6px; padding: 12px 16px; margin-bottom: 14px; font-size: 12px; line-height: 1.6; }
+  .context strong { color: var(--amber); }
+
+  /* ── STRESS TEST ALERTS ── */
+  .alert-row { display: flex; gap: 4px; align-items: flex-start; margin-bottom: 8px; font-size: 13px; }
+  .alert-icon { font-size: 16px; flex-shrink: 0; width: 24px; }
+  .alert-text { line-height: 1.5; }
+
+  /* ── TABLES ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  th { background: var(--navy); color: #fff; padding: 8px 12px; text-align: left; font-size: 12px; }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--light); }
+  tr.red-row td { background: #FFECEC; }
+  tr.amber-row td { background: #FFF8E8; }
+  tr.green-row td { background: #EAFAF0; }
+
+  /* ── FOOTER ── */
+  .footer { text-align: center; color: var(--muted); font-size: 11px; padding: 20px; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <span class="nav-title">📋 C&B COMMS</span>
+  <button class="active" onclick="showTab('overview')">🗺 Overview</button>
+  <button onclick="showTab('absolutewed')">✈️ Absolute Wedsite Email</button>
+  <button onclick="showTab('wa-hotel')">🏨 WA: Hotel Group</button>
+  <button onclick="showTab('wa-beloved')">💐 WA: Beloved Planners</button>
+  <button onclick="showTab('wa-absolutewed')">✈️ WA: Absolute Wedsite</button>
+  <button onclick="showTab('critical')">🚨 Critical Alerts</button>
+  <button onclick="showTab('decor')">🌸 Decor Brief</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- TAB 1: OVERVIEW -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div id="tab-overview" class="tab active">
+  <h2>🚨 Pre-Wedding Stress Test — May 20, 2026</h2>
+  <div class="context">
+    <strong>📌 Situation Summary:</strong> 28 days to first event. Multiple critical items are unresolved, overdue, or expiring within days.
+    The communications package below is organized by urgency and by recipient channel (email vs. WhatsApp per group).
+    All messages are copy/paste-ready. Context boxes explain the <em>why</em> behind each communication.
+  </div>
+
+  <h2>IMMEDIATE ACTION DASHBOARD</h2>
+  <div class="card">
+    <div class="card-header red">🚨 CRITICAL — ACT TODAY (May 20–21)</div>
+    <div class="card-body">
+      <div class="alert-row"><span class="alert-icon">💸</span><span class="alert-text"><strong>Majestic Films — C$12,755 DUE MAY 21:</strong> Pay NOW at <a href="https://majestic-films-ltd.vsco.page/pay" target="_blank">majestic-films-ltd.vsco.page/pay</a> · Ref: D09-CD6-A43 · Order #20260620004</span></div>
+      <div class="alert-row"><span class="alert-icon">💸</span><span class="alert-text"><strong>Grand Palladium Deposit 3 — $1,600 USD 16 DAYS OVERDUE:</strong> Contact Natasha immediately to confirm payment method and submit.</span></div>
+      <div class="alert-row"><span class="alert-icon">📧</span><span class="alert-text"><strong>Absolute Wedsite — Room allocation email STILL PENDING:</strong> Raj has been waiting since May 13 to send the FAQ email to all guests. Full formal email drafted below.</span></div>
+      <div class="alert-row"><span class="alert-icon">🌸</span><span class="alert-text"><strong>Decor decision — Zuniga quote expires May 25:</strong> Must confirm Zuniga (Scenario A, $43,940) or finalize alternative by May 23 at latest.</span></div>
+      <div class="alert-row"><span class="alert-icon">🎵</span><span class="alert-text"><strong>Mills James AV — Quote expires May 27:</strong> Must sign Quote 279122 ($16,652) + confirm Box Truss 279827 ($3,932) before May 27.</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header amber">⚠️ HIGH PRIORITY — This Week (by May 25)</div>
+    <div class="card-body">
+      <div class="alert-row"><span class="alert-icon">🪷</span><span class="alert-text"><strong>Loto Mehndi — UNCONFIRMED:</strong> 50% deposit ($893.20 USD) must go through Palladium to confirm Jun 16 bridal mehndi + Jun 18 guest mehndi. Paulina's status question (May 11) never resolved.</span></div>
+      <div class="alert-row"><span class="alert-icon">📄</span><span class="alert-text"><strong>CATHERINE & BHARKWAJ WEDDING SOUTH ASIAN doc (Natasha's):</strong> Vendor section is entirely blank — needs all vendors filled in and returned urgently. Send to Natasha no later than May 23.</span></div>
+      <div class="alert-row"><span class="alert-icon">✈️</span><span class="alert-text"><strong>Majestic Films crew travel — UNBOOKED:</strong> Rahul Mehra, Anurag Sandhu, Amanpreet Singh need 3 flights + 1 room booked through Raj at Absolute Wedsite ASAP.</span></div>
+      <div class="alert-row"><span class="alert-icon">🥁</span><span class="alert-text"><strong>Drums in Paradise — confirm via Hotel Master Account:</strong> $1,786 USD for 2× dhol sessions June 19. Quote valid to June 12 — sign now to lock in.</span></div>
+      <div class="alert-row"><span class="alert-icon">🍛</span><span class="alert-text"><strong>Patravali food confirmation:</strong> Natasha needs outside vendor list + final menu selection from you. Tasting menu was chosen Apr 27 (Café Nader) — now needs formal confirmation.</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header navy">📋 COMMUNICATIONS SENT — Quick Index</div>
+    <div class="card-body">
+      <table>
+        <tr><th>Channel</th><th>Recipient</th><th>Purpose</th><th>Tab</th></tr>
+        <tr class="red-row"><td>📧 Email</td><td>Raj Virk + Jean Teodoro (Absolute Wedsite)</td><td>Room allocation, check-in process, FAQ info, crew travel</td><td>Absolute Wedsite Email</td></tr>
+        <tr class="amber-row"><td>💬 WhatsApp</td><td>Hotel Group (Natasha + Beloved)</td><td>Deposit 3 overdue, SAW vendor doc, Loto Mehndi, Haldi venue change</td><td>WA: Hotel Group</td></tr>
+        <tr class="amber-row"><td>💬 WhatsApp</td><td>Beloved Planners (Jennyfer + team)</td><td>Decor decision, AL Studio escalation, AV deadline, SAW doc</td><td>WA: Beloved Planners</td></tr>
+        <tr><td>💬 WhatsApp</td><td>Absolute Wedsite (Raj + Jean)</td><td>Crew travel booking, Land Only transfers, Air Canada comp seats</td><td>WA: Absolute Wedsite</td></tr>
+        <tr class="green-row"><td>📊 Brief</td><td>Internal</td><td>Decor vendor comparison + 3 new options brief</td><td>Decor Brief</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- TAB 2: ABSOLUTEWED FORMAL EMAIL -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div id="tab-absolutewed" class="tab">
+  <h2>✈️ Formal Email to Absolute Wedsite (Raj + Jean)</h2>
+
+  <div class="context">
+    <strong>📌 Context &amp; Strategy:</strong>
+    On May 13, Raj explicitly asked for the event itinerary to send out his FAQ email to all guests.
+    On May 14, Jean provided the Land Only rate (C$1,725/7 days).
+    On May 19, Catherina asked about travel insurance and flight details.
+    <strong>No room allocation or check-in details email has been sent to guests.</strong>
+    This email consolidates all outstanding asks: room allocation per guest, check-in timing, flight confirmation process,
+    Land Only transfers, group bus logistics, complimentary Air Canada seats, crew travel, and event itinerary.
+    Tone: warm but thorough and deadline-driven.
+  </div>
+
+  <div class="meta-row">
+    <div class="meta-item"><strong>To:</strong> raj@absolutewedsite.com; groups@absolutewedsite.com</div>
+    <div class="meta-item"><strong>CC:</strong> catherina.khadoo@gmail.com; bmadduluri@gmail.com</div>
+    <div class="meta-item"><strong>Subject:</strong> C&B Wedding — Room Allocation, Check-In Details & Guest FAQ (ACTION NEEDED)</div>
+    <div class="meta-item"><strong>Priority:</strong> <span class="badge badge-red">🚨 CRITICAL</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header navy">📧 FORMAL EMAIL — Copy/Paste Ready</div>
+    <div class="card-body">
+      <div class="msg-box" id="email-absolutewed">Subject: C&B Wedding (June 17–21, 2026) — Room Allocation, Check-In Process & Guest FAQ — Action Needed
+
+To: Raj Virk Pahwa (raj@absolutewedsite.com)
+     Jean W. Teodoro (groups@absolutewedsite.com)
+CC:  Catherina Khadoo (catherina.khadoo@gmail.com)
+     Bharadwaj Madduluri (bmadduluri@gmail.com)
+
+Hi Raj and Jean,
+
+Hope you're both doing well! With just 28 days to go, we want to make sure our guests arrive informed, relaxed, and ready to celebrate. We're writing to consolidate several open items that we need to close this week so you can send the guest FAQ email Raj mentioned on May 13th.
+
+──────────────────────────────────────────
+1. ROOM ALLOCATION LIST — Per Guest
+──────────────────────────────────────────
+Could you please provide a complete room allocation list showing each guest's name, assigned room number, check-in date, and check-out date at Grand Palladium Costa Mujeres? We have the supplier breakdown from your April 9th email (Air Canada Vacations rooms 1–38, Transat rooms 39–66b, Travel Brands Land Only rooms 67–90, Sunwing rooms 106–125, Deviation Kumar rooms 126–131), but we do not yet have:
+
+  a) The final room numbers assigned by Grand Palladium for each booking
+  b) Confirmation of which guests have finalized their room booking vs. are still pending
+  c) Any guests who have NOT yet completed their balance/booking
+
+Please share this in a format we can use to cross-reference with our internal guest roster.
+
+──────────────────────────────────────────
+2. CHECK-IN PROCESS & ARRIVAL LOGISTICS
+──────────────────────────────────────────
+For the guest FAQ email, we need the following confirmed:
+
+  a) What is the standard check-in time at Grand Palladium Costa Mujeres?
+  b) Is there a group/wedding block check-in process, or does each guest check in individually?
+  c) What identification/documentation do guests need at check-in (booking confirmation, passport, etc.)?
+  d) Is early check-in available or arranged for our wedding group? (We arrive June 16 — bride & groom landing 9:30 AM)
+  e) What is the resort address and best route from Cancún International Airport (CUN)?
+  f) For guests arriving by group bus (Land Only), what is the confirmed pickup location, time, and bus schedule?
+
+──────────────────────────────────────────
+3. FLIGHT DETAILS & TIMING
+──────────────────────────────────────────
+  a) Can you please confirm the flight numbers and departure/arrival times for all three tour operators (Air Canada Vacations, Transat, Sunwing) so we can include in the FAQ?
+  b) For guests who haven't received their flight confirmation documents yet — when should they expect them?
+  c) Re: travel insurance — Catherina asked on May 19 whether travel insurance is still available for guests to purchase. Could you confirm availability and any deadline?
+
+──────────────────────────────────────────
+4. LAND ONLY TRANSFERS
+──────────────────────────────────────────
+You confirmed the Land Only rate on May 14 (C$1,725 / 7 days). For the ~25 Land Only guests:
+
+  a) Can you confirm the group bus pickup schedule from Cancún Airport? Dates, times, meeting point?
+  b) Are transfers to/from the airport included, or is that guests' individual responsibility?
+  c) Is there a Land Only guest contact list or WhatsApp group for coordination?
+
+──────────────────────────────────────────
+5. AIR CANADA COMPLIMENTARY SEATS
+──────────────────────────────────────────
+You mentioned we need 44 adults for 4 complimentary Air Canada seats, and we're currently at approximately 38 booked. Could you:
+
+  a) Confirm the current exact count of adults booked on Air Canada?
+  b) Let us know by what date we'd need to reach 44 to qualify for the comps?
+  c) Advise whether there are any guests we should proactively encourage to switch to AC?
+
+──────────────────────────────────────────
+6. VIDEOGRAPHER CREW TRAVEL — URGENT
+──────────────────────────────────────────
+Our videography team (Majestic Films) requires 3 flights and 1 shared room at the resort:
+
+  Rahul Mehra         DOB: August 9, 2000
+  Anurag Sandhu       DOB: March 26, 1991
+  Amanpreet Singh     DOB: April 25, 1991
+
+Per the Majestic Films contract, the CLIENT (us) is responsible for crew travel and accommodation. Could you please:
+
+  a) Provide availability and pricing for 3 flights (round trip, Toronto → Cancún, June 16–22) for the above travellers?
+  b) Quote the cost for 1 additional room at Grand Palladium Costa Mujeres for June 16–22?
+  c) Confirm whether these can be added to our existing group booking?
+
+This is time-sensitive as Majestic Films' full balance is being settled now (May 21).
+
+──────────────────────────────────────────
+7. EVENT ITINERARY FOR GUEST FAQ
+──────────────────────────────────────────
+As requested on May 13, here is our event schedule for inclusion in the guest FAQ:
+
+  Wednesday, June 17   Welcome Dinner — Ballroom — 5:00 PM – 8:00 PM
+  Thursday, June 18    Mehndi — Mini Ballrooms — Morning (TBC)
+  Thursday, June 18    Sangeet — Convention Centre Plaza — 7:00 PM – 11:00 PM
+  Friday, June 19      Haldi / Lady Maticoor — Beach Deck — 11:00 AM – 3:00 PM
+  Friday, June 19      Baraat + Hindu Ceremony — 6:00 PM onwards
+  Saturday, June 20    Hindu Wedding Ceremony — Glassroom Foyer — 7:00 AM – 12:00 PM
+  Sunday, June 21      Reception — Ballroom — 7:00 PM – 12:00 AM
+
+Please note: Dress codes and event-specific details will be communicated separately via our wedding website:
+https://khadoosaysido.my.canva.site/
+
+──────────────────────────────────────────
+8. EXCURSIONS & GROUP ACTIVITIES
+──────────────────────────────────────────
+Are there any group excursions planned that we should include in the FAQ? If not, we'd love to mention 2–3 recommended activities near the resort guests can book independently.
+
+──────────────────────────────────────────
+
+Raj and Jean, we truly appreciate everything you've done to coordinate this for us. The April 9th rooming list you sent was very helpful. We just want to make sure our 133 guests feel fully taken care of from the moment they land.
+
+Could we aim to have the guest FAQ email sent out by Friday, May 22nd (or Monday May 25th at latest), so guests have at least 3 weeks of advance notice before travel?
+
+Please let us know if it would be helpful to jump on a quick call this week.
+
+Warmly,
+Catherina & Baji
+📱 Baji: bmadduluri@gmail.com | Catherina: catherina.khadoo@gmail.com
+🌐 Wedding website: https://khadoosaysido.my.canva.site/</div>
+      <button class="copy-btn" onclick="copyMsg('email-absolutewed', this)">Copy</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- TAB 3: WA — HOTEL GROUP -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div id="tab-wa-hotel" class="tab">
+  <h2>🏨 WhatsApp — Hotel Group (Natasha + Beloved)</h2>
+
+  <div class="context">
+    <strong>📌 Group Context:</strong> "Hotel group Cath &amp; Baji June 2026 Grand palladium" — includes Natasha Lima (Palladium coordinator, +52 998 348 2377), Jennyfer, and Beloved Planners team.
+    Key open items: overdue Deposit 3, SAW vendor doc blank, Loto Mehndi unconfirmed, Haldi venue change to beach, Patravali menu confirmation.
+  </div>
+
+  <h3>Message 1 — Deposit 3 Overdue <span class="badge badge-red">🚨 Send Now</span></h3>
+  <div class="meta-row">
+    <div class="meta-item"><strong>To:</strong> Natasha Lima (+52 998 348 2377)</div>
+    <div class="meta-item"><strong>Tone:</strong> Apologetic, urgent, action-seeking</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp urgent" id="wa-hotel-1">Hi Natasha! Catherina and Baji here 🙏 We hope you're doing well!
+
+We just reviewed our contract payments and noticed our 3rd deposit of $1,600 USD (due May 4) has not yet been processed from our side — we sincerely apologize for the delay!
+
+Could you please confirm the preferred payment method and send us the payment link or wire details so we can take care of this immediately? We want to make sure everything is in order with our booking before we get too close to the event dates.
+
+Thank you so much for your patience with us, Natasha! 🙏</div>
+      <button class="copy-btn" onclick="copyMsg('wa-hotel-1', this)">Copy</button>
+    </div>
+  </div>
+
+  <h3>Message 2 — SAW Vendor Document + Menu Confirmation <span class="badge badge-amber">⚠️ Send Today</span></h3>
+  <div class="meta-row">
+    <div class="meta-item"><strong>To:</strong> Natasha Lima / Hotel Group</div>
+    <div class="meta-item"><strong>Tone:</strong> Organized, proactive, warm</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp" id="wa-hotel-2">Hi Natasha! 👋 Following up on the South Asian Wedding doc you sent on May 17 — here's the vendor information to fill it in:
+
+📸 PHOTO: Something Borrowed Studios (external vendor — contract signed)
+🎥 VIDEO: Majestic Films (external vendor — contract signed)
+🙏 PRIEST: Confirming with Beloved — will send shortly
+💅 MEHNDI: Loto Mehndi — pending deposit confirmation (see separate message)
+🎤 AV: Mills James — contract being finalized
+💃 ENTERTAINMENT: Drums in Paradise (June 19 dhol × 2 sessions)
+🌸 DECOR/FLOWERS: Decision by May 23 — Zuniga Decor (pending final sign-off)
+🍛 FOOD: Patravali — we confirmed the tasting menu from the April 27 dinner at Café Nader. Final menu:
+   • Sprouted Moon Salad, Kachumber Salad
+   • Butter Chicken, Veg Jalfrezi, Kadai Paneer
+   • Jeera Rice, Daal Makhani
+   • Cheesecake, Garlic Naan
+
+⚠️ Please note: Rukmini Madduluri is vegetarian. No beef or red meat for ALL guests.
+
+Can we confirm this menu is locked in? And do you need anything else from us to complete the doc? 🙏</div>
+      <button class="copy-btn" onclick="copyMsg('wa-hotel-2', this)">Copy</button>
+    </div>
+  </div>
+
+  <h3>Message 3 — Loto Mehndi Booking Confirmation <span class="badge badge-red">🚨 Urgent</span></h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp urgent" id="wa-hotel-3">Hi Natasha 🙏 Quick one on Loto Mehndi — we'd like to confirm both bookings and pay the deposit:
+
+📅 June 16 (eve): Ruby Bridal Mehndi — $460 USD
+📅 June 18 (9–11am): Guest Mehndi (3 artists, 72 designs) — $1,080 USD
+💰 Total: $1,540 + 16% tax = $1,786.40 USD
+💳 50% deposit = $893.20 USD (to be paid through Palladium)
+
+Could you please send us the payment link / process to confirm the deposit directly with Palladium? We want to lock this in as soon as possible. Thank you!! 🙏🌿</div>
+      <button class="copy-btn" onclick="copyMsg('wa-hotel-3', this)">Copy</button>
+    </div>
+  </div>
+
+  <h3>Message 4 — Haldi Venue Change Confirmation <span class="badge badge-amber">⚠️ Confirm</span></h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp" id="wa-hotel-4">Hi Natasha! Just confirming the venue change discussed — for the Haldi on Friday June 19, we'd like to use the Beach Deck instead of the Village Deck as previously listed. Has this change been confirmed on your end? 🏖️
+
+Also — do we need any special permit or setup arrangement for the beach location? We have approximately 120 guests for that event. Thank you! 🙏</div>
+      <button class="copy-btn" onclick="copyMsg('wa-hotel-4', this)">Copy</button>
+    </div>
+  </div>
+
+  <h3>Message 5 — Drums in Paradise Booking <span class="badge badge-amber">⚠️ Confirm</span></h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp" id="wa-hotel-5">Hi Natasha! For the Sangeet on June 19, we have a Dhol Drummer quote from Drums in Paradise (Quote #2026-06-19 PCM DH) for 2 × 60-minute sessions — 4:00 PM and 6:00 PM at the Villages Deck. Total: $1,786 USD via Hotel Master Account.
+
+Can we confirm the booking through you? Do we just approve the quote with Ana Isabel Curiel (Drums in Paradise sales) and it gets billed to the master account? Or is there a separate process? 🥁 Thank you!</div>
+      <button class="copy-btn" onclick="copyMsg('wa-hotel-5', this)">Copy</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- TAB 4: WA — BELOVED PLANNERS -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div id="tab-wa-beloved" class="tab">
+  <h2>💐 WhatsApp — Beloved Planners (Jennyfer + Team)</h2>
+
+  <div class="context">
+    <strong>📌 Group Context:</strong> "Catherina &amp; Baji June 17-21 Grand Palladium Costa Mujeres" — primary planning group with Jennyfer (+52 984 215 8539), Paulina (+52 449 911 1389), Jorge (+52 998 498 8453), Lilly (+52 998 136 0120).
+    Key items: AL Studio unresponsiveness (Jennyfer confirmed May 19 no response from Armando), decor deadline, AV quotes expiring, SAW doc to complete, Loto Mehndi status.
+    <strong>Commission note:</strong> Beloved likely earns commission on AL Studio (they sourced it). Frame decor communications neutrally but with evidence.
+  </div>
+
+  <h3>Message 1 — Decor Decision + AL Studio Escalation <span class="badge badge-red">🚨 Key Message</span></h3>
+  <div class="meta-row">
+    <div class="meta-item"><strong>Tone:</strong> Decisive, warm but firm</div>
+    <div class="meta-item"><strong>Strategy:</strong> Set hard decision deadline, open door to new vendors</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp urgent" id="wa-beloved-1">Hi Jennyfer and the Beloved team! 🙏 Catherina and Baji here — we hope everyone is doing well!
+
+We wanted to flag the decor situation as our #1 priority this week. The Zuniga quote expires May 25 and we know Armando at AL Studio has still not responded (thank you for following up, Jennyfer!). Given the deadline, we need to make a final call by this Thursday, May 23rd.
+
+Here's where we land:
+→ We'd like to move forward with Zuniga Decor as our primary decor vendor
+→ We'll need to confirm the quote and understand the deposit + payment schedule
+→ We're also exploring 2–3 fresh floral supplement options to round out the design
+
+Could you please:
+1️⃣ Reach out to Zuniga today to confirm they can still honor the May 15 quote and lock in our dates
+2️⃣ Share Zuniga's deposit requirements and payment timeline
+3️⃣ Let us know if Palladium-approved florists you can recommend to supplement with fresh flowers
+
+We'd also love a quick call or voice note from you this week to walk through the Zuniga scope if possible — just so we're all aligned on what's included for each event.
+
+Thank you so much! 🌸</div>
+      <button class="copy-btn" onclick="copyMsg('wa-beloved-1', this)">Copy</button>
+    </div>
+  </div>
+
+  <h3>Message 2 — AV Quote Expiry Deadline <span class="badge badge-red">🚨 May 27 Deadline</span></h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp urgent" id="wa-beloved-2">Hi team! One more urgent one — the Mills James AV quotes expire May 27:
+
+📄 Quote 279122 — all events — $16,652 USD (expires May 27)
+📄 Quote 279827 — Box Truss for Reception — $3,932.40 USD
+
+Could you please confirm whether we're proceeding with both quotes, and what we need to do to sign/confirm before the deadline? We don't want to lose the pricing.
+
+Is there a deposit required now, or just a signed confirmation? Please let us know ASAP! 🙏</div>
+      <button class="copy-btn" onclick="copyMsg('wa-beloved-2', this)">Copy</button>
+    </div>
+  </div>
+
+  <h3>Message 3 — SAW Vendor Doc + Priest Confirmation <span class="badge badge-amber">⚠️ Send by May 22</span></h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp" id="wa-beloved-3">Hi Jennyfer! Following up on the South Asian doc Natasha sent on May 17. We're working on filling in all the vendor details. Two questions:
+
+🙏 PRIEST: For the Hindu Ceremony on June 20 (Glassroom Foyer, 7am–12pm) and the Snathakam on June 19 — can you confirm whether the resort is providing the pandit, or do we need to confirm our own? The SAW doc has "provided by resort? CONFIRM" — we need a definitive answer this week.
+
+Also — we have a 2nd priest coming as a guest: the Narasimha Chari family (4 guests) checking in June 18 and staying until June 26. Are they on the rooming list you sent Natasha?
+
+Please let us know! 🙏</div>
+      <button class="copy-btn" onclick="copyMsg('wa-beloved-3', this)">Copy</button>
+    </div>
+  </div>
+
+  <h3>Message 4 — Loto Mehndi Confirmation (to Paulina) <span class="badge badge-red">🚨 Resolve Now</span></h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp urgent" id="wa-beloved-4">Hi Paulina! 🌿 Quick clarification on mehndi — on May 11 you asked "You don't have mehndi services, correct?" but we do have Loto Mehndi booked (purchase order: Catherina&BajiPalladiumCM):
+
+📅 June 16 (eve): Bridal Mehndi — $460 USD
+📅 June 18: Guest Mehndi — $1,080 USD (3 artists, 2hrs)
+Total with 16% tax: $1,786.40 USD
+
+The purchase order is through Palladium — 50% deposit is required to confirm the booking. Has the deposit been paid, or is this still pending? We want to make sure the dates are locked in with Loto before it gets too close. Can you check with Gaby / Natasha and let us know? 🙏</div>
+      <button class="copy-btn" onclick="copyMsg('wa-beloved-4', this)">Copy</button>
+    </div>
+  </div>
+
+  <h3>Message 5 — Request to Meet / Video Call This Week <span class="badge badge-amber">⚠️ Relationship</span></h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp" id="wa-beloved-5">Hi Beloved team! 🙏 We're 28 days out and feeling the energy building! We'd love to schedule a quick video or voice call this week to go through the full event runsheet together — decor confirmation, vendor statuses, day-of logistics, etc.
+
+We have a lot of moving pieces and want to make sure we're all aligned before the big push. Does anyone on the team have 30 minutes Thursday or Friday this week? Even a voice note walkthrough would be amazing.
+
+Also — we found a few additional Cancún decor vendors we'd love your thoughts on before finalizing: Grupo Gama, Latin Asia, and Blossom Events. Can we share some info and get your professional read? 🌸 Thank you!!</div>
+      <button class="copy-btn" onclick="copyMsg('wa-beloved-5', this)">Copy</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- TAB 5: WA — ABSOLUTEWED -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div id="tab-wa-absolutewed" class="tab">
+  <h2>✈️ WhatsApp — Absolute Wedsite (Raj + Jean)</h2>
+
+  <div class="context">
+    <strong>📌 Group Context:</strong> "C&B Mexico 0626 - Absolute Wedsite" — Raj Virk Pahwa (raj@absolutewedsite.com) and Jean W. Teodoro (+1 647-870-6740, groups@absolutewedsite.com).
+    Key outstanding: crew travel booking (3 flights + 1 room unbooked), Land Only bus schedule, AC complimentary seats, travel insurance deadline, FAQ email to all guests.
+  </div>
+
+  <h3>Message 1 — Crew Travel Booking (Urgent) <span class="badge badge-red">🚨 Send Today</span></h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp urgent" id="wa-abs-1">Hi Raj and Jean! Catherina and Baji here 🙏
+
+One urgent item — our videography team (Majestic Films) requires 3 flights and 1 room that we need to arrange urgently (we're settling their full payment this week). Here are the crew details:
+
+👤 Rahul Mehra — DOB: Aug 9, 2000
+👤 Anurag Sandhu — DOB: Mar 26, 1991
+👤 Amanpreet Singh — DOB: Apr 25, 1991
+
+Arrival: June 16 or 17 at CUN | Departure: June 22
+Hotel: Grand Palladium Costa Mujeres (1 shared room, same as guest block if possible)
+
+Can you please quote us flights + 1 room for these 3? Are they able to join our existing group booking? Let us know availability and pricing ASAP! 🙏</div>
+      <button class="copy-btn" onclick="copyMsg('wa-abs-1', this)">Copy</button>
+    </div>
+  </div>
+
+  <h3>Message 2 — Guest FAQ Email + Event Itinerary <span class="badge badge-amber">⚠️ Follow-up on May 13 ask</span></h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp" id="wa-abs-2">Hi Raj! Following up on your May 13 message about the FAQ email to all guests — we've sent you a full formal email with everything you need (check your inbox, subject: "C&B Wedding — Room Allocation, Check-In Details & Guest FAQ").
+
+The event itinerary is included in that email. In short:
+📅 Wed Jun 17 — Welcome Dinner (5–8pm)
+📅 Thu Jun 18 — Mehndi (morning) + Sangeet (7–11pm)
+📅 Fri Jun 19 — Haldi/Lady Maticoor (11am–3pm) + Baraat + Ceremony
+📅 Sat Jun 20 — Hindu Wedding Ceremony (7am–12pm)
+📅 Sun Jun 21 — Reception (7pm–12am)
+
+Wedding website: https://khadoosaysido.my.canva.site/ 🎉
+
+Would love to get that guest FAQ out by Friday May 22nd or Monday May 25th latest — our guests would really appreciate the advance notice! Let us know if you need anything else from our side 🙏</div>
+      <button class="copy-btn" onclick="copyMsg('wa-abs-2', this)">Copy</button>
+    </div>
+  </div>
+
+  <h3>Message 3 — Land Only Bus + Transfer Details <span class="badge badge-amber">⚠️ Confirm</span></h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp" id="wa-abs-3">Hi Raj! One more question — for the Land Only guests (Travel Brands), you mentioned you're arranging a group bus. Could you confirm:
+
+🚌 Pickup location at CUN Airport (terminal / meeting point)?
+🕐 Departure time (and return on June 22)?
+📋 Is there a confirmed passenger list / WhatsApp group for Land Only guests?
+
+A few of the Land Only guests have been asking us, so if you have a contact or confirmation doc, that would be super helpful to share with them. Thank you!! 🙏</div>
+      <button class="copy-btn" onclick="copyMsg('wa-abs-3', this)">Copy</button>
+    </div>
+  </div>
+
+  <h3>Message 4 — Travel Insurance + Air Canada Comps <span class="badge badge-amber">⚠️ Confirm</span></h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="msg-box whatsapp" id="wa-abs-4">Hi Jean! Two quick ones:
+
+1️⃣ TRAVEL INSURANCE — Catherina asked about this on May 19. Is travel insurance still available for guests to purchase at this stage? If yes, what's the deadline and who should they contact?
+
+2️⃣ AIR CANADA COMPLIMENTARY SEATS — you mentioned we need 44 adults booked on AC for 4 comp seats, and we're around 38. What's the current exact count, and by when do we need to hit 44? Are there any guests we should encourage to switch?
+
+Thanks so much Jean! 🙏</div>
+      <button class="copy-btn" onclick="copyMsg('wa-abs-4', this)">Copy</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- TAB 6: CRITICAL ALERTS -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div id="tab-critical" class="tab">
+  <h2>🚨 Stress-Test Analysis — Evidence-Based Gaps</h2>
+
+  <div class="context">
+    <strong>📌 Methodology:</strong> All items below were cross-validated against WhatsApp chat transcripts (3 groups), signed contracts, PDF quotes, and the final rooming list. Severity ratings are based on both dollar exposure and timeline risk.
+  </div>
+
+  <div class="card">
+    <div class="card-header red">🚨 CRITICAL — Financial Exposure &gt; $1,000 / Imminent Deadline</div>
+    <div class="card-body">
+      <table>
+        <tr><th>Issue</th><th>Evidence</th><th>Dollar Exposure</th><th>Deadline</th><th>Owner</th></tr>
+        <tr class="red-row">
+          <td><strong>Majestic Films balance unpaid</strong></td>
+          <td>Invoice #20260620006 — C$12,755 due May 21</td>
+          <td>C$12,755 (~USD $9,241)</td>
+          <td>🚨 MAY 21 (TODAY)</td>
+          <td>Baji — pay at vsco.page/pay</td>
+        </tr>
+        <tr class="red-row">
+          <td><strong>Palladium Deposit 3 overdue</strong></td>
+          <td>Contract WID 207718 — $1,600 due May 4</td>
+          <td>$1,600 USD</td>
+          <td>🚨 16 DAYS OVERDUE</td>
+          <td>Contact Natasha for payment link</td>
+        </tr>
+        <tr class="red-row">
+          <td><strong>Zuniga quote expiring</strong></td>
+          <td>PDF quote — expires May 25, $43,940.80</td>
+          <td>$43,940.80 USD</td>
+          <td>🚨 MAY 25 (5 days)</td>
+          <td>Jennyfer — confirm Zuniga today</td>
+        </tr>
+        <tr class="red-row">
+          <td><strong>Mills James AV expiring</strong></td>
+          <td>Quote 279122 — expires May 27, $16,652</td>
+          <td>$20,584.40 USD (both quotes)</td>
+          <td>🚨 MAY 27 (7 days)</td>
+          <td>Jennyfer — sign by May 27</td>
+        </tr>
+        <tr class="red-row">
+          <td><strong>AL Studio unresponsive — mods deadline passed</strong></td>
+          <td>Jennyfer May 19: "haven't received response from Armando"</td>
+          <td>Risk: $0 if Zuniga confirmed | $59K if fallback</td>
+          <td>🚨 MODS DEADLINE PASSED</td>
+          <td>Do NOT wait — go Zuniga</td>
+        </tr>
+        <tr class="red-row">
+          <td><strong>Majestic Films crew travel unbooked</strong></td>
+          <td>Order #20260620004 — 3 flights + 1 room CLIENT obligation</td>
+          <td>Est. C$8,000–12,000</td>
+          <td>🚨 ASAP</td>
+          <td>Raj (Absolute Wedsite)</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header amber">⚠️ HIGH — Unconfirmed Bookings / Pending Sign-offs</div>
+    <div class="card-body">
+      <table>
+        <tr><th>Issue</th><th>Evidence</th><th>Risk</th><th>Owner</th></tr>
+        <tr class="amber-row">
+          <td><strong>Loto Mehndi 50% deposit unpaid</strong></td>
+          <td>Purchase order exists; Palladium payment required; Paulina asked May 11 if "no mehndi services"</td>
+          <td>Dates not blocked without payment</td>
+          <td>Natasha (via Palladium)</td>
+        </tr>
+        <tr class="amber-row">
+          <td><strong>Palladium Deposit 2 unconfirmed</strong></td>
+          <td>Contract shows Dec 19, 2025 payment — no receipt found in any document</td>
+          <td>$1,600 USD disputed or lost</td>
+          <td>Request receipt from Natasha</td>
+        </tr>
+        <tr class="amber-row">
+          <td><strong>SAW vendor doc entirely blank</strong></td>
+          <td>Natasha sent May 17 — all vendor fields show $0 / blank</td>
+          <td>Coordination breakdown if not filed</td>
+          <td>Fill and send this week</td>
+        </tr>
+        <tr class="amber-row">
+          <td><strong>Priest unconfirmed</strong></td>
+          <td>SAW doc: "provided by resort? CONFIRM" — no answer in any chat</td>
+          <td>Ceremony without officiant</td>
+          <td>Jennyfer / Natasha</td>
+        </tr>
+        <tr class="amber-row">
+          <td><strong>Patravali food — menu unsubmitted</strong></td>
+          <td>Tasting done Apr 27, menu selected; SAW doc says food info missing</td>
+          <td>Catering not aligned with resort</td>
+          <td>Natasha needs formal submission</td>
+        </tr>
+        <tr class="amber-row">
+          <td><strong>Room night gap: 389 of 400 confirmed</strong></td>
+          <td>Roster v2 = 389 nights; need 11 more for Tier 5 concession</td>
+          <td>Miss max concession tier by 11 nights</td>
+          <td>Raj — identify 2+ guests to extend</td>
+        </tr>
+        <tr class="amber-row">
+          <td><strong>Drums in Paradise not confirmed</strong></td>
+          <td>Quote valid to Jun 12; payment via Hotel Master Acct; no booking confirmation in any chat</td>
+          <td>No dhol at Sangeet/Baraat ($1,786)</td>
+          <td>Natasha / Beloved</td>
+        </tr>
+        <tr class="amber-row">
+          <td><strong>DJ Sharan — rate and formal booking unconfirmed</strong></td>
+          <td>WhatsApp: "DJ Sharan Jeyarajah on Air Transat" — no contract or rate mentioned</td>
+          <td>DJ logistics unclear</td>
+          <td>Raj / Jennyfer to confirm</td>
+        </tr>
+        <tr class="amber-row">
+          <td><strong>Guest FAQ / travel info email not sent</strong></td>
+          <td>Raj asked May 13; as of May 20 still not sent — 133 guests uninformed</td>
+          <td>Guest confusion / late arrivals</td>
+          <td>Raj — send by May 22</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header navy">📊 PLANNER INCENTIVE ANALYSIS — Factual Record</div>
+    <div class="card-body">
+      <div class="context">
+        <strong>Observation (not accusation):</strong> Based on the pattern of communications, AL Studio appears to have been sourced and managed exclusively through Beloved Planners. Beloved has a financial incentive structure tied to vendor coordination.
+        The following facts are drawn solely from WhatsApp transcripts:
+      </div>
+      <table>
+        <tr><th>Date</th><th>Fact</th><th>Source</th></tr>
+        <tr><td>May 19</td><td>Jennyfer: "I haven't received an updated quote/response from Armando" — AL Studio silent</td><td>Hotel Group chat</td></tr>
+        <tr><td>May 17</td><td>SAW vendor doc sent by Natasha with all decor fields blank — still waiting on Beloved to populate</td><td>Hotel Group chat</td></tr>
+        <tr><td>May 15+</td><td>AL Studio quote ($59,143) is $15,203 higher than Zuniga ($43,941) before florist supplement</td><td>PDF quotes</td></tr>
+        <tr><td>Mar–May</td><td>Only 2 decor vendors ever presented (AL Studio + Zuniga) — no alternatives proactively offered despite 60-day window</td><td>All planning chats</td></tr>
+        <tr class="green-row"><td>Action</td><td>Proceed with Zuniga independently; request Grupo Gama / Latin Asia quotes directly; inform Beloved professionally</td><td>Recommendation</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- TAB 7: DECOR BRIEF -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div id="tab-decor" class="tab">
+  <h2>🌸 Decor Vendor Brief — Decision Guide</h2>
+
+  <div class="card">
+    <div class="card-header gold">💰 Financial Summary: Scenario A (Zuniga) vs Scenario B (AL Studio)</div>
+    <div class="card-body">
+      <table>
+        <tr><th>Item</th><th>Scenario A — Zuniga</th><th>Scenario B — AL Studio</th></tr>
+        <tr><td>Decor quote</td><td>$43,940.80 USD</td><td>$59,143.76 USD</td></tr>
+        <tr><td>Fresh florals supplement (est.)</td><td>+$8,000–$12,000 USD</td><td>Included</td></tr>
+        <tr><td>Total est.</td><td><strong>$52,000–$56,000 USD</strong></td><td><strong>$59,143.76 USD</strong></td></tr>
+        <tr class="green-row"><td>Savings with Scenario A</td><td colspan="2"><strong>~$5,000–$7,000 USD savings with Zuniga + florist</strong></td></tr>
+        <tr><td>Quote expiry</td><td>⚠️ May 25, 2026</td><td>🚨 Mods deadline PASSED — unresponsive</td></tr>
+        <tr><td>Planner relationship</td><td>Independent / no commission bias</td><td>Sourced by Beloved — potential commission</td></tr>
+        <tr class="amber-row"><td>Recommendation</td><td colspan="2"><strong>Go with Scenario A (Zuniga) + independent florist. Confirm by May 23.</strong></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header green">⭐ NEW DECOR OPTIONS — Request Quotes This Week</div>
+    <div class="card-body">
+      <table>
+        <tr><th>Vendor</th><th>Type</th><th>SA Experience</th><th>Contact</th><th>Why Consider</th></tr>
+        <tr class="green-row">
+          <td><strong>Grupo Gama</strong></td>
+          <td>Full decor + SA package</td>
+          <td>✅ Yes — portfolio in your files, confirmed at PH Costa Mujeres</td>
+          <td>Celina Hernández<br>998-242-3668<br>ventas7@grupogama.mx</td>
+          <td>⭐ Proven at your venue. Best starting point. Request quote by May 21.</td>
+        </tr>
+        <tr>
+          <td><strong>Latin Asia</strong></td>
+          <td>Decor + full SA planning</td>
+          <td>✅ Yes — own SA decor brand; Vogue/Asiana featured</td>
+          <td>@CancunWeddings (FB)<br>indianweddingscancun.com</td>
+          <td>South Asian wedding specialists. May offer combined decor + coordination. DM on Facebook.</td>
+        </tr>
+        <tr class="amber-row">
+          <td><strong>Blossom Events & Design</strong></td>
+          <td>Florals + decor</td>
+          <td>✅ Works at luxury Riviera Maya resorts</td>
+          <td>@blossomcancun (IG)<br>blossomcancun.com<br>Laura / Daniela González</td>
+          <td>Best for fresh florals supplement if Zuniga chosen. Smaller, specialized. Hormiga 386, Cancún.</td>
+        </tr>
+        <tr>
+          <td><strong>Weddings by Lomas Travel</strong></td>
+          <td>Full service + SA mandap</td>
+          <td>✅ Has 3 Rainbow Floral Mandap specialist</td>
+          <td>weddingsbylomastravel.com</td>
+          <td>Backup option with explicit SA Hindu ceremony packages.</td>
+        </tr>
+      </table>
+
+      <div style="margin-top:16px; padding:12px; background:#E8F5E9; border-radius:6px;">
+        <strong>📋 Sample outreach message to Grupo Gama (WhatsApp/email):</strong>
+      </div>
+      <div class="msg-box whatsapp" id="wa-decor-gama" style="margin-top:8px;">Hola Celina! My name is Baji Madduluri — I'm a groom getting married at Grand Palladium Costa Mujeres from June 17–21, 2026. I found your South Asian weddings portfolio and I'm very impressed with your work! 🌸
+
+We are planning a 5-day South Asian / Hindu wedding with approximately 120 guests across 5 events (Welcome Dinner, Mehndi, Sangeet, Haldi/Ceremony, Reception). We currently have a decor quote from another vendor but are very interested in getting a quote from Grupo Gama as well.
+
+Our existing quote totals approximately $44,000 USD for décor across all 5 events, including stage backdrops, centerpieces, lounge zones, mandap, drapery, and uplighting. Fresh florals would be a supplemental add-on.
+
+Would you be available this week for a quick call or to receive our event brief by email so you can prepare a quote? Our decision deadline is May 23rd.
+
+Thank you so much! 🙏
+— Baji Madduluri (bmadduluri@gmail.com)</div>
+      <button class="copy-btn" onclick="copyMsg('wa-decor-gama', this)">Copy</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header navy">📋 Zuniga Quote Breakdown (Confirmed Events)</div>
+    <div class="card-body">
+      <table>
+        <tr><th>Event</th><th>Date</th><th>USD</th><th>Key Elements</th></tr>
+        <tr><td>Welcome Dinner</td><td>Jun 17 — Ballroom</td><td>$6,800</td><td>Backdrop, LED bar, centerpieces, drapery</td></tr>
+        <tr><td>Mehndi</td><td>Jun 18 — Mini Ballrooms</td><td>$7,250</td><td>Boho backdrop, cushion seating, florals</td></tr>
+        <tr><td>Sangeet</td><td>Jun 18 — Convention Ctr Plaza</td><td>$9,400</td><td>Stage, uplighting, centerpieces, lounge zones</td></tr>
+        <tr><td>Haldi / Lady Maticoor</td><td>Jun 19 — Beach Deck</td><td>$5,200</td><td>Marigold arch, petal decor, cushion seating</td></tr>
+        <tr><td>Ceremony</td><td>Jun 20 — Glassroom Foyer</td><td>$8,700</td><td>Mandap, aisle flowers, canopy, draping</td></tr>
+        <tr><td>Reception</td><td>Jun 21 — Ballroom</td><td>$9,590.80</td><td>Centerpieces, head table, table runners, uplighting</td></tr>
+        <tr class="green-row"><td><strong>TOTAL</strong></td><td></td><td><strong>$43,940.80</strong></td><td>Expires May 25 — confirm by May 23</td></tr>
+        <tr class="amber-row"><td>Fresh florals (Blossom/add-on)</td><td>All events</td><td>est. $8,000–$12,000</td><td>Supplement with independent florist</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="footer">C&B Cancún Wedding Communications Package · Generated May 20, 2026 · 28 days to go 💍</div>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function copyMsg(id, btn) {
+  const el = document.getElementById(id);
+  const text = el.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2500);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = 'Copied ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+</script>
+</body>
+</html>

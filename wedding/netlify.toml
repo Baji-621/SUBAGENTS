@@ -1,18 +1,148 @@
+# Netlify configuration — B&C Wedding Source of Truth
+# Deploy from repo root:  netlify deploy --dir=wedding --prod
+
 [build]
   publish = "wedding"
 
+# Root URL serves the landing page
+[[redirects]]
+  from = "/"
+  to = "/00_START_HERE_index.html"
+  status = 200
+
+# Short links — Command Center App
+[[redirects]]
+  from = "/app"
+  to = "/01_Command_Center/CB_Command_Center_App.html"
+  status = 200
+
+[[redirects]]
+  from = "/app/*"
+  to = "/01_Command_Center/CB_Command_Center_App.html"
+  status = 200
+
+[[redirects]]
+  from = "/os"
+  to = "/01_Command_Center/CB_WeddingOS_v6.html"
+  status = 200
+
 [[redirects]]
   from = "/ops"
-  to = "/CB_WeddingOS_v6.html"
-  status = 302
+  to = "/05_Communications/CB_Ops_Command_May29.html"
+  status = 200
 
 [[redirects]]
-  from = "/v6"
-  to = "/CB_WeddingOS_v6.html"
-  status = 302
+  from = "/itinerary"
+  to = "/02_Guest_Facing/CB_Wedding_Itinerary_for_Raj.html"
+  status = 301
 
+[[redirects]]
+  from = "/entertainment"
+  to = "/07_Entertainment/CB_Entertainment_Hub.html"
+  status = 200
+
+# Communications & rooming short links
+[[redirects]]
+  from = "/comms"
+  to = "/05_Communications/"
+  status = 200
+
+[[redirects]]
+  from = "/comms/*"
+  to = "/05_Communications/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/rooming"
+  to = "/05_Communications/CB_Rooming_Dashboard_Hub.html"
+  status = 200
+
+[[redirects]]
+  from = "/rooming/natasha"
+  to = "/05_Communications/CB_Natasha_Guest_Rooming_Dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/rooming/raj"
+  to = "/05_Communications/CB_Raj_Rooming_Dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/rooming/beloved"
+  to = "/05_Communications/CB_Beloved_Rooming_Dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/rooming/couple"
+  to = "/05_Communications/CB_Couple_Rooming_Summary.html"
+  status = 200
+
+[[redirects]]
+  from = "/accountability"
+  to = "/05_Communications/CB_Ops_Command_May29.html"
+  status = 200
+
+[[redirects]]
+  from = "/transfer"
+  to = "/06_Agent_Skills/CB_Comms_Transfer_Studio.html"
+  status = 200
+
+[[redirects]]
+  from = "/edoc"
+  to = "/06_Agent_Skills/CB_Raj_eDoc_Splitter_Guide.html"
+  status = 301
+
+[[redirects]]
+  from = "/edoc/desk"
+  to = "/06_Agent_Skills/CB_Raj_eDoc_Desk_Card.html"
+  status = 301
+
+[[redirects]]
+  from = "/edoc/process"
+  to = "/06_Agent_Skills/CB_Raj_eDoc_Process_Guide.html"
+  status = 301
+
+[[redirects]]
+  from = "/edoc/cheatsheet"
+  to = "/06_Agent_Skills/CB_Raj_eDoc_Splitter_Cheat_Sheet.html"
+  status = 301
+
+[[redirects]]
+  from = "/entertainment/*"
+  to = "/07_Entertainment/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/vendors"
+  to = "/07_Entertainment/CB_Vendors_Ops_Hub.html"
+  status = 200
+
+[[redirects]]
+  from = "/07"
+  to = "/07_Entertainment/"
+  status = 200
+
+# Global security + privacy headers
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
+    X-Frame-Options        = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "no-referrer"
+    X-Robots-Tag           = "noindex, nofollow, noarchive, nosnippet"
+    Cache-Control          = "public, max-age=300, must-revalidate"
+
+# HTML — no stale cache
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# PDFs — inline display, restricted cache
+[[headers]]
+  for = "/*.pdf"
+  [headers.values]
+    Content-Type        = "application/pdf"
+    Content-Disposition = "inline"
+    Cache-Control       = "private, max-age=3600"
+    X-Robots-Tag        = "noindex, nofollow, noarchive"

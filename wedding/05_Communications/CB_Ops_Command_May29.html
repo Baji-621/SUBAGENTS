@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ops Command · May 29 · C&amp;B Internal</title>
+<meta name="robots" content="noindex,nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ivory:#FAF6EE;--gold:#C9A84C;--deep:#4E3045;--teal:#2A7B8E;--mauve:#7B5A6A;--line:#EFE4CE;--bad:#8B1E1E;--warn:#9A6B00;--ok:#2E6E2E;--text:#2E1E28}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Lora,Georgia,serif;background:var(--ivory);color:var(--text);line-height:1.5}
+header{background:var(--deep);color:#FAF6EE;padding:1.5rem 1.25rem;text-align:center}
+header h1{font-family:"Cormorant Garamond",serif;font-size:1.75rem;color:#E8C97A;font-style:italic}
+header p{font-size:.85rem;opacity:.85;margin-top:.35rem}
+nav{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;padding:1rem;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+nav button{border:1px solid var(--line);background:#fff;padding:.45rem .85rem;border-radius:999px;font:inherit;font-size:.75rem;cursor:pointer}
+nav button.on{background:var(--deep);color:#FAF6EE;border-color:var(--deep)}
+.wrap{max-width:960px;margin:0 auto;padding:1.25rem 1rem 3rem}
+.panel{display:none}
+.panel.on{display:block}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:1rem;margin-bottom:.75rem}
+.card h2{font-family:"Cormorant Garamond",serif;font-size:1.15rem;color:var(--deep);margin-bottom:.5rem}
+.badge{display:inline-block;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.15rem .45rem;border-radius:999px}
+.p0{background:#FCE8E8;color:var(--bad)}
+.p1{background:#FFF4D6;color:var(--warn)}
+.ok{background:#E8F3E8;color:var(--ok)}
+table{width:100%;border-collapse:collapse;font-size:.78rem}
+th,td{border-bottom:1px solid var(--line);padding:.45rem .35rem;text-align:left;vertical-align:top}
+th{font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;color:var(--mauve)}
+.filter{margin:.75rem 0;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.filter input{flex:1;min-width:180px;padding:.5rem;border:1px solid var(--line);border-radius:8px;font:inherit}
+.links{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.links a{font-size:.75rem;color:var(--teal)}
+.decision{background:linear-gradient(135deg,#fff 0%,var(--ivory) 100%);border-left:4px solid var(--teal)}
+@media(max-width:640px){table{font-size:.7rem} nav button{font-size:.7rem;padding:.4rem .6rem}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Ops Command · May 29, 2026</h1>
+  <p>T-18 · Internal only · Decor decision · Payments · Comms</p>
+</header>
+<nav aria-label="Sections">
+  <button type="button" class="on" data-panel="ledger">Ledger</button>
+  <button type="button" data-panel="decor">Decor</button>
+  <button type="button" data-panel="decisions">Decisions</button>
+  <button type="button" data-panel="links">Links</button>
+</nav>
+<div class="wrap">
+  <section id="ledger" class="panel on">
+    <div class="filter"><label for="q">Filter</label><input id="q" type="search" placeholder="Majestic, Mills, AL Studio…" aria-label="Filter ledger"></div>
+    <table><thead><tr><th>P</th><th>Vendor</th><th>Amount</th><th>Owner</th><th>Due</th></tr></thead>
+    <tbody id="ledger-body"></tbody></table>
+  </section>
+  <section id="decor" class="panel">
+    <div class="card decision">
+      <h2>Recommendation: AL Studio</h2>
+      <p><strong>$43,126.48 USD</strong> (May 27 revised) · Sign by May 31 · SAW via Jennyfer</p>
+      <p style="margin-top:.5rem;font-size:.85rem">GAMA C4179 $43,202.46 · Zúñiga May 28 $37,021.40 — decline reference only</p>
+    </div>
+    <table><thead><tr><th>Vendor</th><th>Total USD</th><th>Events</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge ok">Pick</span> AL Studio</td><td>$43,126.48</td><td>Sangeet · Haldi · Ceremony · Reception</td><td>Florals + ceiling + backdrops per Jennyfer brief</td></tr>
+      <tr><td>GAMA C4179</td><td>$43,202.46</td><td>5 events incl Welcome</td><td>Revised May 27 · do not sign</td></tr>
+      <tr><td>Zúñiga</td><td>$37,021.40</td><td>5 events</td><td>Valid 10 days from May 28 · rental-heavy</td></tr>
+    </tbody></table>
+  </section>
+  <section id="decisions" class="panel">
+    <div class="card"><h2><span class="badge p0">Today</span> Payments</h2><p>Majestic C$12,755 · Palladium $1,600 · confirm SMB retainer</p></div>
+    <div class="card"><h2><span class="badge p1">May 30–31</span> Sign-offs</h2><p>AL Studio decor · Mills James AV (after revision) · Patravali revised quote</p></div>
+    <div class="card"><h2><span class="badge p1">May 29</span> Comms</h2><p>Patravali lunch 145–150 email · Natasha follow-up · decline GAMA/Zúñiga</p></div>
+  </section>
+  <section id="links" class="panel">
+    <div class="card"><h2>Live hubs</h2><div class="links">
+      <a href="https://khadwedsmadd.netlify.app/comms">/comms</a>
+      <a href="https://khadwedsmadd.netlify.app/vendors">/vendors</a>
+      <a href="https://khadwedsmadd.netlify.app/07">/07</a>
+      <a href="CB_AccountabilityComms_May29.md">Accountability May 29</a>
+      <a href="../01_Command_Center/CB_WeddingOS_v6.html">Wedding OS v6</a>
+    </div></div>
+    <div class="card"><h2>Sheets</h2><div class="links">
+      <a href="https://docs.google.com/spreadsheets/d/1WMg74RDdaP1FUZPxfqM6keLy42xDeCWDWp54uzCDzHQ/edit">Rooming FINAL MASTER</a>
+      <a href="https://docs.google.com/spreadsheets/d/1lwmu8dTuz4KtyX_lwsdGMzqJ6BM9mINafDmzdQd2t3w/edit">Planner kit ENT_*</a>
+    </div></div>
+  </section>
+</div>
+<script>
+const rows=[
+  {p:'P0',v:'Majestic Films',a:'C$12,755',o:'Baji',d:'OVERDUE'},
+  {p:'P0',v:'Palladium Deposit #3',a:'$1,600 USD',o:'Baji',d:'May 29'},
+  {p:'P0',v:'Something Borrowed',a:'C$10,000 bal',o:'Baji',d:'Jun 17'},
+  {p:'P0',v:'Mills James AV',a:'$18,125 USD',o:'Jennyfer',d:'May 30'},
+  {p:'P0',v:'AL Studio Decor',a:'$43,126 USD',o:'Cath',d:'May 31'},
+  {p:'P1',v:'Patravali S01545',a:'$13,189 @130',o:'Baji',d:'Rev 145–150'},
+  {p:'P1',v:'Loto Mehndi',a:'$881.60 dep',o:'Baji',d:'May 31'},
+  {p:'P1',v:'Drums in Paradise',a:'$3,386',o:'Jorge',d:'May 30'}
+];
+const tb=document.getElementById('ledger-body');
+const q=document.getElementById('q');
+function render(){
+  const term=q.value.trim().toLowerCase();
+  tb.innerHTML=rows.filter(r=>!term||JSON.stringify(r).toLowerCase().includes(term))
+    .map(r=>`<tr><td><span class="badge ${r.p==='P0'?'p0':'p1'}">${r.p}</span></td><td>${r.v}</td><td>${r.a}</td><td>${r.o}</td><td>${r.d}</td></tr>`).join('');
+}
+q.addEventListener('input',render); render();
+document.querySelectorAll('nav button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav button').forEach(b=>b.classList.remove('on'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+    btn.classList.add('on');
+    document.getElementById(btn.dataset.panel).classList.add('on');
+  });
+});
+</script>
+</body>
+</html>

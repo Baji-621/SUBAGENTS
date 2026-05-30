@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comms Transfer Studio · B&amp;C Wedding</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F0E8;--card:#fff;--deep:#4E3045;--teal:#2A7B8E;--gold:#C9A84C;--wa:#25D366;--mail:#1F3864;--text:#2E1E28;--muted:#7B5A6A;--line:#E8E0D0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:linear-gradient(135deg,var(--deep),var(--teal));color:#FAF6EE;padding:28px 20px;text-align:center}
+header h1{font-family:'Cormorant Garamond',serif;font-size:28px;color:#E8C97A;font-style:italic}
+header p{font-size:13px;opacity:.9;margin-top:6px}
+.back{color:#E8C97A;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-block;margin-top:12px}
+.layout{max-width:1100px;margin:0 auto;padding:24px 16px 64px;display:grid;grid-template-columns:240px 1fr;gap:20px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}}
+.sidebar{background:var(--card);border-radius:12px;padding:16px;border:1px solid var(--line);height:fit-content;position:sticky;top:16px}
+.sidebar h2{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.filter{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;margin-bottom:12px;font:inherit}
+.msg-list{list-style:none;max-height:70vh;overflow:auto}
+.msg-list button{width:100%;text-align:left;background:transparent;border:none;border-left:3px solid transparent;padding:10px 8px;cursor:pointer;border-radius:0 6px 6px 0;font:inherit;color:var(--text)}
+.msg-list button:hover,.msg-list button.on{background:#F7EDD0;border-left-color:var(--gold)}
+.msg-list .id{font-size:10px;color:var(--muted);letter-spacing:1px}
+.msg-list .title{font-size:13px;font-weight:600;margin-top:2px}
+.panel{background:var(--card);border-radius:12px;border:1px solid var(--line);overflow:hidden}
+.panel-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.panel-head h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--deep)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:12px;font-weight:600}
+.chip-wa{background:#E8F8EC;color:#1A7A3A}
+.chip-mail{background:#E8EEF8;color:var(--mail)}
+.chip-p0{background:#FFE8E8;color:#A22}
+.meta{padding:12px 20px;background:#FAF8F4;font-size:12px;color:var(--muted);border-bottom:1px solid var(--line)}
+.meta strong{color:var(--deep)}
+.body-wrap{padding:20px;position:relative}
+.msg-body{background:#FAFAFA;border-left:4px solid var(--mail);padding:16px 18px;border-radius:0 8px 8px 0;font-size:14px;line-height:1.7;white-space:pre-wrap;min-height:200px}
+.msg-body.wa{border-left-color:var(--wa);background:#F0FAF2}
+.copy{position:absolute;top:28px;right:28px;background:var(--deep);color:#E8C97A;border:none;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:600;letter-spacing:1px;cursor:pointer}
+.copy:hover{background:var(--teal)}
+.copy.done{background:#2E6E2E}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--deep);color:#fff;padding:12px 24px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<header>
+  <h1>Comms Transfer Studio</h1>
+  <p>May 26 accountability pack · one-click copy for WhatsApp &amp; Gmail</p>
+  <a class="back" href="../05_Communications/">← Communications Hub</a>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <h2>Messages</h2>
+    <input class="filter" type="search" id="filter" placeholder="Search…" aria-label="Filter messages">
+    <ul class="msg-list" id="list"></ul>
+  </aside>
+  <section class="panel" aria-live="polite">
+    <div class="panel-head">
+      <h3 id="title">Select a message</h3>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="meta" id="meta"></div>
+    <div class="body-wrap">
+      <button class="copy" id="copyBtn" type="button">Copy</button>
+      <div class="msg-body" id="body">Choose a message from the list to preview and copy.</div>
+    </div>
+  </section>
+</div>
+<div class="toast" id="toast" role="status">Copied to clipboard</div>
+<script>
+const MSGS = [
+  { id:'P0-A', title:'Natasha · WhatsApp urgent', channel:'wa', priority:'P0', to:'+52 998 348 2377', subject:'', body:`Hi Natasha — Baji here. Quick urgent update from our May 26 planning call:
+
+1. PALLADIUM DEPOSIT #3 — $1,600 USD is now 22 days overdue. Can you confirm amount and best payment method today? We will send immediately once confirmed.
+
+2. SAW BATCH — Jennyfer is submitting all outstanding vendor docs by May 27. Please confirm you will accept partial submissions as payments clear (Majestic balance sending today).
+
+3. WELCOME PARTY — Jun 17, 5:00–8:00 PM, Ballroom/Fizz. Please confirm venue hold (included perk).
+
+4. ROOMING — Raj ID 207718. FINAL ROOMING MASTER tab + HTML dashboards attached via Jennyfer email today.
+   • 137 pax · 43 SAME · 32 NEARBY · 30 TBD · 19 TBC · 13 B16
+   Sheet: https://docs.google.com/spreadsheets/d/1WMg74RDdaP1FUZPxfqM6keLy42xDeCWDWp54uzCDzHQ/edit
+   Live dashboard: https://khadwedsmadd.netlify.app/rooming/natasha
+
+5. RESORT VENDORS — Please confirm SAW paths once deposits clear:
+   • Loto Mehndi (50% $893.20 to CM · signed contract on file)
+   • Drums in Paradise ($1,786 · Jorge confirming Jun 19)
+   • Bogali — Sangeet + Reception food (included perks · menu TBD)
+
+6. STILL NEED FROM YOU:
+   • Venue breakdown sheet (May 5/11/13 requests)
+   • Soft bar / juice / coffee quote for poojas + Haldi + ceremony
+   • Mehndi room confirm (Jun 18 9–11 AM)
+   • Baraat boat quote (Jun 19 6 PM)
+   • Indian menu for Jun 20 ceremony events
+   • Lady Maticoor beach deck + Haldi on beach (not Village Deck)
+
+Please confirm receipt. Thank you — Baji & Cath`},
+  { id:'P0-B', title:'Mills James · AV revised sign-off', channel:'mail', priority:'P0', to:'jmochoa@millsjames.com.mx', subject:'REVISED AV Sign-Off · Remove Welcome Lighting + Mehndi Audio · Quotes 279122 + 279827', body:`Hi Jimena,
+
+Thank you for the updated quote. We are ready to sign once the following items are REMOVED from Quote 279122:
+
+REMOVE — Welcome Event, Ballroom/Fizz Pool, Jun 17, 5:00–8:00 PM:
+• Full lighting system (16× Elation SixPar300 LED, 8× uplights, XLR cable, Mekano truss + heavy bases)
+
+REMOVE — Mehndi, Amber & Garnet Ballrooms, Jun 18, 9:00–11:00 AM:
+• Audio system package (QSC K12.2 speaker, Allen & Heath VLZ mixer, Shure ULXD4 wireless mic)
+
+KEEP all other event AV as quoted, including Sangeet through Reception and Quote 279827 box truss ($3,932.40 USD).
+
+Once the revised PDF reflects these removals, please send DocuSign.
+
+Thank you,
+Bharadwaj (Baji) Madduluri
+bmadduluri@gmail.com · (226) 750-7972`},
+  { id:'P0-C', title:'Beloved group · SAW + vendors', channel:'wa', priority:'P0', to:'+52 984 215 8539', subject:'', body:`Hi Jennyfer & team — May 26 update:
+
+URGENT BY MAY 27:
+1. Submit ALL outstanding SAW docs to Natasha (DJ Jethu, AL Studio decor once signed, Drums, Loto deposit, Banu Prakash, Beauty by Sharda, Something Borrowed, Patravali S01545, Bogali food).
+2. Jorge — please confirm Drums in Paradise ($1,786 · 2 sessions Jun 19) TODAY.
+3. Venue breakdown sheet — follow up with Natasha (requested May 5/11/13) by May 28.
+4. Forward revised Mills James AV email to Jimena (Welcome lighting + Mehndi audio removed — Baji sending today).
+
+DECISION: AL Studio revised decor quote is PRIMARY path. GAMA C4179 + Zuniga — reference only, do not sign.
+
+RESORT FOOD: Bogali/Bhogali for Sangeet + Reception — Cath chasing menu + chaat station cost by Jun 1.
+
+Thank you — Baji & Cath`},
+  { id:'P0-D', title:'Raj · rooming + transfers', channel:'mail', priority:'P0', to:'raj@absolutewedsite.com', subject:'RE: Rooming ID 207718 + Land Only Bus + Building 16 · Action by May 27', body:`Hi Raj,
+
+We have reconciled against our locked 137-pax master and need the following by May 27:
+
+1. Confirm Beloved Planners (PAX 100–103) — Sunwing vs Land Only discrepancy.
+2. Land Only bus schedule for 33 guests.
+3. Building 16 adjacent-room blocking (13 B16 + SAME flags).
+4. Resolve placeholders: PAX 6, 85, 103 TBA.
+5. Welcome Party 5:00–8:00 PM Jun 17.
+
+Dashboard: https://khadwedsmadd.netlify.app/rooming/raj
+Sheet tab: FINAL ROOMING MASTER
+
+Warm regards,
+Baji Madduluri · bmadduluri@gmail.com · (226) 750-7972`},
+  { id:'P1-E', title:'Jennyfer → Natasha · rooming package', channel:'mail', priority:'P1', to:'natasha.lima@palladiumweddings.com', subject:'C&B Wedding · Guest Arrivals & Rooming · Contract 207718', body:`Hi Natasha,
+
+Following our May 26 call, please find our consolidated guest arrival and rooming package:
+
+1. GOOGLE SHEET — tab FINAL ROOMING MASTER (137 guests · SAME/NEARBY/TBD/TBC/B16)
+   https://docs.google.com/spreadsheets/d/1WMg74RDdaP1FUZPxfqM6keLy42xDeCWDWp54uzCDzHQ/edit
+
+2. HTML DASHBOARDS
+   • https://khadwedsmadd.netlify.app/rooming
+   • https://khadwedsmadd.netlify.app/rooming/natasha
+
+Key: 137 pax · 43 SAME · 32 NEARBY · 30 TBD · 19 TBC · 13 B16 · Block 207718
+
+Thank you,
+Jennyfer Reyes · Beloved Planners`},
+  { id:'P1-F', title:'Jennyfer · AV event schedule', channel:'mail', priority:'P1', to:'info@jennyferreyesweddings.com', subject:'Fwd: Final AV Quote Changes · Event Schedule for Mills James', body:`Hi Jennyfer,
+
+Please forward to Jimena at Mills James with our sign-off pending revised quote.
+
+EVENT SCHEDULE:
+• Jun 16 PM — Bridal mehndi (Loto Mehndi)
+• Jun 17 5–8 PM — Welcome · NO lighting per Baji revision
+• Jun 18 9–11 AM — Mehndi · NO audio per Baji revision
+• Jun 18 7–11 PM — Sangeet · Bogali food
+• Jun 19 — Snathakam, Lady Maticoor (beach), Haldi (beach), Baraat (boat TBD)
+• Jun 20 — Ceremony + Patravali lunch
+• Jun 21 — Reception · box truss 279827
+
+Baji's removal list sent to Jimena today.
+
+Thank you,
+Baji`}
+];
+const listEl = document.getElementById('list');
+const filterEl = document.getElementById('filter');
+const titleEl = document.getElementById('title');
+const chipsEl = document.getElementById('chips');
+const metaEl = document.getElementById('meta');
+const bodyEl = document.getElementById('body');
+const copyBtn = document.getElementById('copyBtn');
+const toast = document.getElementById('toast');
+let current = null;
+
+function renderList(q=''){
+  const ql = q.toLowerCase();
+  listEl.innerHTML = '';
+  MSGS.filter(m => !ql || m.title.toLowerCase().includes(ql) || m.id.toLowerCase().includes(ql)).forEach(m => {
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.innerHTML = `<div class="id">${m.id} · ${m.channel === 'wa' ? 'WhatsApp' : 'Email'}</div><div class="title">${m.title}</div>`;
+    btn.onclick = () => select(m, btn);
+    if (current && current.id === m.id) btn.classList.add('on');
+    li.appendChild(btn);
+    listEl.appendChild(li);
+  });
+}
+function select(m, btn){
+  current = m;
+  document.querySelectorAll('.msg-list button').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  titleEl.textContent = m.title;
+  chipsEl.innerHTML = `<span class="chip chip-${m.channel === 'wa' ? 'wa' : 'mail'}">${m.channel === 'wa' ? 'WhatsApp' : 'Gmail'}</span><span class="chip chip-p0">${m.priority}</span>`;
+  metaEl.innerHTML = `<strong>To:</strong> ${m.to}` + (m.subject ? ` · <strong>Subject:</strong> ${m.subject}` : '');
+  bodyEl.textContent = m.body;
+  bodyEl.className = 'msg-body' + (m.channel === 'wa' ? ' wa' : '');
+}
+async function copy(){
+  if (!current) return;
+  const text = current.channel === 'mail' && current.subject
+    ? `To: ${current.to}\nSubject: ${current.subject}\n\n${current.body}`
+    : current.body;
+  await navigator.clipboard.writeText(text);
+  copyBtn.textContent = 'Copied!';
+  copyBtn.classList.add('done');
+  toast.classList.add('show');
+  setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('done'); toast.classList.remove('show'); }, 2000);
+}
+filterEl.addEventListener('input', e => renderList(e.target.value));
+copyBtn.addEventListener('click', copy);
+renderList();
+select(MSGS[0], listEl.querySelector('button'));
+</script>
+</body>
+</html>

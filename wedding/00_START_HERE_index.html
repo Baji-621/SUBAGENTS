@@ -1,32 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="refresh" content="0;url=CB_WeddingOS_v6.html">
-<title>C&B Wedding — June 16–23, 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B&amp;C Wedding · Source of Truth · Jun 16 – 23, 2026</title>
+<meta name="description" content="Bharadwaj &amp; Catherina — Wedding Source of Truth: itinerary, command center, vendor docs and coordination resources for the couple, parents and core planning team.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:wght@400;500;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Work Sans',sans-serif;background:#13221f;color:#f6f3eb;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center}
-.wrap{max-width:480px;padding:48px 32px}
-.gold{color:#b8872b}
-h1{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;line-height:1.2;margin-bottom:12px}
-h1 em{font-style:italic;color:#b8872b}
-.date{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:rgba(246,243,235,.5);margin-bottom:36px}
-.divider{width:60px;height:1px;background:#b8872b;margin:0 auto 36px}
-.btn{display:inline-block;padding:14px 36px;background:#b8872b;color:#fff;text-decoration:none;font-family:'Work Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:32px}
-.btn:hover{background:#8e6619}
-.note{font-size:11px;color:rgba(246,243,235,.35);letter-spacing:.05em}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ivory:#FAF6EE;--ivory-dark:#EFE4CE;
+  --gold:#C9A84C;--gold-light:#E8C97A;--gold-pale:#F7EDD0;
+  --mauve:#7B5A6A;--deep-mauve:#4E3045;
+  --teal:#2A7B8E;--deep-teal:#1A5060;--teal-pale:#D8EEF2;
+  --navy:#1C2040;--charcoal:#3A2535;--text:#2E1E28;
+  --blush:#F5D8E0;--rose:#C47090;
+  --lock-bg:#F4EDE0;--lock-border:#D4B98E;--lock-ink:#7A5D2C;
+  --unlock-bg:#E8F3E8;--unlock-border:#7BAE7B;--unlock-ink:#2E6E2E;
+}
+html,body{font-family:'Lora',Georgia,serif;color:var(--text);background:var(--ivory);min-height:100vh}
+
+.hero{background:linear-gradient(160deg,var(--deep-mauve) 0%,var(--deep-teal) 60%,var(--navy) 100%);padding:60px 36px 48px;text-align:center;color:#FAF6EE;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(232,201,122,.10),transparent 50%),radial-gradient(circle at 70% 80%,rgba(196,112,144,.08),transparent 50%);pointer-events:none}
+.hero-inner{position:relative;z-index:2}
+.tag{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:6px;text-transform:uppercase;color:var(--gold-light);opacity:.95}
+.mono{font-family:'Cormorant Garamond',serif;font-size:68px;font-weight:700;color:#E8C97A;font-style:italic;margin:18px 0 6px;letter-spacing:1px}
+.mono .amp{font-family:'Dancing Script',cursive;font-size:42px;color:rgba(232,201,122,.75);margin:0 12px}
+.couple{font-family:'Cormorant Garamond',serif;font-size:32px;font-style:italic;color:#FAF6EE;margin-bottom:6px}
+.date{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:3px;color:var(--gold-light);margin-top:10px}
+.subtitle{font-family:'Lora',serif;font-size:15px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(250,246,238,.8);margin-top:10px}
+
+.wrap{max-width:980px;margin:0 auto;padding:48px 28px 80px}
+.intro{background:linear-gradient(135deg,var(--teal-pale) 0%,#EAF5F7 100%);border-left:5px solid var(--teal);padding:28px 32px;border-radius:0 12px 12px 0;margin-bottom:44px;font-size:16px;line-height:1.75;color:var(--deep-teal);box-shadow:0 4px 18px rgba(42,123,142,.10)}
+.intro p{margin-bottom:12px}
+.intro p:last-child{margin-bottom:0}
+.intro strong{color:var(--deep-mauve);font-weight:700}
+.intro .highlight{background:var(--gold-pale);padding:3px 8px;border-radius:5px;color:var(--charcoal);font-weight:600}
+.intro .cta{display:block;margin-top:18px;padding:16px 20px;background:linear-gradient(135deg,var(--deep-mauve) 0%,var(--deep-teal) 100%);color:var(--gold-light);border-radius:10px;font-size:15px;line-height:1.6;text-align:left;text-decoration:none;border:1px solid var(--gold);box-shadow:0 6px 20px rgba(78,48,69,.25);transition:all .25s;cursor:pointer}
+.intro .cta:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(78,48,69,.35);color:#FFE9B0}
+.intro .cta strong{color:#FFE9B0;text-shadow:0 0 12px rgba(232,201,122,.5)}
+.intro .cta .arrow{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold-light);margin:0 6px}
+.intro .cta .url{display:block;margin-top:8px;font-family:'Lora',serif;font-size:11px;letter-spacing:1px;color:var(--gold-pale);word-break:break-all}
+.intro .cta .lock-pill{display:inline-block;margin-top:10px;font-family:'Lora',serif;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;background:rgba(232,201,122,.15);color:var(--gold-light);padding:3px 10px;border-radius:10px;border:.5px solid rgba(232,201,122,.35)}
+
+.section-btn{display:block;background:linear-gradient(135deg,var(--deep-mauve) 0%,var(--charcoal) 50%,var(--deep-teal) 100%);color:#FFE9B0;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;letter-spacing:5px;text-transform:uppercase;text-align:center;padding:18px 26px;border-radius:10px;margin:0 0 22px 0;border:1px solid var(--gold);box-shadow:0 6px 22px rgba(78,48,69,.28),inset 0 0 0 1px rgba(232,201,122,.2);text-shadow:0 0 18px rgba(232,201,122,.55),0 0 4px rgba(232,201,122,.4);position:relative;overflow:hidden}
+.section-btn::before{content:'✦';position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--gold-light);font-size:20px;text-shadow:0 0 10px rgba(232,201,122,.7)}
+.section-btn::after{content:'✦';position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--gold-light);font-size:20px;text-shadow:0 0 10px rgba(232,201,122,.7)}
+.section-btn .lead{display:block;font-size:14px;letter-spacing:1px;color:var(--gold-light);margin-bottom:4px;font-style:italic;text-shadow:none;opacity:.75;font-weight:600;text-transform:uppercase}
+
+.section-title{font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin:0 0 14px 4px}
+.section-title-left{text-align:left;margin-left:0}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-bottom:40px}
+.card{background:#fff;border:.5px solid var(--ivory-dark);border-radius:10px;padding:22px 22px;text-decoration:none;color:var(--text);transition:all .25s ease;position:relative;overflow:hidden;cursor:pointer;display:block}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold)}
+.card:hover{box-shadow:0 8px 24px rgba(78,48,69,.12);transform:translateY(-2px);border-color:var(--gold-light)}
+.card .num{font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:600}
+.card .title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--deep-mauve);margin:8px 0 4px;font-style:italic}
+.card .who{font-family:'Lora',serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mauve);margin-bottom:10px}
+.card .desc{font-size:13px;line-height:1.6;color:var(--text)}
+
+.featured{background:linear-gradient(135deg,var(--gold-pale),#fff 50%,var(--blush));border:1px solid var(--gold-light)}
+.featured::before{background:linear-gradient(to bottom,var(--rose),var(--gold))}
+.featured .badge{position:absolute;top:14px;right:14px;background:var(--rose);color:#fff;font-family:'Lora',serif;font-size:9px;letter-spacing:2px;padding:3px 10px;border-radius:10px;text-transform:uppercase}
+
+.card.locked{background:linear-gradient(135deg,var(--lock-bg),#FBF6EC);border-color:var(--lock-border)}
+.card.locked::before{background:var(--lock-border)}
+.card.locked .title{color:var(--lock-ink)}
+.card .lock-status{display:none;align-items:center;gap:6px;font-family:'Lora',serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:12px;margin-top:12px}
+.card.locked .lock-status{display:inline-flex;background:rgba(122,93,44,.10);color:var(--lock-ink);border:.5px solid var(--lock-border)}
+.card.unlocked{border-color:var(--unlock-border);background:linear-gradient(135deg,var(--unlock-bg),#F4FBF4)}
+.card.unlocked::before{background:var(--unlock-border)}
+.card.unlocked .lock-status{display:inline-flex;background:rgba(46,110,46,.10);color:var(--unlock-ink);border:.5px solid var(--unlock-border)}
+
+.divider{display:flex;align-items:center;margin:36px 0 18px;gap:14px}
+.divider .line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-light),transparent)}
+.divider .label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold)}
+
+.contact-strip{background:linear-gradient(to right,var(--gold-pale),var(--ivory));border-radius:10px;padding:22px 24px;margin-top:30px;border:.5px solid rgba(201,168,76,.3)}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:12px}
+.cc{background:rgba(255,255,255,.6);border-radius:6px;padding:10px 14px;border:.5px solid rgba(201,168,76,.2)}
+.cc .role{font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600}
+.cc .name{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--deep-mauve);font-weight:600;margin-top:2px}
+.cc .det{font-size:11px;color:var(--mauve);margin-top:3px;line-height:1.5}
+.cc a{color:var(--deep-teal);text-decoration:none}
+
+.signature{text-align:center;margin-top:40px;padding-top:22px;border-top:.5px solid var(--ivory-dark);font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--mauve);font-size:13px}
+.signature .script{display:block;font-family:'Dancing Script',cursive;font-size:24px;color:var(--deep-mauve);margin-top:6px}
+
+.modal-bg{position:fixed;inset:0;background:rgba(28,32,64,.55);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:var(--ivory);border-radius:14px;padding:32px 30px 26px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.35);text-align:center;border:1px solid var(--gold-light)}
+.modal-icon{font-size:36px;display:block;margin-bottom:8px}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--deep-mauve);font-style:italic;margin-bottom:6px}
+.modal-sub{font-family:'Lora',serif;font-size:12px;color:var(--mauve);margin-bottom:20px;line-height:1.6}
+.modal-input{width:100%;padding:12px 14px;border:1px solid var(--ivory-dark);border-radius:8px;font-family:'Lora',serif;font-size:14px;background:#fff;color:var(--charcoal);letter-spacing:1px}
+.modal-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.18);outline:none}
+.modal-actions{display:flex;gap:10px;margin-top:16px}
+.modal-btn{flex:1;padding:12px 16px;border:none;border-radius:8px;font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.modal-btn.primary{background:var(--deep-mauve);color:var(--gold-light)}
+.modal-btn.primary:hover{background:var(--charcoal)}
+.modal-btn.ghost{background:transparent;color:var(--mauve);border:1px solid var(--ivory-dark)}
+.modal-btn.ghost:hover{background:var(--ivory-dark)}
+.modal-error{margin-top:10px;font-family:'Lora',serif;font-size:12px;color:#A22;min-height:18px}
+.modal-note{margin-top:14px;font-family:'Lora',serif;font-size:10.5px;color:var(--mauve);line-height:1.5;padding-top:12px;border-top:.5px solid var(--ivory-dark)}
+
+@media (max-width:600px){
+  .hero{padding:44px 24px 36px}
+  .mono{font-size:42px}
+  .couple{font-size:20px}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-<div class="date">Grand Palladium Costa Mujeres · Cancún · Mexico</div>
-<h1><em>C&amp;B</em><br>Wedding<br>June 16–23</h1>
-<div class="date" style="font-size:11px;margin-top:8px;margin-bottom:24px">2026</div>
-<div class="divider"></div>
-<a href="CB_WeddingOS_v6.html" class="btn">Open Command Center v6</a>
-<div class="note">Internal planning use only · Access code required</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="tag">Wedding Operations · Source of Truth</div>
+    <div class="mono">B<span class="amp">&amp;</span>C</div>
+    <div class="couple">Bharadwaj &amp; Catherina</div>
+    <div class="date">JUNE 16 to JUNE 23, 2026</div>
+    <div class="subtitle">Grand Palladium Costa Mujeres · Cancún</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="intro">
+    <p>A singular, comprehensive, and easy-to-use, <strong>"Source of Truth"</strong> for the wedding-week coordination, execution during, and for last-mile ops/logistics organization with our arrival in Cancún on <strong>June 16</strong>.</p>
+    <p>This resource was built directly for the <strong>Couple, Parents, and Core Planning Team</strong> — including family/friends directly involved with significant planning responsibilities along with our <strong>Vendors</strong>. Every link below opens a self-contained file (no internet required beyond Google Fonts).</p>
+    <p><span class="highlight">Start with the <strong>Wedding Week Itinerary</strong></span> if you just want a beautiful and informed view.</p>
+    <a class="cta" data-lock-group="cmd" href="/app">
+      <strong>For Execution of Wedding Logistics</strong>, Hands-On Tools to complete all remaining tasks/prep for June 16 — <span class="arrow">→</span> <strong>OPEN the COMMAND CENTER App</strong>
+      <span class="url">https://khadwedsmadd.netlify.app/app</span>
+      <span class="lock-pill">🔒 Password required</span>
+    </a>
+  </div>
+
+  <div class="section-btn"><span class="lead">Start with these</span>Wedding-Week Resources</div>
+  <div class="cards">
+
+    <a class="card featured" href="02_Guest_Facing/CB_Wedding_Itinerary_for_Raj.html">
+      <span class="badge">Open · For Everyone</span>
+      <div class="num">02 · Guest Facing</div>
+      <div class="title">Wedding Week Itinerary</div>
+      <div class="who">Couple · Parents · Raj · Family</div>
+      <div class="desc">Visually engaging itinerary cover + day-by-day Jun 16 – 22, with venues, dress codes, and on-site coordination contacts. Email-ready.</div>
+    </a>
+
+    <a class="card locked featured" data-lock-group="cmd" href="/app">
+      <span class="badge">New · App UX</span>
+      <div class="num">01 · Command Center App</div>
+      <div class="title">Wedding Command Center</div>
+      <div class="who">Couple · Baji · Catherina · Core Team</div>
+      <div class="desc">Sidebar app: Dashboard, Events timeline, Tasks, Vendors, Budget, Contacts — real-time ops hub. Short link: /app</div>
+      <span class="lock-status">🔒 Password required</span>
+    </a>
+
+    <a class="card locked" data-lock-group="cmd" href="/os">
+      <div class="num">01 · Wedding OS</div>
+      <div class="title">Wedding OS v6 — Live Console</div>
+      <div class="who">Couple · Baji · Catherina · Core Team</div>
+      <div class="desc">15-tab command center: Cockpit, Sprint, Budget (28 lines), Payments, Vendor Playbook, Natasha SAW, Rooming, SAW Docs, Comms Hub, Decor, Vault, Guest Mirror, Ceremony SOP, Beloved Hub, AbsoluteWed Hub. Short link: /os</div>
+      <span class="lock-status">🔒 Password required</span>
+    </a>
+
+    <a class="card" href="02_Guest_Facing/guest_packet_v19.html">
+      <div class="num">02 · Guest Facing</div>
+      <div class="title">Full Guest Packet (v19)</div>
+      <div class="who">All Guests</div>
+      <div class="desc">Complete guest-facing booklet: cover, itinerary, ceremony guide, FAQ, dress code, welcome bag, contacts. Chromatic Ritual design.</div>
+    </a>
+  </div>
+
+  <div class="section-btn"><span class="lead">Restricted · Password Required</span>Vendor &amp; Source Docs</div>
+
+  <div class="cards">
+    <a class="card locked" data-lock-group="vendor" href="03_Vendor_Source_Docs/">
+      <div class="num">03 · Vendor Source</div>
+      <div class="title">All Vendor PDFs</div>
+      <div class="who">Couple · Planners</div>
+      <div class="desc">Source files: Patravali S01545, GAMA C4179, Majestic, Zuñiga (May 28 updated), Mills James AV, DJ Jethu, Something Borrowed, Palladium SAW, flight PDFs, rooming lists (42 files).</div>
+      <span class="lock-status">🔒 Password required</span>
+    </a>
+
+    <a class="card locked" data-lock-group="contracts" href="04_Master_Contracts/">
+      <div class="num">04 · Master Contracts</div>
+      <div class="title">Signed Master Contracts</div>
+      <div class="who">Couple · Parents</div>
+      <div class="desc">Palladium master 207718, Beloved Planners agreement, venue deposit, final guest roster, master planning kit.</div>
+      <span class="lock-status">🔒 Password required</span>
+    </a>
+
+    <a class="card locked featured" data-lock-group="comms" href="07_Entertainment/">
+      <div class="num">07 · Entertainment &amp; Vendors</div>
+      <div class="title">Entertainment + Vendor Ops Hubs</div>
+      <div class="who">Couple · DJ Jethu · Jorge · Majestic · Raj · Natasha</div>
+      <div class="desc">Dual landing: Entertainment Command (cue sheets · Spotify · ENT_* tabs) + Vendor Ops (DJ · Majestic · Something Borrowed · coordination). Short links: /07 · /entertainment · /vendors</div>
+      <span class="lock-status">🔒 Password required</span>
+    </a>
+
+    <a class="card locked" data-lock-group="comms" href="05_Communications/">
+      <div class="num">05 · Communications</div>
+      <div class="title">Communications Hub</div>
+      <div class="who">Couple · Baji · Jennyfer</div>
+      <div class="desc">Accountability comms · rooming dashboards (Natasha/Raj/Beloved) · Comms Transfer Studio · command center. Short link: /comms</div>
+      <span class="lock-status">🔒 Password required</span>
+    </a>
+
+    <a class="card locked" data-lock-group="cmd" href="06_Agent_Skills/">
+      <div class="num">06 · Agent Skills</div>
+      <div class="title">Ops Runbooks &amp; Validation</div>
+      <div class="who">Couple · Core Team</div>
+      <div class="desc">Composio Gmail ingest, PM validation, UI guidelines review, Canvas dashboard readme, refresh pipeline.</div>
+      <span class="lock-status">🔒 Password required</span>
+    </a>
+  </div>
+
+  <div class="section-btn"><span class="lead">Always Reachable</span>On-Site Coordination</div>
+
+  <div class="contact-strip">
+    <div class="section-title section-title-left">Key Contacts</div>
+    <div class="contact-grid">
+      <div class="cc"><div class="role">Travel Ops</div><div class="name">Raj — Absolute Wedsite</div><div class="det">Travel agency · rooming · flights · transfers<br><a href="mailto:raj@absolutewedsite.com">raj@absolutewedsite.com</a></div></div>
+      <div class="cc"><div class="role">Wedding Planners</div><div class="name">Beloved Planners</div><div class="det">Jennyfer · Jorge · Lilliana · Ekaterina<br>On-site Jun 16 – Jun 22<br><a href="mailto:info@jennyferreyesweddings.com">info@jennyferreyesweddings.com</a></div></div>
+      <div class="cc"><div class="role">Hotel Liaison</div><div class="name">Natasha — Palladium</div><div class="det">Wedding #207718 · SAW lead<br><a href="mailto:natasha.lima@palladiumweddings.com">natasha.lima@palladiumweddings.com</a></div></div>
+      <div class="cc"><div class="role">Couple</div><div class="name">Catherina &amp; Baji</div><div class="det"><a href="mailto:catherina.khadoo@gmail.com">catherina.khadoo@gmail.com</a><br><a href="mailto:bmadduluri@gmail.com">bmadduluri@gmail.com</a></div></div>
+    </div>
+  </div>
+
+  <div class="signature">
+    Built with care for the wedding party —
+    <span class="script">Catherina &amp; Baji</span>
+  </div>
+
+</main>
+
+<div class="modal-bg" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <span class="modal-icon" aria-hidden="true">🔒</span>
+    <div class="modal-title" id="modalTitle">Restricted Section</div>
+    <div class="modal-sub" id="modalSub">Enter the password to unlock.</div>
+    <input class="modal-input" id="modalInput" type="password" autocomplete="off" placeholder="Password" aria-label="Password">
+    <div class="modal-actions">
+      <button class="modal-btn ghost" id="modalCancel" type="button">Cancel</button>
+      <button class="modal-btn primary" id="modalSubmit" type="button">Unlock</button>
+    </div>
+    <div class="modal-error" id="modalError" role="alert"></div>
+    <div class="modal-note">Passwords are issued by the couple. Once unlocked, this section stays open for the current browser session.</div>
+  </div>
 </div>
+
+<script>
+(function(){
+  const HASHES = {
+    cmd:       'eced9d4e7f00ebda7310b580da3c96b3811bce80c69187c62e3558c3c1be0a46',
+    vendor:    '19cb4d4a1923799f7ca285865da69b3735d9098fe8b0b00a6499c8ce9542307d',
+    contracts: 'e7c79c5181cbac17826dd467367f3fca8bda06745c6ec8bca3ce88b5d6e9954b',
+    comms:     'e67ea6467b5d8a94be72d6f0fe0f09d25cee6b72dfc445fe1cce33f104edcf01'
+  };
+  const LABELS = {
+    cmd:       'Command Center',
+    vendor:    'Vendor &amp; Source Documents',
+    contracts: 'Master Contracts',
+    comms:     'Communications Package'
+  };
+  const STORAGE_KEY = 'bc_unlocked_groups_v1';
+
+  async function sha256Hex(text){
+    const buf = new TextEncoder().encode(text);
+    const hash = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+  function getUnlocked(){
+    try { return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){ return {}; }
+  }
+  function saveUnlocked(map){
+    try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(map)); } catch(e){}
+  }
+  function markUnlocked(card){
+    card.classList.remove('locked');
+    card.classList.add('unlocked');
+    const lockEl = card.querySelector('.lock-status');
+    if (lockEl) lockEl.textContent = '✓ Unlocked — click to open';
+  }
+
+  const unlocked = getUnlocked();
+  document.querySelectorAll('[data-lock-group]').forEach(el => {
+    const g = el.dataset.lockGroup;
+    if (unlocked[g]) markUnlocked(el);
+  });
+
+  const modal     = document.getElementById('modal');
+  const modalSub  = document.getElementById('modalSub');
+  const modalInput= document.getElementById('modalInput');
+  const modalErr  = document.getElementById('modalError');
+  const btnSubmit = document.getElementById('modalSubmit');
+  const btnCancel = document.getElementById('modalCancel');
+  let pendingCard = null;
+
+  function openModal(card){
+    pendingCard = card;
+    const g = card.dataset.lockGroup;
+    modalSub.innerHTML = 'Enter the password for <strong>' + (LABELS[g] || 'this section') + '</strong>.';
+    modalInput.value = '';
+    modalErr.textContent = '';
+    modal.classList.add('open');
+    setTimeout(() => modalInput.focus(), 50);
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    pendingCard = null;
+  }
+  async function trySubmit(){
+    if (!pendingCard) return;
+    const g    = pendingCard.dataset.lockGroup;
+    const want = HASHES[g];
+    const got  = await sha256Hex(modalInput.value);
+    if (got === want){
+      markUnlocked(pendingCard);
+      const map = getUnlocked();
+      map[g] = true;
+      saveUnlocked(map);
+      const href = pendingCard.getAttribute('href');
+      closeModal();
+      if (href) window.location.href = href;
+    } else {
+      modalErr.textContent = 'Incorrect password — please try again.';
+      modalInput.select();
+    }
+  }
+
+  document.querySelectorAll('a[data-lock-group]').forEach(card => {
+    card.addEventListener('click', function(e){
+      if (!card.classList.contains('unlocked')){
+        e.preventDefault();
+        openModal(card);
+      }
+    });
+  });
+
+  btnSubmit.addEventListener('click', trySubmit);
+  btnCancel.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
+  modalInput.addEventListener('keydown', function(e){
+    if (e.key === 'Enter'){ e.preventDefault(); trySubmit(); }
+    if (e.key === 'Escape'){ closeModal(); }
+  });
+})();
+</script>
 </body>
 </html>

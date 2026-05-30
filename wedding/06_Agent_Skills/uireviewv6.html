@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>UI Review v6</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
+<style>body{font-family:Lora,serif;max-width:780px;margin:40px auto;padding:0 24px;line-height:1.7}code{background:#eee;padding:1px 4px;font-size:12px}.pass{color:green}.warn{color:#a60}</style>
+</head><body>
+<h1>Web Interface Guidelines Review</h1>
+<p><a href="index.html">← Agent Skills</a> · Vercel Web Interface Guidelines · May 26, 2026</p>
+
+<h2>00_START_HERE_index.html</h2>
+<ul>
+<li class="warn"><code>42,59,104</code> — <code>transition: all</code> → list explicit properties</li>
+<li class="warn"><code>101</code> — <code>outline: none</code> on password input without <code>:focus-visible</code> ring (partial fix applied)</li>
+<li class="pass"><code>218</code> — modal has <code>role="dialog"</code>, <code>aria-modal</code>, <code>aria-labelledby</code></li>
+<li class="pass"><code>223</code> — password input has <code>aria-label</code></li>
+<li class="warn">No <code>prefers-reduced-motion</code> media query for hero/card animations</li>
+<li class="warn">Password gate is client-side SHA-256 only — direct PDF URLs still resolve (documented in manifest)</li>
+</ul>
+
+<h2>CB_WeddingOS_v6.html</h2>
+<ul>
+<li class="warn"><code>12</code> — global input <code>outline: none</code> without focus-visible replacement</li>
+<li class="warn">Tab buttons lack <code>aria-selected</code> / roving tabindex pattern</li>
+<li class="pass">Semantic structure with headings per tab panel</li>
+<li class="pass">Checkbox labels paired with controls</li>
+<li class="warn">Large DOM (15 tabs inline) — acceptable for ops console; consider lazy tab mount if perf issues</li>
+</ul>
+
+<h2>03_Vendor_Source_Docs/index.html</h2>
+<ul class="pass"><li>Pass — anchor rows, semantic headings, no interactive anti-patterns</li></ul>
+
+<h2>Recommended fixes (post-deploy)</h2>
+<ol>
+<li>Add <code>@media (prefers-reduced-motion: reduce)</code> to disable transforms on cards</li>
+<li>Replace <code>outline: none</code> with <code>:focus-visible { outline: 2px solid var(--gold); }</code></li>
+<li>Add skip link to command center main content</li>
+</ol>
+</body></html>

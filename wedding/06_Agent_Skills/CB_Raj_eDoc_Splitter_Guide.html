@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eDoc PDF Splitter — Absolute Wedsite Guide</title>
+<style>
+  :root {
+    --blue:#1a56a4; --green:#14805e; --orange:#c85a00; --red:#b42318;
+    --purple:#5a3ea0; --gray:#f4f6f9; --border:#d1d9e6;
+    --text:#1e2636; --muted:#5a6478;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:"Segoe UI",Arial,sans-serif; font-size:16px; color:var(--text); background:#fff; max-width:900px; margin:0 auto; padding:32px 24px 64px; line-height:1.6; }
+  h1 { font-size:1.7rem; color:var(--blue); margin-bottom:4px; }
+  .subtitle { color:var(--muted); font-size:.95rem; margin-bottom:24px; }
+
+  /* Download banner */
+  .dl-banner { background:#1e2636; color:#fff; border-radius:10px; padding:16px 20px; margin-bottom:20px; display:flex; flex-wrap:wrap; align-items:center; gap:14px; }
+  .dl-banner .dl-text { flex:1; min-width:220px; font-size:.93rem; }
+  .dl-banner .dl-text strong { color:#7dd3fc; }
+  .dl-btn { display:inline-block; background:var(--green); color:#fff; text-decoration:none; font-weight:700; font-size:.88rem; padding:9px 18px; border-radius:6px; white-space:nowrap; }
+  .dl-btn:hover { background:#0f6347; }
+  .url-chip { display:inline-block; background:rgba(255,255,255,.12); color:#d4e0f5; font-family:monospace; font-size:.82rem; padding:3px 8px; border-radius:4px; margin-top:4px; }
+
+  .start-box { background:#e6f5f1; border:1px solid #9fd4c0; border-radius:10px; padding:16px 20px; margin-bottom:28px; }
+  .start-box strong { color:var(--green); }
+
+  /* Pick table */
+  table.pick { width:100%; border-collapse:collapse; font-size:.88rem; margin:12px 0 28px; }
+  table.pick th, table.pick td { border:1px solid var(--border); padding:9px 11px; text-align:left; vertical-align:top; }
+  table.pick th { background:var(--gray); font-size:.8rem; text-transform:uppercase; letter-spacing:.04em; }
+  @media(max-width:600px) {
+    table.pick thead { display:none; }
+    table.pick tr { display:block; border:1px solid var(--border); border-radius:6px; margin-bottom:10px; }
+    table.pick td { display:block; border:none; padding:6px 10px; font-size:.85rem; }
+    table.pick td:first-child { font-weight:700; background:var(--gray); border-radius:6px 6px 0 0; }
+  }
+
+  /* Persona badges */
+  .badge { display:inline-block; color:#fff; font-size:.72rem; font-weight:700; padding:2px 9px; border-radius:20px; margin-right:6px; white-space:nowrap; }
+  .badge.zero   { background:#374259; }
+  .badge.raj    { background:var(--green); }
+  .badge.jean   { background:var(--purple); }
+  .badge.fast   { background:var(--blue); }
+  .badge.last   { background:var(--red); }
+
+  /* Method cards */
+  .methods { display:grid; gap:28px; margin-bottom:36px; }
+  .card { border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+  .card-header { padding:14px 20px; font-size:1.02rem; font-weight:700; border-bottom:1px solid var(--border); }
+  .card-header.m1 { background:#eceef2; }
+  .card-header.m2 { background:#e6f5f1; }
+  .card-header.m3 { background:#ede9f8; }
+  .card-header.m4 { background:#e8f1fc; }
+  .card-header.m5 { background:#fdecea; }
+  .card-body { padding:20px 24px; }
+
+  /* Steps */
+  .steps { list-style:none; counter-reset:step; margin-top:8px; }
+  .steps li { counter-increment:step; padding:10px 0 10px 52px; position:relative; border-bottom:1px solid var(--border); }
+  .steps li:last-child { border-bottom:none; }
+  .steps li::before { content:counter(step); position:absolute; left:0; top:10px; width:34px; height:34px; border-radius:50%; background:var(--green); color:#fff; font-weight:700; font-size:.9rem; display:flex; align-items:center; justify-content:center; }
+  .steps li.dark::before   { background:#374259; }
+  .steps li.purple::before { background:var(--purple); }
+  .steps li.blue::before   { background:var(--blue); }
+  .steps li.red::before    { background:var(--red); }
+  .step-title { font-weight:700; margin-bottom:3px; }
+  .step-note  { font-size:.87rem; color:var(--muted); margin-top:4px; }
+
+  /* Callout boxes */
+  .callout { border-left:4px solid; padding:11px 15px; font-size:.9rem; margin:12px 0; border-radius:0 6px 6px 0; }
+  .callout.safe   { border-color:var(--green);  background:#edf7f2; }
+  .callout.warn   { border-color:#f0a500;        background:#fff8e6; }
+  .callout.danger { border-color:var(--red);     background:#fdecea; }
+  .callout.info   { border-color:var(--blue);    background:#e8f1fc; }
+
+  .file-list { background:var(--gray); border-radius:7px; padding:12px 16px; font-size:.88rem; margin:10px 0; }
+  .file-list code { background:#fff; padding:1px 5px; border-radius:3px; }
+  .cmd { background:#1e2636; color:#d4e0f5; border-radius:6px; padding:10px 14px; font-family:monospace; font-size:.85rem; margin:8px 0; overflow-x:auto; }
+  .cmd span { color:#7dd3fc; }
+
+  .security-list { font-size:.92rem; color:var(--text); margin-left:20px; margin-bottom:28px; }
+  .security-list li { margin-bottom:6px; }
+  .faq h2 { font-size:1.05rem; color:var(--blue); margin:32px 0 12px; border-bottom:2px solid var(--border); padding-bottom:6px; }
+  .faq-item { margin-bottom:14px; }
+  .faq-q { font-weight:700; }
+  .faq-a { color:var(--muted); font-size:.92rem; }
+  .footer { margin-top:40px; font-size:.82rem; color:var(--muted); border-top:1px solid var(--border); padding-top:16px; }
+  a { color:var(--blue); }
+  kbd { background:#eee; padding:1px 6px; border-radius:3px; font-size:.84em; }
+</style>
+</head>
+<body>
+
+<h1>eDoc PDF Splitter</h1>
+<p class="subtitle">Absolute Wedsite · Split one Air Transat group eDoc into one PDF per guest · Booking 75953181 · 93 pp · 21 guests</p>
+
+<!-- ── DOWNLOAD BANNER ────────────────────────────────────────────── -->
+<div class="dl-banner">
+  <div class="dl-text">
+    <strong>Local kit files (bat, ps1, csv, templates)</strong> — download once, run everything from your desktop.<br>
+    <span class="url-chip">This guide online: khadwedsmadd.netlify.app/edoc</span>
+    &nbsp;
+    <span class="url-chip">Desk card: khadwedsmadd.netlify.app/edoc/desk</span>
+  </div>
+  <a class="dl-btn" href="https://drive.google.com/drive/folders/1L6_BGtS3n-oJuNy1-Sd82sQpX9DlPgZQ?usp=drive_link" target="_blank">⬇ Download Kit (Google Drive)</a>
+</div>
+
+<div class="start-box">
+  <strong>Raj — start here:</strong> Download the kit above → double-click <code>OPEN_DESK_KIT.bat</code> to open your Excel tracker, desk card, and this guide in one click. No Python needed for Methods 1, 2, or 3.
+</div>
+
+<!-- ── PICK TABLE ─────────────────────────────────────────────────── -->
+<h2 style="font-size:1.05rem;color:var(--blue);margin-bottom:8px;">Which method should you use?</h2>
+<table class="pick">
+  <thead><tr><th>Situation</th><th>Method</th><th>Time</th><th>Install needed</th><th>Privacy</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Nothing installed, need it now</td>
+      <td><strong>1 — Microsoft Edge</strong></td>
+      <td>~20 min</td>
+      <td>None — Edge is already on Windows</td>
+      <td>Fully offline</td>
+    </tr>
+    <tr>
+      <td>Raj · regular use · paper-friendly</td>
+      <td><strong>2 — PDFsam Desk Kit ⭐</strong></td>
+      <td>~10 min</td>
+      <td>PDFsam Basic (one-time, free)</td>
+      <td>Fully offline</td>
+    </tr>
+    <tr>
+      <td>Jean · any new eDoc layout · no Python</td>
+      <td><strong>3 — PowerShell (bundled tool)</strong></td>
+      <td>~30 sec</td>
+      <td>None — PDF tool ships in the kit; double-click the .bat</td>
+      <td>Fully offline · auto-detects names</td>
+    </tr>
+    <tr>
+      <td>Jean · Python already set up · fastest</td>
+      <td><strong>4 — Python one-click</strong></td>
+      <td>~15 sec</td>
+      <td>Python + PyMuPDF (one-time)</td>
+      <td>Fully offline · fastest path</td>
+    </tr>
+    <tr>
+      <td>Absolute last resort · none of the above work</td>
+      <td><strong>5 — iLovePDF web</strong></td>
+      <td>~8 min</td>
+      <td>Browser only</td>
+      <td><strong style="color:var(--red)">Uploads guest PII — read warning</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="methods">
+
+<!-- ── METHOD 1 ── EDGE ZERO-INSTALL ─────────────────────────────── -->
+<div class="card">
+  <div class="card-header m1"><span class="badge zero">ZERO INSTALL</span> Method 1 — Microsoft Edge Print to PDF</div>
+  <div class="card-body">
+    <div class="callout info"><strong>When to use:</strong> PDFsam isn't installed yet and you need to send a guest their PDF right now. Uses only software already on Windows — no download required.</div>
+    <div class="callout safe"><strong>Privacy:</strong> Nothing leaves your computer. Microsoft Edge renders the PDF locally.</div>
+    <ul class="steps">
+      <li class="dark">
+        <div class="step-title">Open the eDoc in Microsoft Edge</div>
+        Right-click the group eDoc PDF → <strong>Open with → Microsoft Edge</strong>.
+      </li>
+      <li class="dark">
+        <div class="step-title">Find the page range for your guest</div>
+        From <code>PDFsam_Split_Points.txt</code> (in your downloaded kit) or the desk card: guest 01 = pages 3–5, guest 02 = pages 6–8, and so on in steps of 3.
+      </li>
+      <li class="dark">
+        <div class="step-title">Print to PDF — one guest at a time</div>
+        <kbd>Ctrl+P</kbd> → Printer: <strong>Microsoft Print to PDF</strong> → Pages: <strong>3-5</strong> → Print → save as <strong>01_SEEMANTHINI_PORURI.pdf</strong>. Repeat for each of the 21 guests.
+        <div class="step-note">Takes ~1 min per guest. Switch to Method 2 (PDFsam) once installed — far faster for the full batch.</div>
+      </li>
+      <li class="dark">
+        <div class="step-title">Open Excel tracker + send</div>
+        Open <code>Raj_eDoc_Guest_Tracker.csv</code> in Excel. Fill in guest email (column F), mark <strong>Sent = Y</strong> (column G) after each send.
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── METHOD 2 ── PDFSAM DESK KIT ───────────────────────────────── -->
+<div class="card">
+  <div class="card-header m2"><span class="badge raj">RAJ · DEFAULT</span> Method 2 — PDFsam Desktop Kit + Excel Tracker</div>
+  <div class="card-body">
+    <div class="callout safe"><strong>Privacy:</strong> Fully offline. PDFsam runs on your PC and never uploads anything. Best choice for guest names and confirmation numbers.</div>
+    <div class="file-list"><strong>In your downloaded kit:</strong><br>
+      <code>OPEN_DESK_KIT.bat</code> · <code>Raj_eDoc_Guest_Tracker.csv</code> · <code>Raj_eDoc_Desk_Card.html</code> · <code>Gmail_Itinerary_Email.txt</code> · <code>PDFsam_Split_Points.txt</code>
+    </div>
+    <ul class="steps">
+      <li>
+        <div class="step-title">Install PDFsam Basic (one time)</div>
+        Download free from <a href="https://pdfsam.org/download-pdfsam-basic/" target="_blank">pdfsam.org</a>. No account needed.
+      </li>
+      <li>
+        <div class="step-title">Trim the group cover + appendix pages</div>
+        PDFsam → <strong>Organize</strong> → open eDoc → delete pages <strong>1-2</strong> and <strong>66-93</strong> → save as <code>Guests_Only.pdf</code>.
+      </li>
+      <li>
+        <div class="step-title">Split every 3 pages → 21 files</div>
+        PDFsam → <strong>Split</strong> → upload <code>Guests_Only.pdf</code> → choose <strong>Split every 3 pages</strong> → go. You get <code>split_1.pdf</code> through <code>split_21.pdf</code>.
+      </li>
+      <li>
+        <div class="step-title">Rename using the Excel tracker</div>
+        Open <code>Raj_eDoc_Guest_Tracker.csv</code> in Excel. Column D shows the target filename for each numbered file. Verify the ALL CAPS name on each PDF matches.
+        <div class="step-note">Print <code>Raj_eDoc_Desk_Card.html</code> (<a href="https://khadwedsmadd.netlify.app/edoc/desk" target="_blank">khadwedsmadd.netlify.app/edoc/desk</a>) and keep it beside your monitor as a quick rename map.</div>
+      </li>
+      <li>
+        <div class="step-title">Send from Gmail · mark Sent = Y</div>
+        Copy body from <code>Gmail_Itinerary_Email.txt</code>. Attach <strong>one guest PDF only</strong>. Mark <strong>Sent = Y</strong> in column G after each send.
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── METHOD 3 ── POWERSHELL + POPPLER ──────────────────────────── -->
+<div class="card">
+  <div class="card-header m3"><span class="badge jean">JEAN · NO PYTHON</span> Method 3 — PowerShell + Poppler (auto-detects names)</div>
+  <div class="card-body">
+    <div class="callout safe"><strong>Privacy:</strong> Fully offline. More reliable than fixed "every 3 pages" — detects guest boundaries from text markers.</div>
+
+    <div class="callout info" style="margin-bottom:14px">
+      <strong>No setup, no website downloads:</strong><br>
+      The PDF tool is bundled inside the downloaded kit. Just double-click <code>3_SPLIT_WITH_MARKERS.bat</code>.<br>
+      <span style="font-size:.85rem;color:var(--muted)">(On a fresh PC without the bundled tool, press <kbd>Y</kbd> when it offers to fetch it automatically, ~30 sec — or run <code>INSTALL_POPPLER.bat</code> once.)</span>
+    </div>
+
+    <h3 style="font-size:.95rem;margin:10px 0 6px;">Section markers detected</h3>
+    <table class="pick" style="font-size:.83rem;margin-bottom:12px;">
+      <thead><tr><th>Marker</th><th>Pattern</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>GUEST_START</code></td><td>ALL-CAPS name + <code>TS 326</code> or <code>TS 327</code></td><td>New guest section begins</td></tr>
+        <tr><td><code>APPENDIX</code></td><td>"Baggage dimensions" / "ELECTRONIC TICKET"</td><td>Guest sections ended; reference pages start</td></tr>
+      </tbody>
+    </table>
+
+    <ul class="steps">
+      <li class="purple">
+        <div class="step-title">Drop the eDoc PDF in the kit folder</div>
+        Put the group eDoc next to <code>3_SPLIT_WITH_MARKERS.bat</code>.
+      </li>
+      <li class="purple">
+        <div class="step-title">Double-click <code>3_SPLIT_WITH_MARKERS.bat</code></div>
+        It lists every guest found (21 for our sample) with page ranges. Check the names, press <kbd>Y</kbd> to split. Output lands in <code>split_output\</code> and the folder opens automatically.
+      </li>
+      <li class="purple">
+        <div class="step-title">Send from Gmail · mark Sent = Y</div>
+        The script auto-creates <code>split_output\Raj_eDoc_Guest_Tracker.csv</code>. Open in Excel, add guest emails (column F), send one PDF each, mark Sent = Y.
+      </li>
+    </ul>
+    <div class="callout safe" style="margin-top:12px;font-size:.85rem"><strong>Verified:</strong> tested end-to-end on the ATH CAT&amp; BRAD sample — 21 guest PDFs (3 pages each) + 28-page group reference, all names matched.</div>
+  </div>
+</div>
+
+<!-- ── METHOD 4 ── PYTHON ONE-CLICK ──────────────────────────────── -->
+<div class="card">
+  <div class="card-header m4"><span class="badge fast">JEAN · FASTEST</span> Method 4 — Python one-click</div>
+  <div class="card-body">
+    <div class="callout safe"><strong>Privacy:</strong> Runs entirely on your computer. Detects passenger names via font size + flight code markers.</div>
+    <ul class="steps">
+      <li class="blue">
+        <div class="step-title">Install Python (one time)</div>
+        <a href="https://www.python.org/downloads/" target="_blank">python.org/downloads</a> → check <strong>Add Python to PATH</strong>.
+      </li>
+      <li class="blue">
+        <div class="step-title">Install PDF library (one time)</div>
+        Double-click <code>2_SETUP_ONCE.bat</code> in your kit folder.
+      </li>
+      <li class="blue">
+        <div class="step-title">Run</div>
+        Put eDoc PDF in the kit folder → double-click <code>1_SPLIT_MY_EDOC.bat</code> → review passenger list → press <kbd>Y</kbd> → files appear in <code>split_output\</code>.
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── METHOD 5 ── ILOVEPDF ──────────────────────────────────────── -->
+<div class="card">
+  <div class="card-header m5"><span class="badge last">LAST RESORT ONLY</span> Method 5 — iLovePDF (browser upload)</div>
+  <div class="card-body">
+    <div class="callout danger"><strong>Privacy warning:</strong> Uploads the full group eDoc — every guest's name, confirmation, and travel dates — to a third-party server. Use only if Methods 1–4 are unavailable. Delete your uploaded file on their site immediately after downloading.</div>
+    <ul class="steps">
+      <li class="red"><div class="step-title">Trim</div><a href="https://www.ilovepdf.com/organize-pdf" target="_blank">ilovepdf.com/organize-pdf</a> → keep pages 3-65 → <code>Guests_Only.pdf</code></li>
+      <li class="red"><div class="step-title">Split</div><a href="https://www.ilovepdf.com/split_pdf" target="_blank">ilovepdf.com/split_pdf</a> → Split every 3 pages → download ZIP</li>
+      <li class="red"><div class="step-title">Rename + send</div>Use Excel tracker column D. <strong>Delete file from iLovePDF site immediately.</strong></li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /.methods -->
+
+<!-- ── SECURITY CHECKLIST ─────────────────────────────────────────── -->
+<h2 style="font-size:1.05rem;color:var(--blue);margin-bottom:10px;">Security checklist (every batch)</h2>
+<ul class="security-list">
+  <li>Send <strong>one guest PDF per email</strong>. Never forward the full 93-page group eDoc to anyone.</li>
+  <li>Open each PDF before sending. Confirm the ALL CAPS name on page 1 matches the recipient's address.</li>
+  <li>Track every send in the Excel tracker (Sent = Y, column G) — no skips, no duplicates.</li>
+  <li>Prefer offline Methods 1–4. Use Method 5 (web) only when everything else fails.</li>
+</ul>
+
+<!-- ── PAGE MAP ───────────────────────────────────────────────────── -->
+<h2 style="font-size:1.05rem;color:var(--blue);margin-bottom:10px;">Air Transat eDoc page map · booking 75953181</h2>
+<table class="pick">
+  <thead><tr><th>Pages</th><th>Content</th><th>Send to guests?</th></tr></thead>
+  <tbody>
+    <tr><td>1–2</td><td>Group booking cover · agency reference</td><td>No — agency copy only</td></tr>
+    <tr><td>3–65</td><td>21 guests × 3 pages each</td><td>Yes — one PDF per guest</td></tr>
+    <tr><td>66–93</td><td>Baggage · hotel · e-ticket reference</td><td>Optional — attach as <code>00_Group_Travel_Reference.pdf</code></td></tr>
+  </tbody>
+</table>
+
+<!-- ── FAQ ───────────────────────────────────────────────────────── -->
+<div class="faq">
+  <h2>Common questions</h2>
+  <div class="faq-item">
+    <div class="faq-q">Can Jean split the file and send me the output folder?</div>
+    <div class="faq-a">Yes. Jean runs Method 3 or 4 and shares the <code>split_output</code> folder (via Google Drive or USB). Raj handles Gmail sends and Excel tracking.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Guest page count isn't 3 on a new eDoc — what do I do?</div>
+    <div class="faq-a">Use Method 3 (PowerShell) or Method 4 (Python). Both detect guest boundaries from text, not page count, so they handle layout variations automatically.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">It says "PDF tools not installed" on a new computer</div>
+    <div class="faq-a">The kit ships with the tool inside <code>tools\poppler\bin\</code>. If a fresh PC is missing it, press <kbd>Y</kbd> when the script offers to install automatically (~30 sec), or run <code>INSTALL_POPPLER.bat</code> once. No website browsing needed.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">"pip is not recognized" for the Python setup</div>
+    <div class="faq-a">Reinstall Python from python.org — check <strong>Add Python to PATH</strong>. Alternatively, use Method 3 (PowerShell) — no Python required.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">I sent the wrong PDF to a guest</div>
+    <div class="faq-a">Send a follow-up with the correct PDF and a brief apology. Mark the correction in the Notes column of the Excel tracker.</div>
+  </div>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+<div class="footer">
+  Absolute Wedsite · <a href="mailto:raj@absolutewedsite.com">raj@absolutewedsite.com</a> · <a href="mailto:groups@absolutewedsite.com">groups@absolutewedsite.com</a><br>
+  Online: <a href="https://khadwedsmadd.netlify.app/edoc">khadwedsmadd.netlify.app/edoc</a> · Desk card: <a href="https://khadwedsmadd.netlify.app/edoc/desk">khadwedsmadd.netlify.app/edoc/desk</a> · Updated May 2026
+</div>
+
+</body>
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eDoc Splitter — Process Guide for Any New eDoc</title>
+<style>
+  :root {
+    --blue:#1a56a4; --green:#14805e; --orange:#c85a00; --red:#b42318;
+    --purple:#5a3ea0; --gray:#f4f6f9; --border:#d1d9e6;
+    --text:#1e2636; --muted:#5a6478;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Segoe UI",Arial,sans-serif;font-size:15px;color:var(--text);background:#fff;max-width:900px;margin:0 auto;padding:32px 24px 80px;line-height:1.65;}
+
+  /* ── Page header ── */
+  .page-header{border-bottom:3px solid var(--blue);padding-bottom:18px;margin-bottom:28px;}
+  .page-header h1{font-size:1.65rem;color:var(--blue);margin-bottom:4px;}
+  .page-header .meta{font-size:.82rem;color:var(--muted);}
+  .page-header .meta span{margin-right:18px;}
+
+  /* ── Section headers ── */
+  h2{font-size:1.08rem;color:var(--blue);border-bottom:2px solid var(--border);padding-bottom:6px;margin:36px 0 14px;}
+  h3{font-size:.96rem;font-weight:700;color:var(--text);margin:20px 0 8px;}
+
+  /* ── Callouts ── */
+  .callout{border-left:4px solid;padding:11px 15px;font-size:.9rem;margin:12px 0;border-radius:0 6px 6px 0;}
+  .callout.safe  {border-color:var(--green); background:#edf7f2;}
+  .callout.info  {border-color:var(--blue);  background:#e8f1fc;}
+  .callout.warn  {border-color:var(--orange);background:#fff8e6;}
+  .callout.danger{border-color:var(--red);   background:#fdecea;}
+
+  /* ── Decision box ── */
+  .decision-box{background:#f0f4fa;border:2px solid var(--blue);border-radius:10px;padding:20px 24px;margin:18px 0;}
+  .decision-box h3{color:var(--blue);margin-top:0;}
+  .decision-row{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border);}
+  .decision-row:last-child{border-bottom:none;}
+  .decision-if{flex:0 0 220px;font-size:.88rem;color:var(--muted);}
+  .decision-then{flex:1;font-size:.9rem;}
+  .decision-then strong{color:var(--blue);}
+
+  /* ── Steps ── */
+  .step-block{border:1px solid var(--border);border-radius:10px;margin-bottom:20px;overflow:hidden;}
+  .step-header{display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--border);}
+  .step-num{background:var(--blue);color:#fff;font-weight:800;font-size:.9rem;min-width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-num.green {background:var(--green);}
+  .step-num.purple{background:var(--purple);}
+  .step-num.orange{background:var(--orange);}
+  .step-num.red   {background:var(--red);}
+  .step-title{font-weight:700;font-size:.98rem;}
+  .step-who{font-size:.8rem;color:var(--muted);margin-left:auto;flex-shrink:0;}
+  .step-body{padding:16px 20px;font-size:.91rem;}
+  .step-body ol,.step-body ul{margin:8px 0 8px 20px;}
+  .step-body li{margin-bottom:5px;}
+  .step-body .output{margin-top:10px;font-size:.86rem;color:var(--green);font-weight:600;}
+  .step-body .note{font-size:.84rem;color:var(--muted);margin-top:6px;}
+
+  /* ── Method badge ── */
+  .badge{display:inline-block;color:#fff;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:20px;margin-right:5px;vertical-align:middle;white-space:nowrap;}
+  .badge.py    {background:var(--blue);}
+  .badge.ps    {background:var(--purple);}
+  .badge.manual{background:#374259;}
+  .badge.best  {background:var(--green);}
+  .badge.warn  {background:var(--red);}
+
+  /* ── Tables ── */
+  table.data{width:100%;border-collapse:collapse;font-size:.87rem;margin:10px 0 18px;}
+  table.data th,table.data td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.data th{background:var(--gray);font-size:.79rem;text-transform:uppercase;letter-spacing:.04em;}
+  table.data tr:hover td{background:#f9fafe;}
+
+  /* ── Flowchart ── */
+  .flow{font-family:Consolas,"Courier New",monospace;font-size:.8rem;background:#f4f6f9;border:1px solid var(--border);border-radius:8px;padding:18px 22px;line-height:1.9;overflow-x:auto;margin:14px 0;}
+
+  /* ── Checklist ── */
+  .checklist{background:var(--gray);border:1px solid var(--border);border-radius:9px;padding:16px 20px;margin:14px 0;}
+  .checklist ul{list-style:none;padding:0;}
+  .checklist li{padding:4px 0 4px 26px;position:relative;font-size:.91rem;}
+  .checklist li::before{content:"\2610";position:absolute;left:0;font-size:1.1rem;color:var(--blue);}
+
+  /* ── Code ── */
+  code{background:#eef1f7;padding:1px 6px;border-radius:3px;font-size:.88em;font-family:Consolas,"Courier New",monospace;}
+  .cmd{background:#1e2636;color:#d4e0f5;border-radius:6px;padding:9px 14px;font-family:Consolas,monospace;font-size:.84rem;margin:6px 0;}
+
+  /* ── RACI ── */
+  .raci-pill{display:inline-block;font-size:.72rem;font-weight:700;padding:1px 8px;border-radius:10px;}
+  .raci-R{background:#dff3ea;color:#0d6640;}
+  .raci-A{background:#e8f1fc;color:#1a4fa0;}
+  .raci-C{background:#fdecea;color:#8b1a14;}
+  .raci-I{background:#f4f6f9;color:#374259;}
+
+  /* ── Footer ── */
+  .footer{margin-top:48px;font-size:.81rem;color:var(--muted);border-top:1px solid var(--border);padding-top:14px;}
+
+  @media print{body{padding:20px;font-size:12px;}.step-block{break-inside:avoid;}.decision-box{break-inside:avoid;}}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<div class="page-header">
+  <h1>eDoc PDF Splitter — Process Guide</h1>
+  <p style="font-size:.95rem;color:var(--muted);margin:4px 0 10px;">How to split any new Air Transat group eDoc into individual guest PDFs and send them</p>
+  <div class="meta">
+    <span><strong>Owner:</strong> Raj / Jean · Absolute Wedsite</span>
+    <span><strong>Last updated:</strong> May 2026</span>
+    <span><strong>Kit download:</strong> <a href="https://drive.google.com/drive/folders/1L6_BGtS3n-oJuNy1-Sd82sQpX9DlPgZQ?usp=drive_link">Google Drive</a></span>
+    <span><strong>Online guide:</strong> <a href="https://khadwedsmadd.netlify.app/edoc">khadwedsmadd.netlify.app/edoc</a></span>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<h2>Purpose</h2>
+<p>Air Transat sends one large PDF (called an "eDoc") that contains itinerary pages for every guest in a group booking. This document explains — step by step — how to split that single PDF into one file per guest and email each guest only their own pages. No guest should ever receive the full group eDoc.</p>
+
+<div class="callout safe" style="margin-top:14px">
+  <strong>Result of this process:</strong> 21 guest PDFs (one per person) + one shared reference PDF (baggage, hotel, e-ticket) + a send-tracking spreadsheet. Each guest PDF is named after the passenger, e.g. <code>01_SEEMANTHINI_PORURI.pdf</code>.
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<h2>Scope</h2>
+<table class="data">
+  <thead><tr><th>Included</th><th>Excluded</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>
+        Any Air Transat group eDoc (TS 326 / TS 327 flights)<br>
+        Standard layout: 2pp cover, 3pp per guest, shared appendix<br>
+        Non-standard layouts (auto-detect methods handle these)
+      </td>
+      <td>
+        Non-Air Transat PDFs (different marker patterns)<br>
+        Sending to guests (covered in Step 7 below)<br>
+        Booking amendments after split — re-run the full process
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<h2>Roles (RACI)</h2>
+<table class="data">
+  <thead><tr><th>Step</th><th>Raj</th><th>Jean</th></tr></thead>
+  <tbody>
+    <tr><td>Receive eDoc from Air Transat</td><td><span class="raci-pill raci-R">R · Does it</span></td><td><span class="raci-pill raci-I">I · Informed</span></td></tr>
+    <tr><td>Choose split method</td><td><span class="raci-pill raci-A">A · Decides</span></td><td><span class="raci-pill raci-C">C · Advises</span></td></tr>
+    <tr><td>Run the splitter script</td><td><span class="raci-pill raci-C">C · Can do it</span></td><td><span class="raci-pill raci-R">R · Primary</span></td></tr>
+    <tr><td>Verify output PDFs</td><td><span class="raci-pill raci-R">R · Does it</span></td><td><span class="raci-pill raci-C">C · Can help</span></td></tr>
+    <tr><td>Email guests + track sends</td><td><span class="raci-pill raci-R">R · Does it</span></td><td><span class="raci-pill raci-I">I · Informed</span></td></tr>
+  </tbody>
+</table>
+<p style="font-size:.83rem;color:var(--muted);margin-top:4px;"><strong>R</strong> = Responsible (does the work) · <strong>A</strong> = Accountable (owns outcome) · <strong>C</strong> = Consulted · <strong>I</strong> = Informed</p>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<h2>What Air Transat sends you — understanding the eDoc structure</h2>
+
+<p>Before splitting, understand what's in the file. Standard Air Transat group eDocs follow this layout:</p>
+
+<div class="flow">
+  PAGE 1-2   Group booking cover (agency reference only — do NOT send to guests)
+  PAGE 3-5   Guest 1 itinerary  (3 pages: itinerary + flight info x2)
+  PAGE 6-8   Guest 2 itinerary
+  PAGE 9-11  Guest 3 itinerary
+  ...        (pattern repeats: 3 pages per guest)
+  PAGE 63-65 Guest 21 itinerary  (last guest)
+  PAGE 66-93 Shared appendix: baggage dimensions, hotel details, e-ticket reference
+             (optional — you can attach this to everyone's email)
+</div>
+
+<div class="callout info">
+  <strong>How to check your specific eDoc's layout:</strong> Open the PDF in Microsoft Edge or Adobe Acrobat. Look at page 3 — the first line in ALL CAPS is the first guest's name. Every 3 pages you should see a new name. The appendix starts when you see "Baggage dimensions" or "ELECTRONIC TICKET." If the page count per guest is different, use an auto-detect method (Steps 5A or 5B below) — they handle any layout automatically.
+</div>
+
+<div class="callout warn">
+  <strong>Note for non-standard eDocs:</strong> Occasionally Air Transat includes an extra information page, making some guests 4 pages instead of 3. The auto-detect methods (split_edoc.py, split_edoc_markers.py, 3_SPLIT_WITH_MARKERS.bat) handle this correctly. The fixed-page method (PDFsam "every 3 pages" or split_edoc_fixedpage.py) will fail in this case.
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<h2>Choose your method before you start</h2>
+
+<div class="decision-box">
+  <h3>Which method should I use?</h3>
+  <div class="decision-row">
+    <div class="decision-if">Python is installed on this PC</div>
+    <div class="decision-then"><strong>→ Method A (best):</strong> double-click <code>1_SPLIT_MY_EDOC.bat</code> <span class="badge best">PRIMARY</span></div>
+  </div>
+  <div class="decision-row">
+    <div class="decision-if">Python not installed / PyMuPDF install failed</div>
+    <div class="decision-then"><strong>→ Method B:</strong> <code>pip install pypdf</code> then run <code>split_edoc_markers.py</code> <span class="badge py">LIGHTWEIGHT</span></div>
+  </div>
+  <div class="decision-row">
+    <div class="decision-if">No Python at all — Jean's path</div>
+    <div class="decision-then"><strong>→ Method C:</strong> double-click <code>3_SPLIT_WITH_MARKERS.bat</code> (Poppler bundled) <span class="badge ps">NO PYTHON</span></div>
+  </div>
+  <div class="decision-row">
+    <div class="decision-if">Layout is confirmed standard (3pp/guest), PDFsam installed</div>
+    <div class="decision-then"><strong>→ Method D:</strong> PDFsam manual split (trim → split every 3 pages → rename) <span class="badge manual">MANUAL</span></div>
+  </div>
+  <div class="decision-row">
+    <div class="decision-if">Nothing works, urgent, last resort only</div>
+    <div class="decision-then"><strong>→ Method E:</strong> iLovePDF web — <span style="color:var(--red);">uploads guest PII to third-party server</span> <span class="badge warn">LAST RESORT</span></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<h2>Process Flow</h2>
+
+<div class="flow">
+  [Receive eDoc from Air Transat]
+          |
+  [Step 1: Save the PDF into the kit folder]
+          |
+  [Step 2: Open the PDF — identify total pages + guest count]
+          |
+  [Step 3: Choose method (see table above)]
+          |
+        /   \
+  Python?   No Python?
+    |              |
+  [Step 4A]     [Step 4C]
+  Run bat/py    Run .bat
+    |              |
+     \            /
+  [Step 5: Verify output — count PDFs, spot-check 2 names]
+          |
+  [Step 6: Open Raj_eDoc_Guest_Tracker.csv — fill in guest emails]
+          |
+  [Step 7: Email each guest their PDF — mark Sent=Y]
+          |
+  [Done]
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<h2>Detailed Steps</h2>
+
+<!-- STEP 1 -->
+<div class="step-block">
+  <div class="step-header">
+    <div class="step-num">1</div>
+    <div class="step-title">Receive and save the new eDoc PDF</div>
+    <div class="step-who">Who: Raj</div>
+  </div>
+  <div class="step-body">
+    <ol>
+      <li>Open the email from Air Transat (subject usually contains "e-Document" or "eDoc").</li>
+      <li>Download the PDF attachment. The filename doesn't matter — the scripts find any PDF in the folder automatically.</li>
+      <li><strong>Copy or move the PDF file into the kit folder:</strong><br>
+        On your PC: <code>eDoc PDF Splitter\</code> (wherever you saved the kit from Google Drive)<br>
+        The kit folder is the same folder that contains <code>1_SPLIT_MY_EDOC.bat</code>, <code>3_SPLIT_WITH_MARKERS.bat</code>, etc.
+      </li>
+    </ol>
+    <div class="note">If you have multiple PDFs in the folder, the script will ask you to pick one by number — that's normal.</div>
+    <div class="output">✓ Output: eDoc PDF is sitting in the kit folder alongside the scripts.</div>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step-block">
+  <div class="step-header">
+    <div class="step-num">2</div>
+    <div class="step-title">Identify the eDoc structure (30 seconds)</div>
+    <div class="step-who">Who: Raj</div>
+  </div>
+  <div class="step-body">
+    <p>Open the PDF in Microsoft Edge (right-click → Open with → Microsoft Edge) and quickly note:</p>
+    <ol>
+      <li><strong>Total pages</strong> — shown at the bottom of Edge (e.g. "Page 1 of 93").</li>
+      <li><strong>First guest name</strong> — jump to page 3. The passenger name appears in ALL CAPS near the top. This confirms the layout is standard.</li>
+      <li><strong>Guest count</strong> — can be calculated: (total pages − 2 cover pages − appendix pages) ÷ 3. For our sample: (93 − 2 − 28) ÷ 3 = 21 guests.</li>
+      <li><strong>Where appendix starts</strong> — scroll forward until you see "Baggage dimensions" (first appendix page). Note that page number.</li>
+    </ol>
+    <div class="callout info" style="margin-top:10px">
+      <strong>Shortcut:</strong> If you're using an auto-detect method (A, B, or C), skip this step entirely — the script figures out the structure automatically by reading the text on each page.
+    </div>
+    <div class="note">Only needed if you're doing Method D (PDFsam manual) — you need exact page numbers to trim correctly.</div>
+    <div class="output">✓ Output: You know total pages, guest count, and appendix start page.</div>
+  </div>
+</div>
+
+<!-- STEP 3: METHOD A -->
+<div class="step-block">
+  <div class="step-header">
+    <div class="step-num green">3A</div>
+    <div class="step-title">Split — Method A: Python auto-detect (primary, fastest)</div>
+    <div class="step-who">Who: Jean or Raj · requires Python</div>
+  </div>
+  <div class="step-body">
+    <div class="callout safe" style="margin-bottom:10px"><strong>First time only:</strong> double-click <code>2_SETUP_ONCE.bat</code> — it walks you through Python + library install (~5 min). After that you only ever double-click <code>1_SPLIT_MY_EDOC.bat</code>.</div>
+    <ol>
+      <li>Make sure the eDoc PDF is in the kit folder (Step 1).</li>
+      <li>Double-click <strong><code>1_SPLIT_MY_EDOC.bat</code></strong>. A black window opens.</li>
+      <li>The script lists every passenger it found with page ranges. <strong>Read the list and confirm the names look correct.</strong></li>
+      <li>Press <kbd>Y</kbd> then <kbd>Enter</kbd> (or just <kbd>Enter</kbd>) to split.</li>
+      <li>A Windows Explorer window opens showing the output folder — <code>split_output\</code>.</li>
+    </ol>
+    <div class="cmd">Expected output: 21 guest PDFs + 00_Group_Travel_Reference.pdf + manifest.json + Raj_eDoc_Guest_Tracker.csv</div>
+    <div class="note">If the script says "No passenger itineraries found" — check that the PDF is an Air Transat eDoc (not a different airline). See Troubleshooting section.</div>
+    <div class="output">✓ Output: <code>split_output\</code> folder with all guest PDFs ready to send.</div>
+  </div>
+</div>
+
+<!-- STEP 3: METHOD B -->
+<div class="step-block">
+  <div class="step-header">
+    <div class="step-num blue" style="background:var(--blue)">3B</div>
+    <div class="step-title">Split — Method B: Lightweight Python (pypdf, no PyMuPDF needed)</div>
+    <div class="step-who">Who: Jean or Raj · Python must be installed</div>
+  </div>
+  <div class="step-body">
+    <div class="callout info" style="margin-bottom:10px"><strong>When to use:</strong> <code>pip install pymupdf</code> failed or took too long. This method uses a smaller library (~1 MB vs 50 MB).</div>
+    <ol>
+      <li>Open Command Prompt (press <kbd>Win</kbd> + <kbd>R</kbd>, type <code>cmd</code>, press Enter).</li>
+      <li>Install the library (one time only):<div class="cmd">pip install pypdf</div></li>
+      <li>Navigate to the kit folder:<div class="cmd">cd "C:\path\to\eDoc PDF Splitter"</div></li>
+      <li>Run the script:<div class="cmd">python split_edoc_markers.py</div></li>
+      <li>Review the passenger list → press <kbd>Enter</kbd> to split.</li>
+    </ol>
+    <div class="output">✓ Output: same as Method A — 21 guest PDFs in <code>split_output\</code>.</div>
+  </div>
+</div>
+
+<!-- STEP 3: METHOD C -->
+<div class="step-block">
+  <div class="step-header">
+    <div class="step-num purple">3C</div>
+    <div class="step-title">Split — Method C: PowerShell + Poppler (no Python, double-click)</div>
+    <div class="step-who">Who: Jean · no Python needed</div>
+  </div>
+  <div class="step-body">
+    <div class="callout safe" style="margin-bottom:10px"><strong>Zero setup on Drive kit:</strong> Poppler is pre-bundled. Just drop the PDF and double-click — nothing to install.</div>
+    <ol>
+      <li>Make sure the eDoc PDF is in the kit folder (Step 1).</li>
+      <li>Double-click <strong><code>3_SPLIT_WITH_MARKERS.bat</code></strong>.</li>
+      <li><strong>First time on a new PC</strong> (if Poppler is not bundled): a yellow box appears offering to download tools automatically. Press <kbd>Y</kbd> + <kbd>Enter</kbd>. Takes ~30 seconds.</li>
+      <li>The script lists every passenger. Check the names, then press <kbd>Y</kbd> + <kbd>Enter</kbd>.</li>
+      <li>The <code>split_output\</code> folder opens automatically when done.</li>
+    </ol>
+    <div class="output">✓ Output: 21 guest PDFs in <code>split_output\</code>.</div>
+  </div>
+</div>
+
+<!-- STEP 3: METHOD D -->
+<div class="step-block">
+  <div class="step-header">
+    <div class="step-num" style="background:#374259">3D</div>
+    <div class="step-title">Split — Method D: PDFsam manual (standard-layout eDocs only)</div>
+    <div class="step-who">Who: Raj · PDFsam must be installed · pdfsam.org (free)</div>
+  </div>
+  <div class="step-body">
+    <div class="callout warn" style="margin-bottom:10px"><strong>Only works reliably</strong> when every guest has exactly 3 pages. If any guest has a different page count, use Method A or C instead — you'll get wrong names on PDFs.</div>
+    <p><strong>Part 1 — Trim the cover and appendix pages:</strong></p>
+    <ol>
+      <li>Open PDFsam → <strong>Organize</strong>.</li>
+      <li>Open the group eDoc PDF.</li>
+      <li>Delete pages <strong>1–2</strong> (group cover) and pages <strong>[appendix start]–[end]</strong>. For a 93-page eDoc with appendix from page 66: delete pages 1–2 and 66–93.</li>
+      <li>Save as <strong><code>Guests_Only.pdf</code></strong>. It should contain exactly 63 pages (21 guests × 3 pages).</li>
+    </ol>
+    <p><strong>Part 2 — Split into guest files:</strong></p>
+    <ol start="5">
+      <li>PDFsam → <strong>Split</strong>.</li>
+      <li>Open <code>Guests_Only.pdf</code>.</li>
+      <li>Choose <strong>"Split every 3 pages"</strong>.</li>
+      <li>Click Run. You get <code>split_1.pdf</code> through <code>split_21.pdf</code>.</li>
+    </ol>
+    <p><strong>Part 3 — Rename the files:</strong></p>
+    <ol start="9">
+      <li>Open <code>PDFsam_Split_Points.txt</code> in the kit folder — it has the exact rename map for this booking.</li>
+      <li>Rename each file: <code>split_1.pdf</code> → <code>01_SEEMANTHINI_PORURI.pdf</code>, etc.</li>
+      <li><strong>For a completely new booking</strong> (different guest names): open one of the auto-detect methods first to get the correct names, then rename manually. See "New booking with different guests" in Exceptions below.</li>
+    </ol>
+    <div class="output">✓ Output: 21 renamed PDFs ready to send.</div>
+  </div>
+</div>
+
+<!-- STEP 4 -->
+<div class="step-block">
+  <div class="step-header">
+    <div class="step-num green">4</div>
+    <div class="step-title">Verify the output (2 minutes — do not skip)</div>
+    <div class="step-who">Who: Raj</div>
+  </div>
+  <div class="step-body">
+    <div class="callout warn" style="margin-bottom:10px"><strong>Never skip verification.</strong> Sending the wrong PDF to a guest exposes another person's name, confirmation number, and travel dates. One minute of checking prevents a serious privacy error.</div>
+    <ol>
+      <li><strong>Count the files.</strong> In the <code>split_output\</code> folder: should be 21 guest PDFs + 1 reference PDF = 22 files total. (Plus manifest.json and CSV.)</li>
+      <li><strong>Spot-check 3 PDFs.</strong> Open guest #01, #11, and #21. On page 1 of each, confirm the ALL CAPS passenger name matches the filename. Example: <code>01_SEEMANTHINI_PORURI.pdf</code> should show "SEEMANTHINI PORURI" on the first page.</li>
+      <li><strong>Check page count.</strong> Each guest PDF should be 3 pages (check the page counter at the bottom of Edge/Acrobat). The reference PDF will be ~28 pages.</li>
+      <li><strong>Check the CSV.</strong> Open <code>split_output\Raj_eDoc_Guest_Tracker.csv</code> in Excel. Confirm 21 guest rows plus 1 REF row.</li>
+    </ol>
+    <div class="callout danger" style="margin-top:10px">
+      <strong>If anything looks wrong — STOP.</strong> Do not send any emails until the split is correct. Delete the <code>split_output\</code> folder and re-run the splitter. If the problem persists, use a different method (A, B, or C) which auto-detect page boundaries.
+    </div>
+    <div class="output">✓ Output: Verified set of 21 guest PDFs, ready to email.</div>
+  </div>
+</div>
+
+<!-- STEP 5 -->
+<div class="step-block">
+  <div class="step-header">
+    <div class="step-num green">5</div>
+    <div class="step-title">Fill in guest emails in the tracker spreadsheet</div>
+    <div class="step-who">Who: Raj</div>
+  </div>
+  <div class="step-body">
+    <ol>
+      <li>Open <strong><code>split_output\Raj_eDoc_Guest_Tracker.csv</code></strong> in Excel. (Or open <code>Raj_eDoc_Guest_Tracker.csv</code> in the kit folder — it has the same guest list.)</li>
+      <li>Column A = guest number, B = full name, C = page range, D = filename, E = confirmation code.</li>
+      <li>Fill in <strong>Column F (Guest Email)</strong> for each of the 21 guests. Cross-reference your booking system or group email list.</li>
+      <li>Save the file.</li>
+    </ol>
+    <div class="note">You don't need to fill in all 21 emails before starting to send. You can fill in a few, send those, then continue. Just track as you go.</div>
+    <div class="output">✓ Output: Tracker has email addresses for all guests.</div>
+  </div>
+</div>
+
+<!-- STEP 6 -->
+<div class="step-block">
+  <div class="step-header">
+    <div class="step-num orange">6</div>
+    <div class="step-title">Email each guest their individual PDF</div>
+    <div class="step-who">Who: Raj</div>
+  </div>
+  <div class="step-body">
+    <ol>
+      <li>Open <strong><code>Gmail_Itinerary_Email.txt</code></strong> in the kit folder. Copy the email body.</li>
+      <li>In Gmail: click Compose. Paste the email body. Replace <code>[Guest first name]</code> with the guest's actual first name.</li>
+      <li>Set the <strong>To:</strong> field to the guest's email (from your tracker, Column F).</li>
+      <li>Click the attachment button (paperclip icon). Attach <strong>ONLY the one PDF for that guest</strong> from <code>split_output\</code>. For example: <code>01_SEEMANTHINI_PORURI.pdf</code>.</li>
+      <li><strong>Before hitting Send — do this 10-second check:</strong>
+        <ul>
+          <li>Open the attached PDF. Does the ALL CAPS name on page 1 match the person you're sending to?</li>
+          <li>Is only one PDF attached? (Not the full 93-page group eDoc.)</li>
+        </ul>
+      </li>
+      <li>Send.</li>
+      <li>In the tracker, find that guest's row → Column G → type <strong>Y</strong>. Save.</li>
+      <li>Repeat for each guest.</li>
+    </ol>
+    <div class="callout info" style="margin-top:10px">
+      <strong>Optional:</strong> Attach <code>00_Group_Travel_Reference.pdf</code> as a second attachment for guests who want the baggage rules, hotel coordinates, and e-ticket reference pages.
+    </div>
+    <div class="output">✓ Output: All 21 guests emailed. All rows in tracker show Sent = Y.</div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<h2>Exceptions and Edge Cases</h2>
+
+<table class="data">
+  <thead><tr><th width="35%">Situation</th><th>What to do</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>New booking — completely different guest names</strong></td>
+      <td>
+        Methods A, B, C auto-detect names from the PDF text — <strong>no changes needed, just drop the PDF and run.</strong><br>
+        Method D (PDFsam): rename files manually; use the auto-detect preview first to get the correct order and names. Run <code>1_SPLIT_MY_EDOC.bat</code> with "Preview" to print the name list.<br>
+        Method B fixed-page (<code>split_edoc_fixedpage.py</code>): update the <code>DEFAULT_NAMES</code> list at the top of the script before running.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Some guests have 4 pages instead of 3</strong></td>
+      <td>
+        Use Method A (<code>split_edoc.py</code>), B (<code>split_edoc_markers.py</code>), or C (<code>3_SPLIT_WITH_MARKERS.bat</code>). All three auto-detect boundaries and handle variable page counts.<br>
+        Do NOT use PDFsam "every 3 pages" or <code>split_edoc_fixedpage.py</code> — these will split at the wrong boundary.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>"No passenger itineraries found" error</strong></td>
+      <td>
+        The PDF may not have a text layer (scanned image only). Try opening it in Edge — if you can't select/copy text, the eDoc is a scan. Request a new copy from Air Transat with a proper text layer.<br>
+        Also check: is the flight actually TS 326 / TS 327? Scripts look for these codes. For different Air Transat routes, confirm the flight numbers in the PDF match the script's expectations.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Script detects fewer than expected guests (e.g. 19 of 21)</strong></td>
+      <td>
+        Run with <code>-PreviewOnly</code> flag (Method C) or check the manifest.json to see which names were missed. The missing guest may have a name that's only one ALL-CAPS word (unusual but possible). Contact Absolute Wedsite team to add that name to the script's detection logic.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>"PDF tools not installed" on a new PC</strong></td>
+      <td>
+        Method C: press <kbd>Y</kbd> when the script offers to install — or run <code>INSTALL_POPPLER.bat</code> once. If internet is restricted, copy the <code>tools\poppler\bin\</code> folder from the Drive kit.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Python says "pip is not recognized"</strong></td>
+      <td>
+        Reinstall Python from python.org and check <strong>Add Python to PATH</strong> during setup. Then re-run <code>2_SETUP_ONCE.bat</code>. Or switch to Method C (no Python needed).
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Wrong guest PDF was sent to the wrong person</strong></td>
+      <td>
+        Send a follow-up email immediately with the correct PDF and a brief apology ("Please disregard the previous email — the correct itinerary is attached below"). If the wrong file exposed another guest's confirmation number, notify both guests. Mark both rows in the tracker (wrong send and correct resend) with notes in Column I.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Air Transat resends a corrected eDoc</strong></td>
+      <td>
+        Start the process over from Step 1. Delete the old <code>split_output\</code> folder first (or rename it to <code>split_output_OLD\</code>). Re-run the split on the new PDF. Resend only to guests whose information changed — check the new manifest.json against the old one.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Guest says their confirmation number is wrong</strong></td>
+      <td>
+        Open their PDF and check the 6-character code on page 1. If it doesn't match the booking system, contact Air Transat directly — the error is in the source eDoc, not the split. Do not resend — the PDF you sent is exactly what Air Transat provided.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<h2>Pre-send checklist (run this before every batch)</h2>
+
+<div class="checklist">
+  <ul>
+    <li>eDoc PDF was received directly from Air Transat — not forwarded or edited</li>
+    <li>Script detected the expected number of guests (check manifest.json)</li>
+    <li>Opened and verified at least 3 guest PDFs (first, middle, last)</li>
+    <li>Each spot-checked PDF: ALL CAPS name on page 1 matches the filename</li>
+    <li>Each guest PDF is 3 pages (or expected page count)</li>
+    <li>00_Group_Travel_Reference.pdf exists and opens correctly</li>
+    <li>Guest tracker CSV has all email addresses filled in before sending</li>
+    <li>Each Gmail attachment is ONE guest PDF only — not the full eDoc</li>
+    <li>After each send: Sent = Y marked in tracker Column G</li>
+  </ul>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<h2>Metrics</h2>
+
+<table class="data">
+  <thead><tr><th>Metric</th><th>Target</th><th>How to measure</th></tr></thead>
+  <tbody>
+    <tr><td>Split time (auto-detect methods)</td><td>&lt; 2 minutes from drop to output</td><td>Wall clock from double-click to Explorer window opening</td></tr>
+    <tr><td>Guest detection accuracy</td><td>100% — all guests detected, zero false positives</td><td>Count of PDFs in split_output\ vs expected guest count</td></tr>
+    <tr><td>Send time (full batch of 21)</td><td>&lt; 45 minutes</td><td>Time from first send to last Sent=Y in tracker</td></tr>
+    <tr><td>Wrong-PDF incidents</td><td>Zero</td><td>Guest complaints or tracker audit after send</td></tr>
+    <tr><td>Tracker completion</td><td>100% of rows marked Sent=Y before closing batch</td><td>Filter Column G for empty cells after send session</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<h2>Quick reference — file names in split_output\</h2>
+
+<table class="data">
+  <thead><tr><th>File</th><th>What it is</th><th>What to do with it</th></tr></thead>
+  <tbody>
+    <tr><td><code>01_SEEMANTHINI_PORURI.pdf</code> … <code>21_KEERTHANA_MUNDLAPUDI.pdf</code></td><td>Guest itinerary PDFs (3 pages each)</td><td>Email to the matching guest — one per person</td></tr>
+    <tr><td><code>00_Group_Travel_Reference.pdf</code></td><td>Shared appendix: baggage, hotel, e-ticket (~28 pages)</td><td>Optional second attachment to all guests</td></tr>
+    <tr><td><code>Raj_eDoc_Guest_Tracker.csv</code></td><td>Spreadsheet: names, pages, filenames, conf codes, send status</td><td>Open in Excel — fill emails, mark Sent=Y</td></tr>
+    <tr><td><code>manifest.json</code></td><td>Machine-readable record of the split (date, source, 21 guest entries)</td><td>Keep for your records — useful if a guest disputes their itinerary later</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<h2>Related documents</h2>
+
+<ul style="font-size:.91rem;line-height:2;margin-left:18px;">
+  <li><a href="https://khadwedsmadd.netlify.app/edoc">Full 5-method guide</a> — khadwedsmadd.netlify.app/edoc</li>
+  <li><a href="https://khadwedsmadd.netlify.app/edoc/desk">Printable desk card</a> — khadwedsmadd.netlify.app/edoc/desk</li>
+  <li><code>Gmail_Itinerary_Email.txt</code> — copy-paste email body for guest sends</li>
+  <li><code>PDFsam_Split_Points.txt</code> — manual rename map for PDFsam method</li>
+  <li><code>README.txt</code> in kit folder — one-page summary of all files</li>
+  <li><a href="https://drive.google.com/drive/folders/1L6_BGtS3n-oJuNy1-Sd82sQpX9DlPgZQ?usp=drive_link">Google Drive kit download</a> — all scripts, tools, templates</li>
+</ul>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<div class="footer">
+  Process owner: Raj Pahwa · Absolute Wedsite · <a href="mailto:raj@absolutewedsite.com">raj@absolutewedsite.com</a><br>
+  Technical contact: Jean Teodoro · <a href="mailto:groups@absolutewedsite.com">groups@absolutewedsite.com</a><br>
+  This document covers Air Transat group eDocs (TS 326 / TS 327) · Last reviewed May 2026
+</div>
+
+</body>
+</html>

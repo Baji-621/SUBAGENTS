@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>Composio Gmail Runbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
+<style>body{font-family:Lora,serif;max-width:780px;margin:40px auto;padding:0 24px;line-height:1.7}code{background:#F7EDD0;padding:2px 6px}h1{font-size:24px}table{border-collapse:collapse;width:100%;font-size:13px;margin:16px 0}th,td{border:1px solid #ddd;padding:8px;text-align:left}</style>
+</head><body>
+<h1>Composio · Gmail Ingest Runbook</h1>
+<p><a href="index.html">← Agent Skills</a></p>
+<h2>Status (May 26, 2026)</h2>
+<ul>
+<li><strong>Active path:</strong> Google OAuth via <code>scripts/google/ingest-gmail.mjs</code> (account: bmadduluri@gmail.com)</li>
+<li><strong>Last ingest:</strong> 92 new Gmail entries · 6,467 total audit rows</li>
+<li><strong>Beloved queries:</strong> belovedcoordinator2@gmail.com, info@jennyferreyesweddings.com, jennyfer/beloved subjects</li>
+<li><strong>Composio CLI:</strong> not installed on this machine — optional fallback once <code>COMPOSIO_API_KEY</code> is set in <code>scripts/composio/.env</code></li>
+</ul>
+<h2>Primary commands</h2>
+<pre>npm run ingest:gmail
+npm run sync:sheets
+npm run build:os</pre>
+<h2>Composio setup (optional)</h2>
+<pre>curl -fsSL https://composio.dev/install | bash
+composio login
+composio init
+composio link gmail --no-wait
+composio search "gmail fetch emails"
+composio execute "GMAIL_FETCH_EMAILS" -d '{"query":"from:belovedcoordinator2@gmail.com"}'</pre>
+<h2>Key threads captured</h2>
+<table>
+<tr><th>Vendor</th><th>Source</th><th>Status</th></tr>
+<tr><td>Jorge / Drums in Paradise</td><td>belovedcoordinator2@gmail.com</td><td>PO attached · confirm by May 27</td></tr>
+<tr><td>Jennyfer / SAW</td><td>info@jennyferreyesweddings.com</td><td>Docs due May 27</td></tr>
+<tr><td>Raj / Rooming</td><td>raj@absolutewedsite.com</td><td>May 22 comm indexed</td></tr>
+<tr><td>Majestic</td><td>Gmail</td><td>Balance overdue</td></tr>
+<tr><td>Mills James</td><td>Gmail</td><td>Query returned 0 — use PDF quotes on file</td></tr>
+</table>
+</body></html>

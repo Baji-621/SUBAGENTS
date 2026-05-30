@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Skills · B&amp;C Wedding Ops</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--ivory:#FAF6EE;--gold:#C9A84C;--mauve:#7B5A6A;--deep:#4E3045;--teal:#2A7B8E;--text:#2E1E28}
+body{font-family:'Lora',Georgia,serif;background:var(--ivory);color:var(--text);line-height:1.65}
+.hero{background:linear-gradient(160deg,var(--deep),var(--teal));color:#FAF6EE;text-align:center;padding:40px 24px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:32px;color:#E8C97A;font-style:italic}
+.back{display:inline-block;margin-top:14px;color:#E8C97A;text-decoration:none;font-size:12px;letter-spacing:2px;text-transform:uppercase}
+.wrap{max-width:900px;margin:0 auto;padding:36px 24px 64px}
+.note{background:#fff;border-left:4px solid var(--gold);padding:14px 18px;margin-bottom:28px;font-size:13px}
+.row{display:block;background:#fff;border:1px solid #EFE4CE;border-left:3px solid var(--gold);border-radius:6px;padding:16px 18px;margin-bottom:10px;text-decoration:none;color:inherit}
+.row:hover{background:#F7EDD0}
+.row h2{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--deep);margin-bottom:4px}
+.row p{font-size:13px;color:var(--mauve)}
+code{font-size:12px;background:#F7EDD0;padding:2px 6px;border-radius:4px}
+ul{margin:12px 0 0 20px;font-size:13px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div style="font-size:11px;letter-spacing:4px;text-transform:uppercase;opacity:.85">B&amp;C Wedding · Agent Ops</div>
+  <h1>Agent Skills Deploy Hub</h1>
+  <p style="font-size:13px;margin-top:8px;opacity:.9">Composio · PM validation · UI guidelines · Canvas</p>
+  <a class="back" href="../">← Back to Source of Truth</a>
+</header>
+<main class="wrap">
+  <div class="note"><strong>Updated May 26, 2026.</strong> These runbooks mirror the Cursor agent skills used to keep Wedding OS v6, Google Sheets, and <code>_DRIVE_READY</code> in sync. Run from repo root unless noted.</div>
+
+  <a class="row" href="CB_Comms_Transfer_Studio.html">
+    <h2>Comms Transfer Studio</h2>
+    <p>WhatsApp + Gmail copy-paste picker · May 26 accountability messages · one-click clipboard.</p>
+  </a>
+
+  <a class="row" href="composio-gmail-runbook.html">
+    <h2>Composio · Gmail &amp; Workspace</h2>
+    <p>OAuth ingest for belovedcoordinator2@gmail.com, info@jennyferreyesweddings.com, Raj, Natasha. Primary path: <code>scripts/google/ingest-gmail.mjs</code>.</p>
+  </a>
+
+  <a class="row" href="pm-validation-may26.html">
+    <h2>Product Manager Skills · Artifact Validation</h2>
+    <p>May 26 Natasha/Beloved call decisions, vendor status matrix, sprint gates, and open gaps (florals, venue breakdown, soft bars).</p>
+  </a>
+
+  <a class="row" href="ui-review-v6.html">
+    <h2>Web Interface Guidelines · UI Review</h2>
+    <p>Accessibility and interaction findings for <code>00_START_HERE</code> and <code>CB_WeddingOS_v6.html</code>.</p>
+  </a>
+
+  <a class="row" href="CB_Raj_eDoc_Splitter_Guide.html">
+    <h2>AbsoluteWed · Split Air Transat eDocs</h2>
+    <p>3-step iLovePDF workflow for Raj · desk card + rename map · backup <code>npm run split:edoc</code>.</p>
+  </a>
+
+  <a class="row" href="canvas-readme.html">
+    <h2>Canvas · Vendor Status Dashboard</h2>
+    <p>Cursor IDE canvas: open <code>canvases/wedding-vendor-status.canvas.tsx</code> beside chat for live budget/vendor view.</p>
+  </a>
+
+  <div class="note" style="margin-top:24px">
+    <strong>Refresh pipeline</strong>
+    <ul>
+      <li><code>npm run parse:whatsapp</code></li>
+      <li><code>npm run seed:gmail</code></li>
+      <li><code>npm run ingest:gmail</code></li>
+      <li><code>npm run sync:sheets</code></li>
+      <li><code>npm run build:os</code></li>
+      <li><code>powershell -File _DRIVE_READY/01_Command_Center/qa_v6.ps1</code></li>
+      <li><code>netlify deploy --dir=_DRIVE_READY --prod</code></li>
+    </ul>
+  </div>
+</main>
+</body>
+</html>
