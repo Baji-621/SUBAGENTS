@@ -1,1071 +1,2988 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="ivory">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C&amp;B Wedding — Command Center App</title>
-<meta name="robots" content="noindex,nofollow">
+<title>B &amp; C Wedding Command Center</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Password-protected wedding command center — dashboard, events, tasks, vendors, budget, contacts.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --ivory:#FAF6EE;--ivory2:#F0E8D6;--ivory3:#E8DCC8;
-  --gold:#C9A84C;--gold2:#E8C97A;--gold3:#F7EDD0;
-  --mauve:#7B5A6A;--deep-mauve:#4E3045;
-  --teal:#2A7B8E;--deep-teal:#1A5060;--teal2:#D8EEF2;
-  --navy:#1C2040;--charcoal:#3A2535;
-  --text:#2E1E28;--text2:#5A3E50;--text3:#8B6B7A;
-  --red:#C0392B;--red2:#FAE6E4;--red3:#F5C6C2;
-  --amber:#D4870A;--amber2:#FDF3E0;--amber3:#F9DFA0;
-  --green:#2E7D32;--green2:#E8F5E9;--green3:#A5D6A7;
-  --blue:#1565C0;--blue2:#E3F0FF;
-  --sidebar-w:220px;
-  --header-h:56px;
+html[data-theme="ivory"],html:not([data-theme]){color-scheme:light}
+html.dark{color-scheme:dark}
+html,body{min-height:100%;background:var(--ground);color:var(--text);font-family:var(--font-body,'Lora',Georgia,serif)}
+.font-serif{font-family:var(--font-display,'Cormorant Garamond',Georgia,serif)}
+#gate{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;padding:24px;background:var(--ground)}
+.gate-box{text-align:center;max-width:360px;width:100%}
+.gate-mono{font-size:72px;font-style:italic;line-height:1;color:var(--accent)}
+.gate-title{font-size:22px;margin:12px 0 24px;color:var(--display)}
+.gate-input{width:100%;padding:12px 16px;border-radius:8px;margin-bottom:12px;border:1px solid var(--border);background:var(--surface);color:var(--text-strong)}
+.gate-btn{width:100%;padding:12px;border:none;border-radius:8px;font-weight:600;cursor:pointer;background:var(--accent);color:var(--btn-primary-fg,#faf6ee)}
+.sb-link.on{background:var(--surface2);color:var(--accent);font-weight:600}
+.banner{background:var(--surface2);border:1px solid var(--border);color:var(--accent)}
+.main{background:var(--ground)}
+.gate-err{color:var(--bad);font-size:13px;margin-top:8px;min-height:20px}
+#app{display:none;height:100vh;overflow:hidden}
+#app.ready{display:flex}
+.sidebar{width:var(--sidebar);min-width:var(--sidebar);display:flex;flex-direction:column;height:100%;overflow-y:auto}
+.sb-head{padding:24px 20px 16px;border-bottom:1px solid var(--border)}
+.sb-mono{font-size:36px;font-style:italic;color:var(--accent)}
+.sb-sub{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.sb-date{font-size:12px;color:var(--muted);margin-top:8px}
+.sb-nav{flex:1;padding:12px 10px}
+.sb-group{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:12px 10px 6px;font-weight:600}
+.sb-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14px;margin-bottom:2px;background:none;border:none;width:100%;text-align:left;cursor:pointer}
+.sb-link:hover{background:var(--surface2);color:var(--text-strong)}
+.sb-foot{padding:16px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)}
+.main{flex:1;overflow-y:auto;padding:28px 32px 48px}
+.page-head{margin-bottom:24px}
+.page-head h1{font-size:28px;font-weight:600;color:var(--display)}
+.page-head p{font-size:13px;color:var(--muted);margin-top:4px}
+.banner{border-radius:10px;padding:12px 18px;margin-bottom:20px;font-size:13px}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
+.card{border-radius:12px;padding:18px}
+.card-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.card-val{font-size:32px;color:var(--accent)}
+.progress{height:6px;background:var(--surface2);border-radius:3px;margin-top:10px;overflow:hidden}
+.progress>span{display:block;height:100%;background:var(--accent);border-radius:3px}
+.section-title{font-size:18px;color:var(--display);margin:24px 0 12px}
+.event-row{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border)}
+.event-row:last-child{border-bottom:none}
+.date-badge{min-width:52px;text-align:center}
+.date-badge .d{font-size:28px;color:var(--accent);line-height:1}
+.date-badge .m{font-size:10px;text-transform:uppercase;color:var(--muted);letter-spacing:.08em}
+.event-row.key{border:1px solid var(--accent);border-radius:10px;padding:14px 16px;margin-bottom:8px;background:var(--surface2)}
+.badge{display:inline-block;font-size:10px;padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.task-list{display:flex;flex-direction:column;gap:8px}
+.task-item{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:10px;font-size:13px}
+.task-item.done{opacity:.85}
+.task-body{flex:1;min-width:0}
+.task-check{margin-top:4px;cursor:pointer;accent-color:var(--accent)}
+.task-status-select{font-size:11px;padding:4px 8px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text)}
+.task-del-btn{border:1px solid var(--border);background:var(--surface2);color:var(--bad);border-radius:6px;padding:2px 8px;font-size:16px;line-height:1;cursor:pointer}
+.task-item.overdue{border-color:var(--bad)}
+.kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;min-height:300px}
+.k-col{border-radius:12px;padding:12px}
+.k-col h3{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.vendor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.v-card{border-radius:12px;padding:16px}
+.v-card h3{font-size:18px;color:var(--display);margin-bottom:4px}
+.v-role{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.v-row{font-size:12px;margin:4px 0;color:var(--muted)}
+.v-row strong{color:var(--text-strong)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+th{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.contact-list{display:flex;flex-direction:column;gap:8px}
+.contact-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:14px 16px;border-radius:10px}
+.contact-row .name{font-weight:600;color:var(--display);min-width:160px}
+.quick-dial{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.quick-btn{padding:14px 20px;border:1px solid var(--border);border-radius:10px;color:var(--accent);font-weight:600;font-size:14px;text-decoration:none}
+.alert-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.alert{padding:10px 14px;border-radius:8px;font-size:13px;border-left:3px solid}
+.alert.critical{background:color-mix(in srgb,var(--bad) 12%,transparent);border-color:var(--bad)}
+.alert.urgent{background:color-mix(in srgb,var(--warn) 12%,transparent);border-color:var(--warn)}
+.alert.info{background:color-mix(in srgb,var(--ok) 12%,transparent);border-color:var(--ok)}
+.mobile-toggle{display:none;position:fixed;top:12px;left:12px;z-index:100;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text)}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.hub-card{display:block;padding:18px;border-radius:12px;border:1px solid var(--border);text-decoration:none;color:inherit;background:var(--surface);transition:border-color .15s}
+.hub-card:hover{border-color:var(--accent)}
+.gap-list{list-style:none;padding:0}
+.gap-list li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text)}
+.comms-card{margin-bottom:12px}
+.ch-tag{display:inline-block;font-size:10px;padding:3px 8px;border-radius:4px;background:var(--surface2);text-transform:uppercase;letter-spacing:.05em}
+.copy-btn{font-size:11px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;margin-right:6px;margin-top:8px;color:var(--text)}
+.av-quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:24px}
+.v-toolbar-extra{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
+.v-search{flex:1;min-width:200px;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:14px}
+.v-ext-link{font-size:13px;color:var(--accent);text-decoration:none;white-space:nowrap}
+.v-section{margin-bottom:28px}
+.v-section-title{font-size:16px;color:var(--display);margin-bottom:10px;display:flex;align-items:baseline;gap:8px}
+.v-count{font-size:12px;color:var(--muted);font-weight:400}
+.v-roster{display:flex;flex-direction:column;gap:2px}
+.v-row{display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:10px;border:1px solid var(--border);background:var(--surface);margin-bottom:6px}
+.v-row-main{flex:1;min-width:220px}
+.v-row-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:4px}
+.v-name{font-weight:600;color:var(--display);font-size:15px}
+.v-meta{font-size:12px;color:var(--muted)}
+.v-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.v-chip{font-size:10px;padding:2px 8px;border-radius:4px;background:var(--surface2);color:var(--muted)}
+.v-notes{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.45;max-width:56ch}
+.v-quote{font-size:13px;color:var(--accent);margin-left:auto}
+.v-actions{display:flex;gap:8px;align-items:center}
+.v-act{font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);color:var(--accent);text-decoration:none;background:var(--surface2)}
+.k-col.drag-over{outline:2px dashed var(--accent);outline-offset:2px}
+.task-item.dragging{opacity:.55;cursor:grabbing}
+.live-pill{font-size:11px;color:var(--muted);margin-top:8px}
+.live-pill strong{color:var(--accent);font-weight:600}
+@media(max-width:768px){
+  .sidebar{position:fixed;left:0;top:0;z-index:90;transform:translateX(-100%);transition:transform .2s}
+  .sidebar.open{transform:translateX(0)}
+  .mobile-toggle{display:block}
+  .main{padding:60px 16px 40px}
+  .kanban{grid-template-columns:1fr}
 }
-html,body{height:100%;font-family:'Work Sans',sans-serif;color:var(--text);background:var(--ivory);overflow:hidden}
+/* Fonts loaded via <link> in build-command-center-app.mjs */
 
-/* ─── PASSWORD GATE ─── */
-#gate{position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,var(--deep-mauve) 0%,var(--deep-teal) 60%,var(--navy) 100%);display:flex;align-items:center;justify-content:center;padding:20px}
-#gate.hidden{display:none}
-.gate-box{background:var(--ivory);border-radius:16px;padding:36px 32px 28px;max-width:400px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.4);text-align:center;border:1px solid var(--gold)}
-.gate-logo{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:700;font-style:italic;color:var(--deep-mauve);margin-bottom:4px}
-.gate-sub{font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
-.gate-desc{font-size:12px;color:var(--text3);margin-bottom:22px;line-height:1.5}
-.gate-input{width:100%;padding:12px 14px;border:1px solid var(--ivory3);border-radius:8px;font-family:'Work Sans',sans-serif;font-size:14px;background:#fff;color:var(--charcoal);letter-spacing:2px;margin-bottom:10px}
-.gate-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.18)}
-.gate-btn{width:100%;padding:13px;background:var(--deep-mauve);color:var(--gold2);border:none;border-radius:8px;font-family:'Work Sans',sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .2s}
-.gate-btn:hover{background:var(--charcoal)}
-.gate-err{font-size:12px;color:var(--red);min-height:16px;margin-top:8px}
+/* ── Ivory (default light) ── */
+:root,
+html[data-theme="ivory"] {
+  --ground: #faf6ee;
+  --surface: #ffffff;
+  --surface2: #f5efe6;
+  --border: #e8dcc8;
+  --text: #7b5a6a;
+  --text-strong: #5c3d4a;
+  --muted: #9a8490;
+  --accent: #c9a84c;
+  --accent-hover: #b8943a;
+  --link: #2a7b8e;
+  --link-hover: #1f6272;
+  --display: #5c3d4a;
+  --ok: #4a8a5a;
+  --warn: #b8860b;
+  --bad: #a84848;
+  --sidebar: 260px;
+  --chip-ceremony: #e8dcc8;
+  --chip-ceremony-text: #6b5344;
+  --chip-sangeet: #1a4d3a;
+  --chip-sangeet-text: #d4f0e4;
+  --chip-haldi: #e8a020;
+  --chip-haldi-text: #4a3010;
+  --chip-welcome: #1a4a6e;
+  --chip-welcome-text: #d4e8f4;
+  --modal-overlay: rgba(26, 40, 48, 0.45);
+  --btn-primary-fg: #faf6ee;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Lora', Georgia, serif;
+}
 
-/* ─── APP SHELL ─── */
-#app{display:flex;height:100vh;overflow:hidden}
-#app.hidden{display:none}
+/* ── Midnight (dark · soft mauve-teal, not espresso) ── */
+html.dark,
+html[data-theme="midnight"] {
+  --ground: #1a2830;
+  --surface: #243038;
+  --surface2: #2a3d45;
+  --border: #3a5058;
+  --text: #d4c8cc;
+  --text-strong: #f0e8ea;
+  --muted: #9a9094;
+  --accent: #c9a84c;
+  --accent-hover: #dbb85e;
+  --link: #5aadbe;
+  --link-hover: #7ec4d4;
+  --display: #f0e8ea;
+  --ok: #6aab7a;
+  --warn: #d4a840;
+  --bad: #c86868;
+  --chip-ceremony: #4a4038;
+  --chip-ceremony-text: #e8dcc8;
+  --chip-sangeet: #1a4d3a;
+  --chip-sangeet-text: #a8e0c8;
+  --chip-haldi: #6a4810;
+  --chip-haldi-text: #f0d080;
+  --chip-welcome: #1a3a58;
+  --chip-welcome-text: #a8d0e8;
+  --modal-overlay: rgba(10, 18, 22, 0.72);
+  --btn-primary-fg: #1a2830;
+}
 
-/* ─── SIDEBAR ─── */
-.sidebar{width:var(--sidebar-w);flex-shrink:0;background:linear-gradient(180deg,var(--deep-mauve) 0%,var(--charcoal) 100%);display:flex;flex-direction:column;overflow:hidden}
-.sb-logo{padding:18px 20px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
-.sb-logo .bc{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;font-style:italic;color:var(--gold2);line-height:1}
-.sb-logo .det{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,246,238,.5);margin-top:3px}
-.sb-nav{flex:1;padding:10px 0;overflow-y:auto}
-.sb-section{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(250,246,238,.3);padding:16px 20px 6px;font-weight:600}
-.sb-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;transition:background .15s;border-left:3px solid transparent;font-size:13px;font-weight:400;color:rgba(250,246,238,.75);text-decoration:none}
-.sb-item:hover{background:rgba(255,255,255,.07);color:#fff}
-.sb-item.active{background:rgba(201,168,76,.12);border-left-color:var(--gold);color:var(--gold2);font-weight:600}
-.sb-item .ico{font-size:15px;width:18px;text-align:center;flex-shrink:0}
-.sb-badge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:8px;letter-spacing:.5px}
-.sb-badge.amber{background:var(--amber)}
-.sb-badge.green{background:var(--green)}
-.sb-footer{padding:12px 20px;border-top:1px solid rgba(255,255,255,.08);font-size:10px;color:rgba(250,246,238,.3);letter-spacing:.5px}
-.sb-footer .version{color:rgba(201,168,76,.6)}
+/* ── Turmeric (warm light) ── */
+html[data-theme="turmeric"] {
+  --ground: #fff8e8;
+  --surface: #fffcf4;
+  --surface2: #f5ecd0;
+  --border: #e8d4a0;
+  --text: #6b4a20;
+  --text-strong: #4a3010;
+  --muted: #9a7840;
+  --accent: #d4880a;
+  --accent-hover: #b87408;
+  --link: #2a6a5a;
+  --link-hover: #1f5248;
+  --display: #4a3010;
+  --chip-ceremony: #f0e0c0;
+  --chip-ceremony-text: #5c4020;
+  --chip-sangeet: #2a5a40;
+  --chip-sangeet-text: #d8f0e0;
+  --chip-haldi: #e8a020;
+  --chip-haldi-text: #3a2008;
+  --chip-welcome: #2a5a78;
+  --chip-welcome-text: #d0e8f4;
+  --modal-overlay: rgba(74, 48, 16, 0.4);
+  --btn-primary-fg: #fff8e8;
+}
 
-/* ─── MAIN AREA ─── */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--ivory)}
-.topbar{height:var(--header-h);background:#fff;border-bottom:1px solid var(--ivory3);display:flex;align-items:center;padding:0 24px;gap:16px;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.topbar .page-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--deep-mauve);font-style:italic}
-.topbar .page-sub{font-size:11px;color:var(--text3);margin-left:4px}
-.topbar .spacer{flex:1}
-.countdown-pill{background:var(--deep-mauve);color:var(--gold2);font-size:11px;font-weight:600;letter-spacing:1px;padding:6px 14px;border-radius:20px}
-.content{flex:1;overflow-y:auto;padding:24px}
+/* ── Peacock (cool light · sangeet energy) ── */
+html[data-theme="peacock"] {
+  --ground: #eef4f6;
+  --surface: #ffffff;
+  --surface2: #e4eef0;
+  --border: #c8d8dc;
+  --text: #3a5058;
+  --text-strong: #1a3840;
+  --muted: #6a8088;
+  --accent: #2a7b8e;
+  --accent-hover: #1f6272;
+  --link: #1a4d3a;
+  --link-hover: #0f3828;
+  --display: #1a3840;
+  --chip-ceremony: #e8e0d4;
+  --chip-ceremony-text: #5a4840;
+  --chip-sangeet: #1a4d3a;
+  --chip-sangeet-text: #c8f0dc;
+  --chip-haldi: #d4880a;
+  --chip-haldi-text: #3a2008;
+  --chip-welcome: #1a5a78;
+  --chip-welcome-text: #c8e4f4;
+  --modal-overlay: rgba(26, 56, 64, 0.45);
+  --btn-primary-fg: #eef4f6;
+}
 
-/* ─── SECTIONS ─── */
-.section{display:none}
-.section.active{display:block}
+/* ── Base reset & typography ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-/* ─── KPI ROW ─── */
-.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px}
-.kpi{background:#fff;border-radius:10px;padding:16px 18px;border:.5px solid var(--ivory3);border-left:4px solid var(--gold);box-shadow:0 1px 6px rgba(0,0,0,.05)}
-.kpi .label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:6px;font-weight:600}
-.kpi .value{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--deep-mauve);line-height:1}
-.kpi .sub{font-size:11px;color:var(--text3);margin-top:4px}
-.kpi.danger{border-left-color:var(--red)}
-.kpi.warn{border-left-color:var(--amber)}
-.kpi.ok{border-left-color:var(--green)}
-.kpi.info{border-left-color:var(--teal)}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  background: var(--ground);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
 
-/* ─── ALERT CARDS ─── */
-.alerts{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.alert{border-radius:8px;padding:12px 16px;display:flex;align-items:flex-start;gap:12px;font-size:13px}
-.alert .ico2{font-size:16px;flex-shrink:0;margin-top:1px}
-.alert .body strong{font-weight:600}
-.alert .body .meta{font-size:11px;margin-top:2px;opacity:.75}
-.alert.crit{background:var(--red2);border:1px solid var(--red3)}
-.alert.warn{background:var(--amber2);border:1px solid var(--amber3)}
-.alert.info{background:var(--teal2);border:1px solid rgba(42,123,142,.25)}
-.alert.ok{background:var(--green2);border:1px solid var(--green3)}
+.font-serif,
+.font-display {
+  font-family: var(--font-display);
+}
 
-/* ─── SECTION TITLES ─── */
-.sec-h{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--deep-mauve);font-style:italic;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--ivory3)}
-.sec-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px}
+a {
+  color: var(--link);
+  text-decoration: none;
+}
 
-/* ─── CARDS GRID ─── */
-.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:20px}
-.card{background:#fff;border-radius:10px;padding:18px 20px;border:.5px solid var(--ivory3);border-left:4px solid var(--gold);box-shadow:0 1px 6px rgba(0,0,0,.05)}
-.card.danger{border-left-color:var(--red)}
-.card.warn{border-left-color:var(--amber)}
-.card.ok{border-left-color:var(--green)}
-.card.teal{border-left-color:var(--teal)}
-.card .card-title{font-weight:600;font-size:14px;color:var(--deep-mauve);margin-bottom:6px}
-.card .card-sub{font-size:12px;color:var(--text3);margin-bottom:10px}
-.pill{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;padding:2px 8px;border-radius:8px;text-transform:uppercase}
-.pill.red{background:var(--red2);color:var(--red)}
-.pill.amber{background:var(--amber2);color:var(--amber)}
-.pill.green{background:var(--green2);color:var(--green)}
-.pill.teal{background:var(--teal2);color:var(--deep-teal)}
-.pill.mauve{background:#F2EAF0;color:var(--deep-mauve)}
-.pill.gold{background:var(--gold3);color:#7A5D2C}
+a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
 
-/* ─── TABLE ─── */
-.tw{overflow-x:auto;margin-bottom:20px}
-table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.05)}
-th{background:var(--deep-mauve);color:var(--gold2);font-weight:600;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 14px;text-align:left}
-td{padding:9px 14px;border-bottom:.5px solid var(--ivory3);color:var(--text);vertical-align:top}
-tr:last-child td{border-bottom:none}
-tr.rr td{background:var(--red2)}
-tr.ra td{background:var(--amber2)}
-tr.rg td{background:var(--green2)}
-tr.rt td{background:var(--teal2)}
+button {
+  font: inherit;
+  cursor: pointer;
+}
 
-/* ─── TASKS ─── */
-.task-group{margin-bottom:20px}
-.task-group-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.task-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#fff;border-radius:8px;margin-bottom:6px;border:.5px solid var(--ivory3);cursor:pointer;transition:background .15s}
-.task-item:hover{background:var(--gold3)}
-.task-item input[type=checkbox]{accent-color:var(--deep-mauve);width:15px;height:15px;flex-shrink:0;margin-top:2px;cursor:pointer}
-.task-item.done .task-text{text-decoration:line-through;color:var(--text3)}
-.task-text{font-size:13px;line-height:1.4}
-.task-meta{font-size:11px;color:var(--text3);margin-top:2px}
-.task-owner{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;padding:1px 6px;border-radius:6px;text-transform:uppercase;background:var(--gold3);color:#7A5D2C}
+/* No gradient text */
+h1, h2, h3, .page-head h1, .card-val, .sb-mono, .gate-mono {
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
+  color: var(--display);
+}
 
-/* ─── VENDOR CARDS ─── */
-.vendor-card{background:#fff;border-radius:10px;padding:18px 20px;border:.5px solid var(--ivory3);margin-bottom:14px;border-left:4px solid var(--ivory3)}
-.vendor-card.signed{border-left-color:var(--green)}
-.vendor-card.unsigned{border-left-color:var(--amber)}
-.vendor-card.overdue{border-left-color:var(--red)}
-.vendor-card.undecided{border-left-color:var(--teal)}
-.vc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
-.vc-name{font-weight:700;font-size:15px;color:var(--deep-mauve)}
-.vc-type{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-top:2px}
-.vc-body{font-size:12px;line-height:1.7;color:var(--text)}
-.vc-amounts{display:flex;gap:16px;margin-top:10px;padding-top:10px;border-top:.5px solid var(--ivory3);flex-wrap:wrap}
-.vc-amt{font-size:11px}
-.vc-amt .av{font-weight:700;font-size:13px;color:var(--deep-mauve)}
-.vc-amt .al{font-size:10px;color:var(--text3);display:block;margin-bottom:1px}
-.vc-links{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
-.vc-link{font-size:11px;color:var(--teal);text-decoration:none;border:.5px solid var(--teal);padding:3px 10px;border-radius:12px;transition:all .15s}
-.vc-link:hover{background:var(--teal);color:#fff}
+/* ── App shell overrides ── */
+html:not(.dark) {
+  --bg: var(--ground);
+  --cream: var(--display);
+  --gold: var(--accent);
+  --gold-dim: var(--muted);
+}
 
-/* ─── CONTACTS ─── */
-.contact-card{background:#fff;border-radius:10px;padding:16px 18px;border:.5px solid var(--ivory3);border-left:4px solid var(--gold)}
-.contact-role{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-weight:600}
-.contact-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--deep-mauve);margin:4px 0 2px;font-style:italic}
-.contact-org{font-size:12px;color:var(--text3);margin-bottom:8px}
-.contact-det{font-size:12px;line-height:1.7}
-.contact-det a{color:var(--teal);text-decoration:none}
+html, body {
+  background: var(--ground);
+  color: var(--text);
+  font-family: var(--font-body);
+}
 
-/* ─── COMMS ─── */
-.msg-card{background:#fff;border-radius:10px;padding:16px 18px;border:.5px solid var(--ivory3);margin-bottom:12px}
-.msg-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.msg-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--deep-mauve);font-weight:600}
-.msg-to{font-size:11px;color:var(--text3)}
-.msg-body{font-size:12px;line-height:1.7;background:var(--ivory);padding:10px 14px;border-radius:6px;border:.5px solid var(--ivory3);white-space:pre-line;max-height:200px;overflow:hidden;position:relative}
-.msg-body.expanded{max-height:none}
-.msg-actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-.btn-sm{font-size:11px;font-weight:600;letter-spacing:.5px;padding:5px 12px;border-radius:6px;border:none;cursor:pointer;transition:all .15s}
-.btn-copy{background:var(--deep-mauve);color:var(--gold2)}
-.btn-copy:hover{background:var(--charcoal)}
-.btn-wa{background:#25D366;color:#fff}
-.btn-wa:hover{background:#1DA851}
-.btn-expand{background:var(--ivory3);color:var(--text)}
-.btn-expand:hover{background:var(--ivory2)}
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+}
 
-/* ─── EVENTS TIMELINE ─── */
-.timeline{position:relative;padding-left:28px}
-.timeline::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--gold),var(--teal))}
-.day-block{position:relative;margin-bottom:24px}
-.day-block::before{content:'';position:absolute;left:-22px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid #fff;box-shadow:0 0 0 2px var(--gold)}
-.day-block.wedding::before{background:var(--deep-mauve);box-shadow:0 0 0 3px var(--gold)}
-.day-date{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;color:var(--deep-mauve);font-style:italic}
-.day-name{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-left:4px}
-.day-events{margin-top:8px}
-.event-row{padding:8px 12px;background:#fff;border-radius:8px;margin-bottom:6px;border:.5px solid var(--ivory3);border-left:3px solid var(--teal);font-size:13px}
-.event-row.ceremony{border-left-color:var(--deep-mauve)}
-.event-row.reception{border-left-color:var(--gold)}
-.event-row.travel{border-left-color:var(--text3)}
-.event-time{font-size:10px;font-weight:600;color:var(--text3);margin-bottom:2px}
-.event-name{font-weight:600;color:var(--deep-mauve)}
-.event-details{font-size:11px;color:var(--text3);margin-top:2px}
+.sb-mono,
+.gate-mono,
+.page-head h1,
+.section-title,
+.card-val,
+.v-card h3 {
+  font-family: var(--font-display);
+  color: var(--display);
+}
 
-/* ─── BUDGET ─── */
-.budget-controls{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
-.fx-label{font-size:12px;color:var(--text3)}
-.fx-input{width:80px;padding:6px 10px;border:1px solid var(--ivory3);border-radius:6px;font-size:13px;background:#fff}
-.fx-input:focus{outline:none;border-color:var(--gold)}
-.toggle-btn{padding:6px 14px;border:1px solid var(--ivory3);border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;transition:all .15s}
-.toggle-btn.active{background:var(--deep-mauve);color:var(--gold2);border-color:var(--deep-mauve)}
+.sb-link.on {
+  color: var(--accent);
+}
 
-/* ─── SCROLLBAR ─── */
-.content::-webkit-scrollbar{width:6px}
-.content::-webkit-scrollbar-track{background:var(--ivory)}
-.content::-webkit-scrollbar-thumb{background:var(--ivory3);border-radius:3px}
-.content::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+.card,
+.v-card,
+.k-col,
+.contact-row,
+.task-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
 
-@media (max-width:700px){
-  .sidebar{width:52px}
-  .sb-item span:not(.ico){display:none}
-  .sb-logo .det,.sb-section,.sb-badge,.sb-footer{display:none}
-  .sb-logo .bc{font-size:18px}
-  .kpi-row{grid-template-columns:1fr 1fr}
+.banner {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--accent);
+}
+
+/* ── Event route accent chips ── */
+.event-chip,
+.route-chip {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+.chip-ceremony,
+.event-chip[data-route="ceremony"] {
+  background: var(--chip-ceremony);
+  color: var(--chip-ceremony-text);
+  border-color: var(--chip-ceremony);
+}
+
+.chip-sangeet,
+.event-chip[data-route="sangeet"] {
+  background: var(--chip-sangeet);
+  color: var(--chip-sangeet-text);
+  border-color: var(--chip-sangeet);
+}
+
+.chip-haldi,
+.event-chip[data-route="haldi"] {
+  background: var(--chip-haldi);
+  color: var(--chip-haldi-text);
+  border-color: var(--chip-haldi);
+}
+
+.chip-welcome,
+.event-chip[data-route="welcome"] {
+  background: var(--chip-welcome);
+  color: var(--chip-welcome-text);
+  border-color: var(--chip-welcome);
+}
+
+/* ── Toolbar ── */
+.crud-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.crud-toolbar .toolbar-title {
+  flex: 1;
+  min-width: 140px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.crud-toolbar .toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--btn-primary-fg);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn-ghost:hover {
+  background: var(--surface2);
+  border-color: var(--muted);
+  color: var(--text-strong);
+}
+
+.btn-ghost.btn-danger {
+  color: var(--bad);
+  border-color: var(--bad);
+}
+
+.btn-ghost.btn-danger:hover {
+  background: var(--bad);
+  color: var(--surface);
+}
+
+.btn-icon {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+/* ── Forms ── */
+.crud-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-row label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text-strong);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  outline: 2px solid var(--link);
+  outline-offset: 1px;
+  border-color: var(--link);
+}
+
+.form-row textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 560px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Modal ── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--modal-overlay);
+}
+
+.modal-backdrop[hidden] {
+  display: none;
+}
+
+.modal-panel {
+  width: 100%;
+  max-width: 520px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--display);
+}
+
+.modal-close {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: var(--text-strong);
+  background: var(--surface2);
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+/* ── CRUD row actions ── */
+.crud-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.v-card.local-item,
+.contact-row.local-item,
+tr.local-item {
+  border-left: 3px solid var(--accent);
+}
+
+.local-badge {
+  display: inline-block;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--surface2);
+  color: var(--accent);
+  border: 1px solid var(--border);
+  margin-left: 6px;
+}
+
+/* ── Theme picker ── */
+.theme-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.theme-picker-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.theme-swatches {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.theme-swatch {
+  padding: 8px 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface2);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.theme-swatch:hover {
+  border-color: var(--accent);
+}
+
+.theme-swatch.active {
+  border-color: var(--accent);
+  background: var(--surface);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.theme-swatch[data-theme="ivory"]::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 8px;
+  margin-bottom: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #faf6ee 50%, #c9a84c 50%);
+}
+
+.theme-swatch[data-theme="midnight"]::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 8px;
+  margin-bottom: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #1a2830 50%, #c9a84c 50%);
+}
+
+.theme-swatch[data-theme="turmeric"]::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 8px;
+  margin-bottom: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #fff8e8 50%, #d4880a 50%);
+}
+
+.theme-swatch[data-theme="peacock"]::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 8px;
+  margin-bottom: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #eef4f6 50%, #2a7b8e 50%);
+}
+
+.mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface2);
+  color: var(--text);
+  width: 100%;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+/* ── Status badges (flat) ── */
+.badge {
+  border-radius: 4px;
+}
+
+.b-ok { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
+.b-warn { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
+.b-bad { background: color-mix(in srgb, var(--bad) 18%, transparent); color: var(--bad); }
+.b-muted { background: var(--surface2); color: var(--muted); }
+
+/* ── Gate ── */
+#gate {
+  background: var(--ground);
+}
+
+.gate-input {
+  font-family: var(--font-body);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-strong);
+}
+
+.gate-btn {
+  background: var(--accent);
+  color: var(--btn-primary-fg);
+  font-family: var(--font-body);
 }
 </style>
 </head>
 <body>
-
-<!-- PASSWORD GATE -->
-<div id="gate">
+<div id="gate" role="dialog" aria-modal="true" aria-label="Enter password">
   <div class="gate-box">
-    <div class="gate-logo">B&amp;C</div>
-    <div class="gate-sub">Wedding · Command Center</div>
-    <div class="gate-desc">Grand Palladium Costa Mujeres · Cancún<br>June 16 – 23, 2026 · Internal use only</div>
-    <input class="gate-input" id="gateInput" type="password" autocomplete="off" placeholder="Password" aria-label="Password">
-    <button class="gate-btn" id="gateBtn" type="button">Unlock</button>
-    <div class="gate-err" id="gateErr"></div>
+    <div class="gate-mono font-serif">B &amp; C</div>
+    <div class="gate-title font-serif">Wedding Command Center</div>
+    <label for="gate-pw" class="visually-hidden">Password</label>
+    <input id="gate-pw" class="gate-input" type="password" placeholder="Access code" autocomplete="off" data-testid="gate-password">
+    <button id="gate-btn" class="gate-btn" type="button" data-testid="gate-submit">Enter</button>
+    <div id="gate-err" class="gate-err" role="alert"></div>
   </div>
 </div>
-
-<!-- APP SHELL -->
-<div id="app" class="hidden">
-  <nav class="sidebar">
-    <div class="sb-logo">
-      <div class="bc">B&amp;C</div>
-      <div class="det">Command Center · Jun 16–23</div>
+<div id="app">
+  <button id="menu-btn" class="mobile-toggle" type="button" aria-label="Menu" data-testid="menu-toggle">Menu</button>
+  <aside class="sidebar">
+    <div class="sb-head">
+      <div class="sb-mono font-serif">B &amp; C</div>
+      <div class="sb-sub">Command Center</div>
+      <div class="sb-date">June 20, 2026</div>
     </div>
-    <div class="sb-nav">
-      <div class="sb-section">Operations</div>
-      <div class="sb-item active" data-sec="dash" onclick="nav('dash',this)"><span class="ico">◉</span><span>Dashboard</span><span class="sb-badge" id="badge-dash">4</span></div>
-      <div class="sb-item" data-sec="events" onclick="nav('events',this)"><span class="ico">📅</span><span>Events Timeline</span></div>
-      <div class="sb-item" data-sec="tasks" onclick="nav('tasks',this)"><span class="ico">✓</span><span>Open Tasks</span><span class="sb-badge amber" id="badge-tasks">12</span></div>
-      <div class="sb-section">Vendors &amp; Finance</div>
-      <div class="sb-item" data-sec="vendors" onclick="nav('vendors',this)"><span class="ico">🏢</span><span>Vendor Status</span></div>
-      <div class="sb-item" data-sec="budget" onclick="nav('budget',this)"><span class="ico">$</span><span>Budget</span></div>
-      <div class="sb-section">People &amp; Comms</div>
-      <div class="sb-item" data-sec="contacts" onclick="nav('contacts',this)"><span class="ico">👤</span><span>Contacts</span></div>
-      <div class="sb-item" data-sec="comms" onclick="nav('comms',this)"><span class="ico">💬</span><span>Comms Hub</span></div>
-      <div class="sb-section">Tools</div>
-      <div class="sb-item" onclick="window.open('../CB_WeddingOS_v6.html','_blank')"><span class="ico">⚡</span><span>Wedding OS v6</span></div>
-      <div class="sb-item" onclick="window.open('../../05_Communications/CB_Ops_Command_May29.html','_blank')"><span class="ico">📋</span><span>Ops May 29</span></div>
+    <nav class="sb-nav">
+      <div class="sb-group">Overview</div>
+      <a href="#/" class="sb-link" data-route="dashboard" data-testid="nav-dashboard">Dashboard</a>
+      <div class="sb-group">Planning</div>
+      <a href="#/events" class="sb-link" data-route="events" data-testid="nav-events">Events</a>
+      <a href="#/tasks" class="sb-link" data-route="tasks" data-testid="nav-tasks">Tasks</a>
+      <a href="#/vendors" class="sb-link" data-route="vendors" data-testid="nav-vendors">Vendors</a>
+      <div class="sb-group">Operations</div>
+      <a href="#/rooming" class="sb-link" data-route="rooming" data-testid="nav-rooming">Rooming</a>
+      <a href="#/comms" class="sb-link" data-route="comms" data-testid="nav-comms">Comms</a>
+      <a href="#/av" class="sb-link" data-route="av" data-testid="nav-av">AV matrix</a>
+      <a href="#/ops" class="sb-link" data-route="ops" data-testid="nav-ops">Ops hub</a>
+      <div class="sb-group">Partners</div>
+      <a href="#/beloved" class="sb-link" data-route="beloved" data-testid="nav-beloved">Beloved</a>
+      <a href="#/travel" class="sb-link" data-route="travel" data-testid="nav-travel">Travel</a>
+      <div class="sb-group">Finances</div>
+      <a href="#/budget" class="sb-link" data-route="budget" data-testid="nav-budget">Budget</a>
+      <div class="sb-group">Directory</div>
+      <a href="#/contacts" class="sb-link" data-route="contacts" data-testid="nav-contacts">Contacts</a>
+      <div class="sb-group">External</div>
+      <a href="/os" class="sb-link sb-link-ext" target="_blank" rel="noopener">Wedding OS ↗</a>
+      <a href="/entertainment" class="sb-link sb-link-ext" target="_blank" rel="noopener">Entertainment ↗</a>
+    </nav>
+    <div class="sb-foot">
+      <button id="theme-btn" class="mode-toggle" type="button" data-testid="theme-toggle" style="display:none">Theme</button>
+      Bharadwaj &amp; Catherina · Phase 7 live
     </div>
-    <div class="sb-footer">May 30, 2026 · <span class="version">App v1.0</span></div>
-  </nav>
-
-  <div class="main">
-    <div class="topbar">
-      <div class="page-title" id="pageTitle">Dashboard</div>
-      <div class="page-sub" id="pageSub">Real-time wedding ops</div>
-      <div class="spacer"></div>
-      <div class="countdown-pill" id="cdPill">⏱ Loading...</div>
-    </div>
-    <div class="content">
-
-
-<!-- ════ DASHBOARD ════ -->
-<div class="section active" id="sec-dash">
-
-<div class="kpi-row">
-  <div class="kpi"><div class="label">Days to Arrival</div><div class="value" id="kpiDays">17</div><div class="sub">Jun 16, 2026 · Cancún</div></div>
-  <div class="kpi info"><div class="label">Guests</div><div class="value">137</div><div class="sub">PAX · 44 rooms booked</div></div>
-  <div class="kpi warn"><div class="label">Overdue</div><div class="value">1</div><div class="sub">Majestic Films · C$12,755</div></div>
-  <div class="kpi danger"><div class="label">Unsigned</div><div class="value">3</div><div class="sub">Decor + AV + Box Truss</div></div>
+  </aside>
+  <main id="main" class="main" role="main"></main>
 </div>
-
-<div class="sec-label">Critical Alerts — Act Today</div>
-<div class="alerts">
-  <div class="alert crit"><div class="ico2">🚨</div><div class="body"><strong>Majestic Films — C$12,755 OVERDUE</strong><div class="meta">Was due May 21 · 9 days past due · Pay via e-transfer to info@majesticfilms.ca (ref D09-CD6-A43)</div></div></div>
-  <div class="alert warn"><div class="ico2">⚠️</div><div class="body"><strong>Decor Decision — UNDECIDED (expires June 7)</strong><div class="meta">Zuñiga $37,021 USD OR AL Studio $43,126 USD · Zuñiga quote expires ~June 7 · Neither signed · Decide NOW</div></div></div>
-  <div class="alert warn"><div class="ico2">⚠️</div><div class="body"><strong>Mills James AV — $14,193 USD UNSIGNED</strong><div class="meta">Job #279122 + #279827 ($3,932) · Prices valid 30 days from May 27 · Sign or lose pricing</div></div></div>
-  <div class="alert info"><div class="ico2">📋</div><div class="body"><strong>Something Borrowed — C$10,000 due June 17</strong><div class="meta">Photography · $4,238 paid · Balance due first event day · Ensure e-transfer ready by Jun 16</div></div></div>
-  <div class="alert info"><div class="ico2">🎧</div><div class="body"><strong>DJ JET (3D Sound) — C$2,000 due June 17</strong><div class="meta">5 events booked · $2,000 deposit paid · Balance due on arrival day · Confirm travel: Sharan Jeyarajah, Jun 17 AM</div></div></div>
-  <div class="alert ok"><div class="ico2">✓</div><div class="body"><strong>Couple's Trip Booked — TR37577 · C$8,976 PAID</strong><div class="meta">Air Canada AC1810 · Jun 16 06:50 YYZ → CUN 09:50 · Room upgrade to Jacuzzi Loft pending</div></div></div>
-</div>
-
-<div class="sec-label">This Week (May 30 – Jun 5)</div>
-<div class="card-grid">
-  <div class="card danger">
-    <div class="card-title">💸 Pay Majestic Films TODAY</div>
-    <div class="card-sub">C$12,755 — 9 days overdue</div>
-    E-transfer: info@majesticfilms.ca<br>
-    Reference: D09-CD6-A43<br>
-    Or online: majestic-films-ltd.vsco.page/pay
-  </div>
-  <div class="card warn">
-    <div class="card-title">🖊 Sign Decor Vendor (by Jun 1)</div>
-    <div class="card-sub">Zuñiga OR AL Studio — choose one</div>
-    Zuñiga: $37,021 USD — hotel preferred vendor · expires Jun 7<br>
-    AL Studio: $43,126 USD — updated May 27<br>
-    Raj recommends: 1 vendor only, confirm hotel preferred status
-  </div>
-  <div class="card warn">
-    <div class="card-title">🔊 Sign Mills James AV Quotes</div>
-    <div class="card-sub">Job #279122 ($14,193) + #279827 box truss ($3,932)</div>
-    Contact Jennyfer — quotes expire May 27 + 30 days = ~Jun 26<br>
-    Hotel master account billing (Cuenta Maestra 30)
-  </div>
-  <div class="card teal">
-    <div class="card-title">📍 Confirm Vendor Rooms</div>
-    <div class="card-sub">Travel booking open items</div>
-    Majestic (3 crew: Rahul, Anurag, Rohit) — Jun 16–23<br>
-    Something Borrowed — confirm with Taaha Javed<br>
-    DJ Sharan Jeyarajah — Jun 17 arrival booked?
-  </div>
-</div>
-
-<div class="sec-label">Wedding Week Events — Quick View</div>
-<div class="tw">
-<table>
-<tr><th>Date</th><th>Event</th><th>Venue</th><th>Time</th><th>Guests</th></tr>
-<tr class="rt"><td>Tue Jun 16</td><td>✈ Arrival Day</td><td>CUN Airport → GPCM</td><td>AC1810 lands 09:50</td><td>All groups</td></tr>
-<tr><td>Wed Jun 17</td><td>Welcome Party</td><td>Fizz Pool Terrace</td><td>5:00 – 8:00 pm</td><td>120+</td></tr>
-<tr><td>Thu Jun 18</td><td>Sangeet</td><td>CC Plaza</td><td>7:00 – 11:00 pm</td><td>120+</td></tr>
-<tr><td>Fri Jun 19</td><td>Snathakam · Haldi · Baraat</td><td>Village Deck · Beach</td><td>7 am / 11 am / 6 pm</td><td>120+</td></tr>
-<tr class="ra"><td>Sat Jun 20</td><td>🕌 CEREMONY</td><td>The Glassroom</td><td>7:55 am SUBHAMUHURTHAM</td><td>All</td></tr>
-<tr class="ra"><td>Sun Jun 21</td><td>🎉 RECEPTION</td><td>Ballroom</td><td>7:00 pm – 1:00 am</td><td>120+</td></tr>
-<tr><td>Mon Jun 22</td><td>Farewell Brunch</td><td>TBC</td><td>Morning</td><td>All</td></tr>
-<tr class="rt"><td>Tue Jun 23</td><td>✈ Departure</td><td>CUN Airport</td><td>AM</td><td>All groups</td></tr>
-</table>
-</div>
-</div><!-- /dash -->
-
-
-<!-- ════ EVENTS TIMELINE ════ -->
-<div class="section" id="sec-events">
-<div class="sec-h">Wedding Week · Jun 16 – 23, 2026</div>
-<p style="font-size:12px;color:var(--text3);margin-bottom:20px">Grand Palladium Costa Mujeres · Cancún, Mexico · 137 PAX confirmed</p>
-
-<div class="timeline">
-
-  <div class="day-block">
-    <div><span class="day-date">Tuesday, June 16</span> <span class="day-name">Arrival Day</span></div>
-    <div class="day-events">
-      <div class="event-row travel"><div class="event-time">06:50 YYZ</div><div class="event-name">Air Canada AC1810 departs Toronto</div><div class="event-details">Arrives CUN 09:50 · AC group (38 pax) · Couple's Trip TR37577</div></div>
-      <div class="event-row travel"><div class="event-time">15:15 YYZ</div><div class="event-name">Sunwing WS2776 departs Toronto</div><div class="event-details">Arrives CUN 18:30 · Sunwing group (20 pax) · Conf #152409712</div></div>
-      <div class="event-row"><div class="event-time">All day</div><div class="event-name">Check-in / Settle / Welcome Bag Distribution</div><div class="event-details">Beloved Planners on-site · Couple: Jacuzzi Loft upgrade request pending Natasha</div></div>
-    </div>
-  </div>
-
-  <div class="day-block">
-    <div><span class="day-date">Wednesday, June 17</span> <span class="day-name">Day 1</span></div>
-    <div class="day-events">
-      <div class="event-row"><div class="event-time">All morning</div><div class="event-name">Snathakam (Engagement Ritual)</div><div class="event-details">Village Deck · Intimate family ceremony · Priest: Bhanu Prakash Malur Venkatesh</div></div>
-      <div class="event-row"><div class="event-time">5:00 – 8:00 pm</div><div class="event-name">Welcome Party</div><div class="event-details">Fizz Pool Terrace · Cocktails + light fare · Mills James AV: $630 · Decor: Zuñiga/AL Studio bistro lights $3,387 / TBD</div></div>
-    </div>
-  </div>
-
-  <div class="day-block">
-    <div><span class="day-date">Thursday, June 18</span> <span class="day-name">Day 2</span></div>
-    <div class="day-events">
-      <div class="event-row travel"><div class="event-time">Flight arrives</div><div class="event-name">Air Transat group arrives</div><div class="event-details">28+2 infants pax · MISS Welcome Party (Jun 17) — gap noted</div></div>
-      <div class="event-row"><div class="event-time">7:00 – 11:00 pm</div><div class="event-name">Sangeet</div><div class="event-details">Convention Centre Plaza · 120 guests · Stage + dancefloor + DJ JET · Mills James AV: $2,272 · Decor: $12,679 (Zuñiga) or included AL Studio</div></div>
-    </div>
-  </div>
-
-  <div class="day-block">
-    <div><span class="day-date">Friday, June 19</span> <span class="day-name">Day 3</span></div>
-    <div class="day-events">
-      <div class="event-row"><div class="event-time">7:00 – 9:30 am</div><div class="event-name">Snathakam Ritual (Groom's Side)</div><div class="event-details">Village Deck · Priest-led · Mills James AV: $498</div></div>
-      <div class="event-row"><div class="event-time">9:00 am – 1:00 pm</div><div class="event-name">Haldi Ceremony</div><div class="event-details">Beach / Village Deck · 120 guests · Shading structure · Decor: $2,813 (Zuñiga) · Mills James AV: $371</div></div>
-      <div class="event-row"><div class="event-time">4:00 pm</div><div class="event-name">Lady Manticoor (Mehndi)</div><div class="event-details">Beach Deck · Mills James AV: $498 · Loto Mehndi artist on-site</div></div>
-      <div class="event-row"><div class="event-time">6:00 pm</div><div class="event-name">Baraat Procession</div><div class="event-details">Village Deck → Glassroom (via boat/path) · Drums in Paradise · Mills James AV: $562 · ₹ Boat option: $150/8pax</div></div>
-    </div>
-  </div>
-
-  <div class="day-block wedding">
-    <div><span class="day-date">Saturday, June 20</span> <span class="day-name">⭐ WEDDING DAY</span></div>
-    <div class="day-events">
-      <div class="event-row travel"><div class="event-time">6:00 am</div><div class="event-name">All family arrive — Glassroom</div><div class="event-details">Hard deadline · Ganapati Puja (Bride's side) begins 6:15 am</div></div>
-      <div class="event-row ceremony"><div class="event-time">6:30 am</div><div class="event-name">Gauri Kankana + Groom Ganapati</div><div class="event-details">Both families simultaneously · Ritual prep underway</div></div>
-      <div class="event-row ceremony"><div class="event-time">7:35 am</div><div class="event-name">Arrival of Bride</div><div class="event-details">Bamboo basket · Dan Khadoo + Paul Khadoo (maternal uncles)</div></div>
-      <div class="event-row ceremony" style="border-left-color:var(--red);background:var(--red2)"><div class="event-time">⭐ 7:55 am</div><div class="event-name">SUBHAMUHURTHAM</div><div class="event-details">Bride + Groom + Priest · Jeera + Bellam · Curtain removed · ALL CAMERAS ON · NO photography before this moment</div></div>
-      <div class="event-row ceremony"><div class="event-time">8:10 – 10:00 am</div><div class="event-name">Madhuparkam → Mangalasutra → Talambralu → Saptapadi → Aashirvadams</div><div class="event-details">3 knots · Yellow rice shower · 7 steps around sacred fire · Elder blessings</div></div>
-      <div class="event-row"><div class="event-time">10:00 am</div><div class="event-name">Exit Procession + Photography Golden Window</div><div class="event-details">Mills James AV ceremony: $557 · Venue: The Glassroom GPCM</div></div>
-      <div class="event-row"><div class="event-time">1:00 pm</div><div class="event-name">Patravali Ceremony-Day Lunch</div><div class="event-details">Traditional banana-leaf service · Invoice S01545 · $20,608.33</div></div>
-    </div>
-  </div>
-
-  <div class="day-block">
-    <div><span class="day-date">Sunday, June 21</span> <span class="day-name">Day 5 — Reception</span></div>
-    <div class="day-events">
-      <div class="event-row reception"><div class="event-time">7:00 pm – 1:00 am</div><div class="event-name">Wedding Reception</div><div class="event-details">Ballroom · DJ JET · Bhogali Indian dinner · Mills James AV #279122: $2,531 + Box Truss #279827: $3,932 · Decor: $15,788 (Zuñiga) or AL Studio</div></div>
-    </div>
-  </div>
-
-  <div class="day-block">
-    <div><span class="day-date">Monday, June 22</span> <span class="day-name">Day 6</span></div>
-    <div class="day-events">
-      <div class="event-row"><div class="event-time">Morning</div><div class="event-name">Farewell Brunch / Recovery Day</div><div class="event-details">Pool area · Informal · Beloved Planners on-site through Jun 22</div></div>
-    </div>
-  </div>
-
-  <div class="day-block">
-    <div><span class="day-date">Tuesday, June 23</span> <span class="day-name">Departure</span></div>
-    <div class="day-events">
-      <div class="event-row travel"><div class="event-time">AM</div><div class="event-name">Departure Day — All Groups</div><div class="event-details">Check-out · Airport transfers · AC7N / Transat 5N / Sunwing 7N groups</div></div>
-    </div>
-  </div>
-
-</div><!-- /timeline -->
-</div><!-- /events -->
-
-
-<!-- ════ TASKS ════ -->
-<div class="section" id="sec-tasks">
-<div class="sec-h">Open Tasks</div>
-<p style="font-size:12px;color:var(--text3);margin-bottom:16px">Checks persist in browser storage. Today: May 30 · 17 days to Jun 16.</p>
-
-<div class="task-group">
-<div class="task-group-title"><span class="pill red">🚨 Urgent — Do Today</span></div>
-<div class="task-item" id="t1" onclick="ck('t1')"><input type="checkbox" id="chk-t1"><div><div class="task-text">PAY Majestic Films — C$12,755 (9 days overdue)</div><div class="task-meta">E-transfer info@majesticfilms.ca · Ref: D09-CD6-A43 <span class="task-owner">Baji</span></div></div></div>
-<div class="task-item" id="t2" onclick="ck('t2')"><input type="checkbox" id="chk-t2"><div><div class="task-text">Decide Decor vendor: Zuñiga ($37,021) vs AL Studio ($43,126)</div><div class="task-meta">Zuñiga expires ~Jun 7 · Sign chosen vendor contract <span class="task-owner">Cath+Baji</span></div></div></div>
-<div class="task-item" id="t3" onclick="ck('t3')"><input type="checkbox" id="chk-t3"><div><div class="task-text">Sign Mills James AV Job #279122 ($14,193) + #279827 ($3,932)</div><div class="task-meta">Through Jennyfer (Beloved) · Via hotel master account <span class="task-owner">Baji</span></div></div></div>
-</div>
-
-<div class="task-group">
-<div class="task-group-title"><span class="pill amber">⚠ This Week (May 31 – Jun 5)</span></div>
-<div class="task-item" id="t4" onclick="ck('t4')"><input type="checkbox" id="chk-t4"><div><div class="task-text">Book Majestic Films crew rooms — 3 rooms (Rahul, Anurag, Rohit) Jun 16–23</div><div class="task-meta">Via Raj / AbsoluteWed — coordinate with Natasha GPCM <span class="task-owner">Baji</span></div></div></div>
-<div class="task-item" id="t5" onclick="ck('t5')"><input type="checkbox" id="chk-t5"><div><div class="task-text">Confirm DJ Sharan Jeyarajah travel — Jun 17 arrival booked?</div><div class="task-meta">DOB May 29, 2000 · Depart Jun 22 <span class="task-owner">Cath</span></div></div></div>
-<div class="task-item" id="t6" onclick="ck('t6')"><input type="checkbox" id="chk-t6"><div><div class="task-text">Follow up with Natasha — room upgrade to Jacuzzi Loft (Couple)</div><div class="task-meta">Wedding #207718 · natasha.lima@palladiumweddings.com <span class="task-owner">Baji</span></div></div></div>
-<div class="task-item" id="t7" onclick="ck('t7')"><input type="checkbox" id="chk-t7"><div><div class="task-text">Confirm Something Borrowed photography details + crew travel</div><div class="task-meta">sborrowedstudios@gmail.com · C$10,000 due Jun 17 <span class="task-owner">Cath</span></div></div></div>
-<div class="task-item" id="t8" onclick="ck('t8')"><input type="checkbox" id="chk-t8"><div><div class="task-text">Submit SAW document to Natasha (all 12 vendor slots)</div><div class="task-meta">Photography, Video, DJ, Dhol, Mehndi, Decor, Florals, Menu, Priest, HMUA, Bridal Mehndi <span class="task-owner">Baji</span></div></div></div>
-<div class="task-item" id="t9" onclick="ck('t9')"><input type="checkbox" id="chk-t9"><div><div class="task-text">Request exact measurements from Decor vendor before signing</div><div class="task-meta">Dancefloor dimensions, Ganesh Ji height/width, bistro light lengths, centrepiece heights <span class="task-owner">Jennyfer</span></div></div></div>
-</div>
-
-<div class="task-group">
-<div class="task-group-title"><span class="pill gold">📌 Next 2 Weeks (Jun 6 – Jun 14)</span></div>
-<div class="task-item" id="t10" onclick="ck('t10')"><input type="checkbox" id="chk-t10"><div><div class="task-text">Palladium final deposit #3 — confirm payment timeline with Natasha</div><div class="task-meta">Contract 207718 · Outstanding deposit — escalate with Raj <span class="task-owner">Baji+Raj</span></div></div></div>
-<div class="task-item" id="t11" onclick="ck('t11')"><input type="checkbox" id="chk-t11"><div><div class="task-text">Final guest count confirmation — 137 PAX locked</div><div class="task-meta">Confirm Transat late arrivals (Jun 18) — coverage gap for Welcome Party <span class="task-owner">Raj</span></div></div></div>
-<div class="task-item" id="t12" onclick="ck('t12')"><input type="checkbox" id="chk-t12"><div><div class="task-text">Prep e-transfers for Jun 17 payments (DJ $2,000 + Photography $10,000)</div><div class="task-meta">3D Sound + Something Borrowed both due on arrival/first event day <span class="task-owner">Cath+Baji</span></div></div></div>
-<div class="task-item" id="t13" onclick="ck('t13')"><input type="checkbox" id="chk-t13"><div><div class="task-text">Confirm digital files delivery to Mills James — 3 business days before events</div><div class="task-meta">Music, monograms, DJ sets, seating chart content <span class="task-owner">Baji</span></div></div></div>
-<div class="task-item" id="t14" onclick="ck('t14')"><input type="checkbox" id="chk-t14"><div><div class="task-text">Confirm adjacent-room blocking — families Bldg 16</div><div class="task-meta">Open item with Raj — both family groups prefer Bldg 16 area <span class="task-owner">Raj</span></div></div></div>
-<div class="task-item" id="t15" onclick="ck('t15')"><input type="checkbox" id="chk-t15"><div><div class="task-text">Prep welcome bag contents + delivery plan for Jun 16 check-in</div><div class="task-meta">Coordinate with Beloved Planners — Jennyfer <span class="task-owner">Cath</span></div></div></div>
-</div>
-
-</div><!-- /tasks -->
-
-
-<!-- ════ VENDORS ════ -->
-<div class="section" id="sec-vendors">
-<div class="sec-h">Vendor Status — May 30, 2026</div>
-
-<div class="sec-label">⚠ Action Required</div>
-
-<div class="vendor-card overdue">
-  <div class="vc-head">
-    <div><div class="vc-name">Majestic Films</div><div class="vc-type">Videography · Toronto</div></div>
-    <span class="pill red">OVERDUE 9 DAYS</span>
-  </div>
-  <div class="vc-body">Diamond Package — 16+6 hrs coverage, 2 lead + 1 asst cinematographer, Next Day Edit, Full Feature Film, 4K footage. Crew: Rahul Mehra, Anurag Sandhu, Rohit Bhardwaj.</div>
-  <div class="vc-amounts">
-    <div class="vc-amt"><span class="al">Total</span><span class="av">C$15,255.00</span></div>
-    <div class="vc-amt"><span class="al">Paid (Dec 2025)</span><span class="av" style="color:var(--green)">C$2,500.00</span></div>
-    <div class="vc-amt"><span class="al">OVERDUE Balance</span><span class="av" style="color:var(--red)">C$12,755.00</span></div>
-  </div>
-  <div class="vc-links">
-    <a class="vc-link" href="mailto:info@majesticfilms.ca">info@majesticfilms.ca</a>
-    <a class="vc-link" href="tel:6473288994">647 328 8994</a>
-    <span class="vc-link" style="cursor:default;opacity:.7">Pay: D09-CD6-A43</span>
-  </div>
-</div>
-
-<div class="vendor-card undecided">
-  <div class="vc-head">
-    <div><div class="vc-name">Decor — UNDECIDED</div><div class="vc-type">All 5 Events Decor · Choose: Zuñiga OR AL Studio</div></div>
-    <span class="pill amber">UNSIGNED · DECIDE NOW</span>
-  </div>
-  <div class="vc-body"><strong>Option A — Zuñiga Productions (Hotel Preferred):</strong> $37,021.40 USD total. Welcome $3,387 · Sangeet $12,679 · Haldi $2,813 · Ceremony $2,355 · Reception $15,788. Quote expires ~June 7, 2026.<br><br><strong>Option B — AL Studio / Armando Lara:</strong> $43,126.48 USD total (incl. florals). Sangeet backdrop $4,350 · Ceremony florals $6,905 · Reception ceiling + backdrop $14,450. Updated May 27, 2026.<br><br><strong>Raj's recommendation:</strong> Use 1 vendor only. Confirm hotel preferred vendor status before signing to avoid extra hotel fees.</div>
-  <div class="vc-amounts">
-    <div class="vc-amt"><span class="al">Zuñiga (all events)</span><span class="av">$37,021 USD</span></div>
-    <div class="vc-amt"><span class="al">AL Studio (all events)</span><span class="av">$43,126 USD</span></div>
-    <div class="vc-amt"><span class="al">Difference</span><span class="av">+$6,105 USD</span></div>
-  </div>
-  <div class="vc-links">
-    <a class="vc-link" href="mailto:alejandra@decocancun.com">Zuñiga: Alejandra Galindo</a>
-    <a class="vc-link" href="mailto:aleventstudio02@gmail.com">AL Studio: Armando Lara</a>
-  </div>
-</div>
-
-<div class="vendor-card unsigned">
-  <div class="vc-head">
-    <div><div class="vc-name">Mills James México</div><div class="vc-type">AV &amp; Production · All Events</div></div>
-    <span class="pill amber">UNSIGNED · TENTATIVE</span>
-  </div>
-  <div class="vc-body">Job #279122: All 7 events (Welcome, Sangeet, Snathakam, Haldi, Lady Manticoor, Baraat, Ceremony, Reception). Full audio + lighting + rigging. Job #279827: Box Truss reception ballroom 26x26ft.</div>
-  <div class="vc-amounts">
-    <div class="vc-amt"><span class="al">Job #279122</span><span class="av">$14,192.73 USD</span></div>
-    <div class="vc-amt"><span class="al">Job #279827 (truss)</span><span class="av">$3,932.40 USD</span></div>
-    <div class="vc-amt"><span class="al">Combined Total</span><span class="av">$18,125.13 USD</span></div>
-  </div>
-  <div class="vc-links">
-    <a class="vc-link" href="tel:9983391825">998 339 1825</a>
-    <span class="vc-link" style="cursor:default;opacity:.7">Via Beloved/Jennyfer</span>
-  </div>
-</div>
-
-<div class="sec-label" style="margin-top:24px">✓ Signed Contracts</div>
-
-<div class="vendor-card signed">
-  <div class="vc-head">
-    <div><div class="vc-name">Something Borrowed Studios</div><div class="vc-type">Photography · Toronto</div></div>
-    <span class="pill green">SIGNED · C$4,238 PAID</span>
-  </div>
-  <div class="vc-body">28 hours of photography coverage · Online gallery · Digital delivery. Signed Mar 2026. Lead: Taaha Javed. Client responsible for vendor travel + accommodation.</div>
-  <div class="vc-amounts">
-    <div class="vc-amt"><span class="al">Total</span><span class="av">C$14,238.00</span></div>
-    <div class="vc-amt"><span class="al">Paid</span><span class="av" style="color:var(--green)">C$4,238.00</span></div>
-    <div class="vc-amt"><span class="al">Due Jun 17</span><span class="av" style="color:var(--amber)">C$10,000.00</span></div>
-  </div>
-  <div class="vc-links">
-    <a class="vc-link" href="mailto:sborrowedstudios@gmail.com">sborrowedstudios@gmail.com</a>
-    <a class="vc-link" href="mailto:cinematicsbyt@gmail.com">cinematicsbyt@gmail.com</a>
-  </div>
-</div>
-
-<div class="vendor-card signed">
-  <div class="vc-head">
-    <div><div class="vc-name">3D Sound — DJ JET (Jethu/Sharan Jeyarajah)</div><div class="vc-type">DJ Services · 5 Events</div></div>
-    <span class="pill green">SIGNED · C$2,000 PAID</span>
-  </div>
-  <div class="vc-body">Package 1 (Plug-In): Welcome x3 ($500ea) + Sangeet + Reception ($2,000). Arriving Jun 17 AM, departing Jun 22. No AV equipment — hotel/Mills James provides speakers, lighting, mics.</div>
-  <div class="vc-amounts">
-    <div class="vc-amt"><span class="al">Total</span><span class="av">C$4,000.00</span></div>
-    <div class="vc-amt"><span class="al">Deposit Paid</span><span class="av" style="color:var(--green)">C$2,000.00</span></div>
-    <div class="vc-amt"><span class="al">Due Jun 17</span><span class="av" style="color:var(--amber)">C$2,000.00</span></div>
-  </div>
-  <div class="vc-links">
-    <a class="vc-link" href="mailto:djjetinquiries@gmail.com">djjetinquiries@gmail.com</a>
-    <span class="vc-link" style="cursor:default;opacity:.7">Travel: Sharan Jeyarajah DOB May 29 2000</span>
-  </div>
-</div>
-
-<div class="vendor-card signed">
-  <div class="vc-head">
-    <div><div class="vc-name">Beloved Wedding Planners</div><div class="vc-type">On-Site Coordination · Jun 16–22</div></div>
-    <span class="pill green">CONTRACTED</span>
-  </div>
-  <div class="vc-body">Jennyfer Reyes Tapia (lead), Liliana Cruz Rosas, Jorge Muralidharan Espinoza, Ekaterina Nikulina. Booked Sunwing Conf #152409712 · JR Suite Garden Lagoon AI · Bldg 16 · Jun 17–22.</div>
-  <div class="vc-links">
-    <a class="vc-link" href="mailto:info@jennyferreyesweddings.com">info@jennyferreyesweddings.com</a>
-    <a class="vc-link" href="https://wa.me/message" target="_blank">WhatsApp Jennyfer</a>
-  </div>
-</div>
-
-<div class="vendor-card signed">
-  <div class="vc-head">
-    <div><div class="vc-name">Patravali</div><div class="vc-type">Ceremony-Day Banana Leaf Lunch</div></div>
-    <span class="pill green">CONFIRMED · INVOICE S01545</span>
-  </div>
-  <div class="vc-body">Traditional South Indian banana-leaf service for ceremony day (Jun 20). Invoice S01545.</div>
-  <div class="vc-amounts">
-    <div class="vc-amt"><span class="al">Invoice S01545</span><span class="av">$20,608.33</span></div>
-  </div>
-</div>
-
-<div class="vendor-card signed">
-  <div class="vc-head">
-    <div><div class="vc-name">Bhanu Prakash Malur Venkatesh</div><div class="vc-type">Hindu Priest · Telegu Vedic Ceremony</div></div>
-    <span class="pill green">CONFIRMED</span>
-  </div>
-  <div class="vc-body">Officiating the ceremony at The Glassroom, GPCM. SUBHAMUHURTHAM at 7:55 AM June 20.</div>
-</div>
-
-</div><!-- /vendors -->
-
-
-<!-- ════ BUDGET ════ -->
-<div class="section" id="sec-budget">
-<div class="sec-h">Budget Control — May 30, 2026</div>
-
-<div class="budget-controls">
-  <span class="fx-label">USD/CAD rate:</span>
-  <input class="fx-input" id="fxRate" type="number" step="0.001" value="1.364" oninput="renderBudget()">
-  <button class="toggle-btn active" id="btnUSD" onclick="setCur('USD')">USD</button>
-  <button class="toggle-btn" id="btnCAD" onclick="setCur('CAD')">CAD</button>
-</div>
-
-<div class="tw" id="budgetTable"><!-- rendered by JS --></div>
-
-<div class="card-grid">
-  <div class="card warn">
-    <div class="card-title">Scenario A — Zuñiga Decor</div>
-    Zuñiga: $37,021 USD · Mills James: $18,125 USD · Majestic: C$15,255 · Photography: C$14,238 · DJ: C$4,000 · Patravali: $20,608 · Beloved: TBD<br>
-    <strong>Estimated Total: ~$85K–95K USD</strong>
-  </div>
-  <div class="card teal">
-    <div class="card-title">Scenario B — AL Studio Decor</div>
-    AL Studio: $43,126 USD · Mills James: $18,125 USD · Majestic: C$15,255 · Photography: C$14,238 · DJ: C$4,000 · Patravali: $20,608 · Beloved: TBD<br>
-    <strong>Estimated Total: ~$90K–100K USD</strong>
-  </div>
-</div>
-</div><!-- /budget -->
-
-<!-- ════ CONTACTS ════ -->
-<div class="section" id="sec-contacts">
-<div class="sec-h">Key Contacts</div>
-
-<div class="card-grid">
-  <div class="contact-card">
-    <div class="contact-role">Hotel Coordinator</div>
-    <div class="contact-name">Natasha Lima</div>
-    <div class="contact-org">Palladium Weddings — Wedding #207718</div>
-    <div class="contact-det">
-      <a href="mailto:natasha.lima@palladiumweddings.com">natasha.lima@palladiumweddings.com</a><br>
-      SAW documentation lead · Room blocking · Vendor access fees
-    </div>
-  </div>
-  <div class="contact-card">
-    <div class="contact-role">Lead Planner</div>
-    <div class="contact-name">Jennyfer Reyes Tapia</div>
-    <div class="contact-org">Beloved Wedding Planners</div>
-    <div class="contact-det">
-      <a href="mailto:info@jennyferreyesweddings.com">info@jennyferreyesweddings.com</a><br>
-      On-site Jun 16–22 · Team: Liliana, Jorge, Ekaterina<br>
-      Bldg 16 · Sunwing #152409712
-    </div>
-  </div>
-  <div class="contact-card">
-    <div class="contact-role">Travel Agent</div>
-    <div class="contact-name">Raj Pahwa</div>
-    <div class="contact-org">Absolute Wedsite</div>
-    <div class="contact-det">
-      <a href="mailto:raj@absolutewedsite.com">raj@absolutewedsite.com</a><br>
-      Jean Teodoro: <a href="mailto:groups@absolutewedsite.com">groups@absolutewedsite.com</a><br>
-      Rooming files: TR37577/37596/37649/37677/37755/37759
-    </div>
-  </div>
-  <div class="contact-card">
-    <div class="contact-role">Couple — Groom</div>
-    <div class="contact-name">Bharadwaj (Baji) Madduluri</div>
-    <div class="contact-org">Couple</div>
-    <div class="contact-det">
-      <a href="mailto:bmadduluri@gmail.com">bmadduluri@gmail.com</a><br>
-      Trip TR37577 · AC1810 Jun 16
-    </div>
-  </div>
-  <div class="contact-card">
-    <div class="contact-role">Couple — Bride</div>
-    <div class="contact-name">Catherina Khadoo</div>
-    <div class="contact-org">Couple</div>
-    <div class="contact-det">
-      <a href="mailto:catherina.khadoo@gmail.com">catherina.khadoo@gmail.com</a><br>
-      647 237 2428
-    </div>
-  </div>
-  <div class="contact-card">
-    <div class="contact-role">Decor Option A</div>
-    <div class="contact-name">Alejandra Galindo</div>
-    <div class="contact-org">Zuñiga Productions / ZDE Bodas y Eventos</div>
-    <div class="contact-det">
-      <a href="mailto:alejandra@decocancun.com">alejandra@decocancun.com</a><br>
-      <a href="tel:9981928070">998 192 8070</a><br>
-      $37,021 USD · Expires ~Jun 7
-    </div>
-  </div>
-  <div class="contact-card">
-    <div class="contact-role">Decor Option B</div>
-    <div class="contact-name">Armando Lara</div>
-    <div class="contact-org">AL Studio / Events Studio</div>
-    <div class="contact-det">
-      <a href="mailto:aleventstudio02@gmail.com">aleventstudio02@gmail.com</a><br>
-      $43,126 USD · Via Beloved/Jennyfer
-    </div>
-  </div>
-  <div class="contact-card">
-    <div class="contact-role">Videography</div>
-    <div class="contact-name">Aman Gabria / Rohit Bhardwaj</div>
-    <div class="contact-org">Majestic Films</div>
-    <div class="contact-det">
-      <a href="mailto:info@majesticfilms.ca">info@majesticfilms.ca</a><br>
-      <a href="tel:6473288994">647 328 8994</a><br>
-      C$12,755 OVERDUE — pay immediately
-    </div>
-  </div>
-  <div class="contact-card">
-    <div class="contact-role">Priest</div>
-    <div class="contact-name">Bhanu Prakash Malur Venkatesh</div>
-    <div class="contact-org">Hindu Officiant</div>
-    <div class="contact-det">
-      Telegu Vedic ceremony · SUBHAMUHURTHAM 7:55 AM Jun 20<br>
-      Travel to be confirmed
-    </div>
-  </div>
-  <div class="contact-card">
-    <div class="contact-role">AV / Production</div>
-    <div class="contact-name">Mills James México</div>
-    <div class="contact-org">Cancún QR</div>
-    <div class="contact-det">
-      <a href="tel:9983391825">998 339 1825</a><br>
-      Jobs #279122 + #279827 · UNSIGNED · Via Beloved
-    </div>
-  </div>
-  <div class="contact-card">
-    <div class="contact-role">DJ</div>
-    <div class="contact-name">JET — Sharan Jeyarajah</div>
-    <div class="contact-org">3D Sound</div>
-    <div class="contact-det">
-      <a href="mailto:djjetinquiries@gmail.com">djjetinquiries@gmail.com</a><br>
-      C$2,000 balance due Jun 17 · Arriving Jun 17 AM
-    </div>
-  </div>
-  <div class="contact-card">
-    <div class="contact-role">Photography</div>
-    <div class="contact-name">Taaha Javed</div>
-    <div class="contact-org">Something Borrowed Studios</div>
-    <div class="contact-det">
-      <a href="mailto:sborrowedstudios@gmail.com">sborrowedstudios@gmail.com</a><br>
-      <a href="mailto:cinematicsbyt@gmail.com">cinematicsbyt@gmail.com</a><br>
-      C$10,000 due Jun 17
-    </div>
-  </div>
-</div>
-</div><!-- /contacts -->
-
-
-<!-- ════ COMMS HUB ════ -->
-<div class="section" id="sec-comms">
-<div class="sec-h">Communications Hub</div>
-<p style="font-size:12px;color:var(--text3);margin-bottom:16px">Pre-drafted messages. Click Copy to clipboard, then paste into email or WhatsApp.</p>
-
-<div class="sec-label">🚨 Urgent — Send Today</div>
-
-<div class="msg-card">
-  <div class="msg-head">
-    <span class="msg-label">M1 — Pay Majestic Films</span>
-    <span class="msg-to">To: Baji (Action) · info@majesticfilms.ca</span>
-  </div>
-  <div class="msg-body" id="msg1">Hi Aman / Rohit,
-
-Following up on our outstanding balance for the Cath & Baji wedding videography.
-
-Invoice #20260620006 for C$12,755.00 was due May 21, 2026 and is now overdue. We apologize for the delay and are sending this e-transfer today.
-
-Details:
-- E-transfer to: info@majesticfilms.ca
-- Reference: D09-CD6-A43
-- Amount: C$12,755.00
-
-Please confirm receipt once received. Looking forward to the wedding — June 16–23, 2026 at Grand Palladium Costa Mujeres, Cancún.
-
-Catherina & Baji</div>
-  <div class="msg-actions">
-    <button class="btn-sm btn-copy" onclick="cp('msg1',this)">📋 Copy</button>
-    <a class="btn-sm btn-wa" href="mailto:info@majesticfilms.ca">📧 Email</a>
-  </div>
-</div>
-
-<div class="msg-card">
-  <div class="msg-head">
-    <span class="msg-label">M2 — Decor Decision: Zuñiga Request to Hold</span>
-    <span class="msg-to">To: Jennyfer → Alejandra Zuñiga</span>
-  </div>
-  <div class="msg-body" id="msg2">Hi Alejandra,
-
-Thank you for sending the updated decor proposals for our June 17–21 wedding at Grand Palladium Costa Mujeres. We've received all 5 event quotes totaling $37,021.40 USD.
-
-We are finalizing our decision between vendors and will confirm by [DATE]. Could you please extend the quote validity by 5 days from June 7 to June 12, 2026?
-
-Before we sign, we'd like to confirm the following measurements:
-- Dance floor: 24x24 ft — can you confirm this fits the Ballroom layout?
-- Sangeet stage: 28x12 ft — exact height with steps?
-- Bistro lights: string lengths for Fizz Pool perimeter?
-- Centrepiece heights: exact dimensions for each event
-
-Also please confirm Zuñiga remains on the Palladium preferred vendor list (to avoid hotel surcharges).
-
-We appreciate your flexibility and look forward to confirming.
-
-Warm regards,
-Catherina & Baji / Jennyfer (Beloved Planners)</div>
-  <div class="msg-actions">
-    <button class="btn-sm btn-copy" onclick="cp('msg2',this)">📋 Copy</button>
-    <a class="btn-sm btn-wa" href="mailto:alejandra@decocancun.com">📧 Email Alejandra</a>
-  </div>
-</div>
-
-<div class="msg-card">
-  <div class="msg-head">
-    <span class="msg-label">M3 — SAW Submission to Natasha</span>
-    <span class="msg-to">To: natasha.lima@palladiumweddings.com</span>
-  </div>
-  <div class="msg-body" id="msg3">Hi Natasha,
-
-Please find our SAW vendor submission for Wedding #207718 — Catherina Khadoo & Bharadwaj Madduluri, June 17–21, 2026.
-
-VENDOR MATRIX:
-1. Photography: Something Borrowed Studios / Taaha Javed (sborrowedstudios@gmail.com) · 28 hrs
-2. Videography: Majestic Films / Rohit Bhardwaj (info@majesticfilms.ca) · 3 crew
-3. DJ: 3D Sound / JET Jeyarajah (djjetinquiries@gmail.com) · 5 events
-4. Dhol: Drums in Paradise · TBC crew details
-5. Mehndi: Loto Mehndi · Jun 19 Lady Manticoor
-6. Decor: [TBD — Zuñiga Productions OR AL Studio — signing week of Jun 1]
-7. Florals: [TBD — part of decor vendor package]
-8. Food/Catering — Ceremony day: Patravali (Invoice S01545)
-9. Food/Catering — Reception: Bhogali Indian Restaurant
-10. Priest: Bhanu Prakash Malur Venkatesh
-11. HMUA: [To confirm]
-12. Bridal Mehndi: Ruby Bridal Mehndi
-
-Additional items:
-- 3 crew rooms needed for Majestic Films (Jun 16–23): Rahul Mehra (Aug 9, 2000), Anurag Sandhu (Mar 26, 1991), Rohit Bhardwaj (Apr 14, 1995)
-- Could you also assist with room upgrade to Jacuzzi Loft for the couple (TR37577)?
-- Palladium Deposit #3 — please advise on timeline
-
-Thank you,
-Baji Madduluri
-bmadduluri@gmail.com</div>
-  <div class="msg-actions">
-    <button class="btn-sm btn-copy" onclick="cp('msg3',this)">📋 Copy</button>
-    <a class="btn-sm btn-wa" href="mailto:natasha.lima@palladiumweddings.com">📧 Email Natasha</a>
-  </div>
-</div>
-
-<div class="sec-label" style="margin-top:24px">📋 Standard Messages</div>
-
-<div class="msg-card">
-  <div class="msg-head">
-    <span class="msg-label">M4 — Mills James Signature Request</span>
-    <span class="msg-to">Via: Jennyfer (Beloved) → Mills James</span>
-  </div>
-  <div class="msg-body" id="msg4">Hi Mills James team,
-
-We'd like to confirm and sign the following quotes for the Cath & Baji wedding at Grand Palladium Costa Mujeres, June 17–21, 2026:
-
-- Job #279122 (All events AV/Production): $14,192.73 USD
-- Job #279827 (Box Truss, Reception Ballroom): $3,932.40 USD
-
-Please confirm the signing process — we understand billing is through the hotel master account (Cuenta Maestra 30). We can sign digitally if you send the signature pages.
-
-Please also advise on digital content submission deadline (3 business days before first event = June 14, 2026 for Jun 17 Welcome Party).
-
-Thank you,
-Beloved Wedding Planners / Catherina & Baji Madduluri</div>
-  <div class="msg-actions">
-    <button class="btn-sm btn-copy" onclick="cp('msg4',this)">📋 Copy</button>
-  </div>
-</div>
-
-<div class="msg-card">
-  <div class="msg-head">
-    <span class="msg-label">M5 — Raj: Vendor Rooms + Adjacent Rooms</span>
-    <span class="msg-to">To: raj@absolutewedsite.com</span>
-  </div>
-  <div class="msg-body" id="msg5">Hi Raj,
-
-Two open items to confirm for the B&C wedding at GPCM June 16–23:
-
-1. VENDOR ROOMS — Majestic Films crew (3 rooms needed, Jun 16–23):
-   - Rahul Mehra (DOB: Aug 9, 2000)
-   - Anurag Sandhu (DOB: Mar 26, 1991)
-   - Rohit Bhardwaj (DOB: Apr 14, 1995)
-   Can you book these as land-only or help coordinate with hotel?
-
-2. ADJACENT ROOM BLOCKING — Both families would like to be grouped in/near Building 16. Can you confirm this request has been submitted to GPCM? 
-
-3. TRANSAT ARRIVAL GAP — The Transat group (approx 28+2 pax) arrives June 18, missing the Welcome Party on June 17. Are we able to send them a separate welcome brief/itinerary?
-
-Please confirm status on all three items.
-
-Thanks,
-Baji Madduluri</div>
-  <div class="msg-actions">
-    <button class="btn-sm btn-copy" onclick="cp('msg5',this)">📋 Copy</button>
-    <a class="btn-sm btn-wa" href="mailto:raj@absolutewedsite.com">📧 Email Raj</a>
-  </div>
-</div>
-
-</div><!-- /comms -->
-
-    </div><!-- /content -->
-  </div><!-- /main -->
-</div><!-- /app -->
-
-
+<script type="application/json" id="wedding-data">{"meta":{"version":"6.1","lastUpdated":"2026-05-29T12:00:00.000Z","couple":"Catherina Danella Khadoo & Bharadwaj Madduluri","venue":"Grand Palladium Costa Mujeres, Cancún","dates":"June 16–23, 2026","daysToArrival":18,"pax":133,"rooms":44,"budgetPaidPct":6,"fxDefault":1.37,"lastSync":"2026-05-29T21:09:34.144Z","syncBackend":"google-api","gmailAccount":"bmadduluri@gmail.com"},"alerts":[{"level":"critical","text":"AL Studio decor — revised quote is primary path (GAMA C4179 reference only)"},{"level":"urgent","text":"Mills James AV — Sign 279122 + 279827 ($18,125.13 USD) after scope revision email"},{"level":"critical","text":"Majestic Films Balance Overdue — $12,755 CAD"},{"level":"critical","text":"Palladium Deposit #3 Overdue — $1,600 USD"},{"level":"info","text":"Sign AL Studio revised decor quote + submit SAW to Natasha"},{"level":"urgent","text":"GAMA C4179 + Zuniga retained as reference only — do not sign"}],"events":[{"name":"Arrivals + Bridal Mehndi","date":"2026-06-16","timeStart":"15:00","timeFinish":"16:00","time":"15:00–16:00","venue":"Resort","theme":"PJ / cream mehndi","notes":""},{"name":"Welcome Party","date":"2026-06-17","timeStart":"17:30","timeFinish":"22:30","time":"17:30–22:30","venue":"Fizz Pool","theme":"Cream / white","notes":""},{"name":"Mimosas & Mehndi","date":"2026-06-18","timeStart":"09:30","timeFinish":"12:00","time":"09:30–12:00","venue":"Mini-Ballrooms","theme":"Cream / pink","notes":""},{"name":"Sangeet","date":"2026-06-18","timeStart":"19:00","timeFinish":"23:00","time":"19:00–23:00","venue":"Convention Centre Plaza","theme":"Peacock / colorful","notes":""},{"name":"Snathakam","date":"2026-06-19","timeStart":"09:30","timeFinish":"11:00","time":"09:30–11:00","venue":"Village Deck","theme":"South Indian pooja","notes":""},{"name":"Haldi","date":"2026-06-19","timeStart":"11:00","timeFinish":"13:00","time":"11:00–13:00","venue":"Village Deck","theme":"Orange / marigold","notes":""},{"name":"Lady Maticoor","date":"2026-06-19","timeStart":"16:00","timeFinish":"17:30","time":"16:00–17:30","venue":"Village Deck","theme":"Bride pooja","notes":""},{"name":"Baraat","date":"2026-06-19","timeStart":"18:00","timeFinish":"19:30","time":"18:00–19:30","venue":"Village Deck","theme":"Procession + boat","notes":""},{"name":"Ceremony","date":"2026-06-20","timeStart":"06:00","timeFinish":"13:00","time":"06:00–13:00","venue":"Glassroom","theme":"Champagne / red · Subhamuhurtham 7:55 AM","notes":"Sheet shows finish 1:00:00 (= 13:00 / 1 PM)"},{"name":"Patravali Breakfast + Lunch","date":"2026-06-20","timeStart":"08:00","timeFinish":"11:00","time":"08:00–11:00","venue":"Ballroom","theme":"South Indian","notes":""},{"name":"Reception","date":"2026-06-21","timeStart":"19:00","timeFinish":"01:00","time":"19:00–01:00","venue":"Ballroom","theme":"TBC · Bhogali · 4hr open bar","notes":"Finish 01:00 next calendar day"},{"name":"Departures","date":"2026-06-22","timeStart":"","timeFinish":"","time":"Various","venue":"CUN","theme":"7-day guests checkout Jun 23","notes":""}],"vendors":[{"name":"Natasha Lima","role":"Venue Coordinator","org":"Grand Palladium CM","tier":"internal","email":"natasha.lima@palladiumweddings.com","phone":"+52 998 348 2377","whatsapp":"529983482377","status":"ACTIVE","quoteUsd":59144,"events":"All resort events","notes":"SAW · menus · deposits · May 26 Meet 10AM CUN"},{"name":"Jennyfer Reyes Tapia","role":"Lead Planner","org":"Beloved Planners","tier":"internal","email":"info@jennyferreyesweddings.com","phone":"+52 984 215 8539","whatsapp":"529842158539","status":"ACTIVE","quoteUsd":null,"events":"Full week","notes":"4-person team · Sunwing #152409712 · Bldg 16"},{"name":"Jorge Muralidharan Espinoza","role":"Coordinator","org":"Beloved Planners","tier":"internal","email":"belovedcoordinator2@gmail.com","phone":null,"whatsapp":null,"status":"ACTIVE","quoteUsd":null,"events":"Entertainment logistics","notes":"Drums in Paradise · vendor reach-outs"},{"name":"Liliana Cruz Rosas","role":"Coordinator","org":"Beloved Planners","tier":"internal","email":null,"phone":null,"whatsapp":null,"status":"ACTIVE","quoteUsd":null,"events":"On-site","notes":"Room with Jennyfer · Bldg 16"},{"name":"Ekaterina Nikulina","role":"Coordinator","org":"Beloved Planners","tier":"internal","email":null,"phone":null,"whatsapp":null,"status":"ACTIVE","quoteUsd":null,"events":"On-site","notes":"Room with Jorge · Bldg 16"},{"name":"Raj Virk Pahwa","role":"Travel Lead","org":"AbsoluteWed","tier":"external","email":"raj@absolutewedsite.com","phone":"905-872-1000","whatsapp":null,"status":"ACTIVE","quoteUsd":null,"events":"Travel/rooming","notes":"Rooming · flights · transfers"},{"name":"Jean W Teodoro","role":"Groups Admin","org":"AbsoluteWed","tier":"external","email":"groups@absolutewedsite.com","phone":"647-870-6740","whatsapp":null,"status":"ACTIVE","quoteUsd":null,"events":"Bookings admin","notes":"Beloved booking #152409712"},{"name":"Mills James AV","role":"AV Vendor","org":"Mills James","tier":"internal","email":"jmochoa@millsjames.com.mx","phone":"+52 998 158 1628","whatsapp":null,"status":"EXPIRES TOMORROW","quoteUsd":16652,"events":"Jun 17–21 · 6 events","notes":"Quotes 279122 + 279827"},{"name":"AV del Caribe","role":"AV Alt","org":"AV del Caribe","tier":"local","email":"paulino-audiovisual.cancun@outlook.es","phone":"+52 998 300 5112","whatsapp":null,"status":"EVALUATING","quoteUsd":16652,"events":"8 events","notes":"Same rate as Mills James"},{"name":"Grupo Gama","role":"Decor Reference","org":"Grupo Gama","tier":"local","email":"ventas7@grupogama.mx","phone":null,"whatsapp":null,"status":"REFERENCE","quoteUsd":43202.46,"events":"5 events","notes":"C4179 · not proceeding · AL Studio primary"},{"name":"Zuniga Productions","role":"Decor Reference","org":"Zuniga","tier":"local","email":"alejandra@decocancun.com","phone":"998 192 8070","whatsapp":null,"status":"EXPIRED","quoteUsd":40554,"events":"4 events","notes":"Alejandra Galindo · expired May 25"},{"name":"Drums in Paradise","role":"Dhol + Mariachi","org":"Drums in Paradise","tier":"local","email":null,"phone":"(998) 240-2834","whatsapp":null,"status":"QUOTED","quoteUsd":3386,"events":"Jun 17 Welcome · Jun 19 Baraat","notes":"Quote 2026-06-17_19 PCM DH · Ana Isabel Curiel · valid Jun 12"},{"name":"Loto Mehndi","role":"Bridal + Guest Mehndi","org":"CB&Co via Palladium","tier":"internal","email":null,"phone":null,"whatsapp":"529983482377","status":"SIGNED","quoteUsd":1763.2,"events":"Jun 16 bridal · Jun 18 guest","notes":"Signed PO · 50% deposit $881.60 to Palladium CM"},{"name":"Ruby Bridal Mehndi","role":"Bridal Mehndi","org":"Ruby Bridal","tier":"internal","email":null,"phone":null,"whatsapp":null,"status":"CONFIRM","quoteUsd":460,"events":"Jun 16","notes":"Evening session"},{"name":"Patravali South Asian","role":"Catering","org":"Patravali","tier":"local","email":"contacto@patravalicancun.com","phone":null,"whatsapp":null,"status":"QUOTED","quoteUsd":13188.97,"events":"Jun 20 breakfast + lunch","notes":"S01545 · 130 pax · exp Nov 10 2026"},{"name":"Bhogali Restaurant","role":"Reception/Sangeet F&B","org":"Resort","tier":"internal","email":null,"phone":null,"whatsapp":null,"status":"PARTIAL","quoteUsd":10800,"events":"Jun 18 Sangeet · Jun 21 Reception","notes":"Reception $90×120 · Sangeet menu TBD"},{"name":"Majestic Films","role":"Videography","org":"Toronto","tier":"external","email":null,"phone":null,"whatsapp":null,"status":"OVERDUE","quoteUsd":null,"events":"Full week","notes":"Balance overdue · 3 crew rooms"},{"name":"Something Borrowed Studios","role":"Photography","org":"Toronto","tier":"external","email":null,"phone":null,"whatsapp":null,"status":"CONTRACTED","quoteUsd":null,"events":"Jun 20+","notes":"No photos before 7:55 AM"},{"name":"DJ Jethu (Sharan Jeyarajah)","role":"DJ/MC","org":"Toronto","tier":"external","email":"djjetinquiries@gmail.com","phone":null,"whatsapp":null,"status":"CONFIRMED","quoteUsd":null,"events":"Sangeet · Reception","notes":"TR37649 · AV rider Apr 14"},{"name":"Beauty by Sharda","role":"HMUA","org":"Toronto","tier":"external","email":null,"phone":null,"whatsapp":null,"status":"CONFIRMED","quoteUsd":null,"events":"Full week","notes":"Group rate room"},{"name":"Banu Prakash Malur Venkatesh","role":"Priest","org":"Toronto","tier":"external","email":null,"phone":null,"whatsapp":null,"status":"CONFIRMED","quoteUsd":null,"events":"Jun 19–20","notes":"Subhamuhurtham 7:55 AM"},{"name":"AL Studio · Armando Lara","role":"Decor + Florals","org":"AL Studio","tier":"local","email":null,"phone":null,"whatsapp":null,"status":"PREFERRED","quoteUsd":null,"events":"5 events","notes":"Revised quote May 27 · primary decor path · sign + SAW pending"}],"budget":[{"id":1,"item":"Couple's Trip TR37577","category":"Travel","usd":null,"cad":8976,"status":"PAID","due":null,"notes":"AC1810 Jun 16 · Couple-paid"},{"id":2,"item":"Palladium Wedding Package","category":"Venue","usd":59144,"cad":null,"status":"DUE","due":null,"notes":"Full wedding package · Palladium CM · deposit schedule on file"},{"id":3,"item":"Palladium Deposit #3","category":"Venue","usd":1600,"cad":null,"status":"OVERDUE","due":"2026-05-26","notes":"22 days overdue — call Natasha · Deposit #3"},{"id":4,"item":"Majestic Films – Balance","category":"Videography","usd":null,"cad":12755,"status":"OVERDUE","due":"2026-05-26","notes":"5 days overdue — balance due now"},{"id":5,"item":"Majestic Films – Prior Deposit","category":"Videography","usd":9311,"cad":null,"status":"PAID","due":null,"notes":"Prior deposit paid · contract on file"},{"id":6,"item":"Mills James AV (279122+279827)","category":"AV","usd":18125.13,"cad":null,"status":"URGENT","due":"2026-05-30","notes":"279122 job $14,192.73 + 279827 truss $3,932.40 (May 27 PDF) · revise Welcome/Mehndi scope then sign"},{"id":7,"item":"AV del Caribe (Alternative)","category":"AV","usd":20584.4,"cad":null,"status":"EVALUATING","due":null,"notes":"Alternative · same scope as Mills James total"},{"id":8,"item":"AL Studio – Decor (PREFERRED)","category":"Decor","usd":43126.48,"cad":null,"status":"QUOTED","due":"2026-05-31","notes":"Revised May 27 post-call · $43,126.48 USD incl tax · sign + deposit + SAW"},{"id":31,"item":"Grupo Gama – Decor (Reference)","category":"Decor","usd":43202.46,"cad":null,"status":"REFERENCE","due":null,"notes":"C4179 · not proceeding · kept for comparison"},{"id":9,"item":"Zuniga Productions – Reference","category":"Decor","usd":37021.4,"cad":null,"status":"REFERENCE","due":"2026-06-07","notes":"May 28 package 5 events · valid 10 days · do not sign"},{"id":10,"item":"Drums in Paradise","category":"Entertainment","usd":3386,"cad":null,"status":"QUOTED","due":"2026-06-12","notes":"Quote 2026-06-17_19 PCM DH · 2× dhol Jun 19 + mariachi Jun 17 · valid Jun 12"},{"id":11,"item":"Loto Mehndi (Bridal Jun 16 + Guest Jun 18)","category":"Beauty","usd":1763.2,"cad":null,"status":"SIGNED","due":"2026-05-28","notes":"Signed PO · $1,520 + 16% tax · 50% deposit $881.60 to Palladium CM"},{"id":12,"item":"Ruby Bridal Mehndi (Jun 16)","category":"Beauty","usd":460,"cad":null,"status":"SUPERSEDED","due":null,"notes":"Replaced by Loto Mehndi signed PO (Jun 16 bridal + feet)"},{"id":13,"item":"DJ Jethu","category":"Entertainment","usd":null,"cad":null,"status":"CONFIRMED","due":null,"notes":"AV rider approved Apr 14"},{"id":14,"item":"Patravali South Asian","category":"Catering","usd":13188.97,"cad":null,"status":"QUOTED","due":"2026-11-10","notes":"S01545 · Praathal breakfast + veg lunch · 130 pax · exp Nov 10 2026"},{"id":15,"item":"Something Borrowed Photography","category":"Photography","usd":null,"cad":14238,"status":"CONTRACTED","due":"2026-06-17","notes":"Signed May 15 · C$4,238 retainer + C$10,000 balance due first event · verify retainer paid"},{"id":16,"item":"Beauty by Sharda (HMUA)","category":"Beauty","usd":null,"cad":null,"status":"CONFIRMED","due":null,"notes":"Full wedding week"},{"id":17,"item":"Banu Prakash – Priest","category":"Officiant","usd":null,"cad":null,"status":"CONFIRMED","due":null,"notes":"Room booked at group rate"},{"id":18,"item":"Beloved Planners","category":"Planning","usd":null,"cad":null,"status":"ACTIVE","due":null,"notes":"4 staff · Sunwing #152409712"},{"id":19,"item":"Baraat Boat","category":"Logistics","usd":150,"cad":null,"status":"OPEN","due":null,"notes":"$150/8 pax · 1 hr · Jun 19"},{"id":20,"item":"Tasting Apr 27","category":"Venue","usd":350,"cad":null,"status":"PAID","due":null,"notes":"$150/couple + $100/extra"},{"id":21,"item":"Misc / Gratuities","category":"Other","usd":2000,"cad":null,"status":"OPEN","due":null,"notes":"Tips + sundry"},{"id":22,"item":"Reception Food + Drinks (Bhogali)","category":"Catering","usd":10800,"cad":null,"status":"CONFIRMED","due":null,"notes":"$90 × 120 guests · Jun 21 Ballroom"},{"id":23,"item":"Soft Bars / Juice / Coffee / Water","category":"Venue","usd":null,"cad":null,"status":"TBD","due":null,"notes":"Awaiting quote from Natasha"},{"id":24,"item":"Vendor Travel/Rooms — DJ","category":"Travel","usd":null,"cad":null,"status":"TBD","due":null,"notes":"Canada → Cancún · TR37649 booked"},{"id":25,"item":"Vendor Travel/Rooms — Video (Majestic)","category":"Travel","usd":null,"cad":null,"status":"TBD","due":null,"notes":"3 crew rooms at group rate"},{"id":26,"item":"Vendor Travel/Rooms — Photo","category":"Travel","usd":null,"cad":null,"status":"TBD","due":null,"notes":"Something Borrowed · group rate"},{"id":27,"item":"Vendor Travel/Rooms — Makeup","category":"Travel","usd":null,"cad":null,"status":"TBD","due":null,"notes":"Beauty by Sharda · group rate"},{"id":28,"item":"Vendor Travel/Rooms — Beloved Planners","category":"Travel","usd":null,"cad":null,"status":"BOOKED","due":null,"notes":"Sunwing #152409712 · Bldg 16"},{"id":29,"item":"Mills James — Box Truss (279827)","category":"AV","usd":3932.4,"cad":null,"status":"INCLUDED","due":"2026-05-30","notes":"Included in line #6 total $18,125.13 · sign with 279122"},{"id":30,"item":"Florals — included in AL Studio scope","category":"Decor","usd":null,"cad":null,"status":"MERGED","due":null,"notes":"May 15 florals quote superseded by AL Studio revised decor path"}],"tasks":[{"id":"sprint-19","owner":"Baji","task":"Majestic Films balance","due":"2026-05-26","status":"5 days overdue","bucket":"sprint"},{"id":"sprint-20","owner":"Baji","task":"Palladium deposit #3","due":"2026-05-26","status":"22 days overdue","bucket":"sprint"},{"id":"c1e","owner":"Jennyfer","task":"Confirm Drums in Paradise ($3,386 · dhol ×2 + mariachi) via Jorge Espinoza — valid Jun 12","due":"2026-05-27","status":"todo","bucket":"thisWeek"},{"id":"c1i","owner":"Jennyfer","task":"Submit outstanding SAW documents to Natasha (see T8)","due":"2026-05-27","status":"todo","bucket":"thisWeek"},{"id":"c1l","owner":"Baji","task":"Respond to Raj May 22 email — Building 16 room notes + transfer reminder","due":"2026-05-27","status":"todo","bucket":"thisWeek"},{"id":"sprint-18","owner":"Baji","task":"Sign Mills James AV","due":"2026-05-27","status":"TMRW","bucket":"sprint"},{"id":"sprint-26","owner":"Jennyfer","task":"SAW submission — open slots","due":"2026-05-27","status":"May 27","bucket":"sprint"},{"id":"sprint-27","owner":"Jennyfer","task":"Drums in Paradise confirm via Jorge","due":"2026-05-27","status":"May 27","bucket":"sprint"},{"id":"sprint-30","owner":"Raj","task":"Adjacent room blocking Bldg 16","due":"2026-05-27","status":"May 27","bucket":"sprint"},{"id":"c1f","owner":"Baji","task":"Pay Loto Mehndi 50% deposit ($881.60 USD) to Palladium CM — signed PO on file","due":"2026-05-28","status":"todo","bucket":"thisWeek"},{"id":"c1g","owner":"Baji","task":"Sign AL Studio revised decor quote + wire deposit when received","due":"2026-05-28","status":"todo","bucket":"thisWeek"},{"id":"c1j","owner":"Jennyfer","task":"Get updated venue breakdown sheet from Natasha (requested May 5/11/13)","due":"2026-05-28","status":"todo","bucket":"thisWeek"},{"id":"c1m","owner":"Jennyfer","task":"Submit AL Studio decor SAW to Natasha once revised quote signed","due":"2026-05-28","status":"todo","bucket":"thisWeek"},{"id":"sprint-21","owner":"Baji","task":"Sign AL Studio revised decor quote","due":"2026-05-28","status":"By May 28","bucket":"sprint"},{"id":"sprint-23","owner":"Cath","task":"Loto Mehndi 50% deposit $881.60 — signed PO on file","due":"2026-05-28","status":"By May 28","bucket":"sprint"},{"id":"sprint-28","owner":"Jennyfer","task":"Obtain updated venue breakdown","due":"2026-05-28","status":"May 28","bucket":"sprint"},{"id":"sprint-31","owner":"Raj","task":"Flight release timeline update","due":"2026-05-28","status":"May 28","bucket":"sprint"},{"id":"c1c","owner":"Baji","task":"Send Majestic Films balance C$12,755 — overdue since May 21","due":"2026-05-29","status":"todo","bucket":"urgent"},{"id":"c1d","owner":"Baji","task":"Palladium Deposit #3 $1,600 USD — contact Natasha today","due":"2026-05-29","status":"todo","bucket":"urgent"},{"id":"sprint-25","owner":"Cath","task":"Chair cushion color for Sangeet","due":"2026-05-29","status":"By May 29","bucket":"sprint"},{"id":"sprint-29","owner":"Jennyfer","task":"Patravali outside vendor confirmation","due":"2026-05-29","status":"May 29","bucket":"sprint"},{"id":"sprint-32","owner":"Raj","task":"Land Only bus schedule","due":"2026-05-29","status":"May 29","bucket":"sprint"},{"id":"c1b","owner":"Jennyfer","task":"Mills James revised AV scope then sign ($18,125.13 USD total)","due":"2026-05-30","status":"todo","bucket":"urgent"},{"id":"sprint-33","owner":"Raj","task":"Crew travel bookings","due":"2026-05-30","status":"May 30","bucket":"sprint"},{"id":"c1a","owner":"Cath","task":"AL Studio revised quote — sign + wire deposit ($43,126.48 USD)","due":"2026-05-31","status":"todo","bucket":"urgent"},{"id":"c1h","owner":"Cath","task":"Confirm Bhogali menu Sangeet + Reception with chaat station cost","due":"2026-06-01","status":"todo","bucket":"thisWeek"},{"id":"milestones-13","owner":"—","task":"All vendor contracts signed & locked","due":"2026-06-01","status":"milestone","bucket":"milestones"},{"id":"sprint-24","owner":"Cath","task":"Bhogali menu selections","due":"2026-06-01","status":"By Jun 1","bucket":"sprint"},{"id":"c1k","owner":"Raj","task":"Send guest T-22 itinerary blast via Raj","due":"2026-06-03","status":"todo","bucket":"thisWeek"},{"id":"milestones-14","owner":"—","task":"Travel files verified, adjacent rooms confirmed with Raj","due":"2026-06-07","status":"milestone","bucket":"milestones"},{"id":"milestones-15","owner":"—","task":"Pooja items checklist sent to Banu Prakash","due":"2026-06-10","status":"milestone","bucket":"milestones"},{"id":"milestones-16","owner":"—","task":"Final day-of vendor calls complete","due":"2026-06-14","status":"milestone","bucket":"milestones"},{"id":"milestones-17","owner":"—","task":"Couple arrive CUN · AC1810 · 06:50 YYZ → 09:50 CUN · TR37577","due":"2026-06-16","status":"milestone","bucket":"milestones"},{"id":"sprint-22","owner":"Cath","task":"GAMA + Zuniga — reference only; no sign","due":null,"status":"Closed","bucket":"sprint"}],"contacts":[{"name":"Natasha Lima","role":"Venue Coordinator","company":"Grand Palladium CM","email":"natasha.lima@palladiumweddings.com","phone":"+52 998 348 2377","category":"planner"},{"name":"Jennyfer Reyes Tapia","role":"Lead Planner","company":"Beloved Planners","email":"info@jennyferreyesweddings.com","phone":"+52 984 215 8539","category":"planner"},{"name":"Jorge Muralidharan Espinoza","role":"Coordinator","company":"Beloved Planners","email":"belovedcoordinator2@gmail.com","phone":null,"category":"planner"},{"name":"Liliana Cruz Rosas","role":"Coordinator","company":"Beloved Planners","email":null,"phone":null,"category":"planner"},{"name":"Ekaterina Nikulina","role":"Coordinator","company":"Beloved Planners","email":null,"phone":null,"category":"planner"},{"name":"Raj Virk Pahwa","role":"Travel Lead","company":"AbsoluteWed","email":"raj@absolutewedsite.com","phone":"905-872-1000","category":"vendor"},{"name":"Jean W Teodoro","role":"Groups Admin","company":"AbsoluteWed","email":"groups@absolutewedsite.com","phone":"647-870-6740","category":"vendor"},{"name":"Mills James AV","role":"AV Vendor","company":"Mills James","email":"jmochoa@millsjames.com.mx","phone":"+52 998 158 1628","category":"planner"},{"name":"AV del Caribe","role":"AV Alt","company":"AV del Caribe","email":"paulino-audiovisual.cancun@outlook.es","phone":"+52 998 300 5112","category":"vendor"},{"name":"Grupo Gama","role":"Decor Reference","company":"Grupo Gama","email":"ventas7@grupogama.mx","phone":null,"category":"vendor"},{"name":"Zuniga Productions","role":"Decor Reference","company":"Zuniga","email":"alejandra@decocancun.com","phone":"998 192 8070","category":"vendor"},{"name":"Drums in Paradise","role":"Dhol + Mariachi","company":"Drums in Paradise","email":null,"phone":"(998) 240-2834","category":"vendor"},{"name":"Loto Mehndi","role":"Bridal + Guest Mehndi","company":"CB&Co via Palladium","email":null,"phone":null,"category":"planner"},{"name":"Ruby Bridal Mehndi","role":"Bridal Mehndi","company":"Ruby Bridal","email":null,"phone":null,"category":"planner"},{"name":"Patravali South Asian","role":"Catering","company":"Patravali","email":"contacto@patravalicancun.com","phone":null,"category":"vendor"},{"name":"Bhogali Restaurant","role":"Reception/Sangeet F&B","company":"Resort","email":null,"phone":null,"category":"planner"},{"name":"Majestic Films","role":"Videography","company":"Toronto","email":null,"phone":null,"category":"vendor"},{"name":"Something Borrowed Studios","role":"Photography","company":"Toronto","email":null,"phone":null,"category":"vendor"},{"name":"DJ Jethu (Sharan Jeyarajah)","role":"DJ/MC","company":"Toronto","email":"djjetinquiries@gmail.com","phone":null,"category":"vendor"},{"name":"Beauty by Sharda","role":"HMUA","company":"Toronto","email":null,"phone":null,"category":"vendor"},{"name":"Banu Prakash Malur Venkatesh","role":"Priest","company":"Toronto","email":null,"phone":null,"category":"vendor"},{"name":"AL Studio · Armando Lara","role":"Decor + Florals","company":"AL Studio","email":null,"phone":null,"category":"vendor"},{"name":"Raj Virk Pahwa","role":"Primary","company":"Absolute Wedsite","email":"raj@absolutewedsite.com","phone":"905-872-1000","category":"travel"},{"name":"Jean W Teodoro","role":"Groups Admin","company":"Absolute Wedsite","email":"groups@absolutewedsite.com","phone":"647-870-6740","category":"travel"}],"stats":{"daysUntilWedding":22,"totalTasks":34,"urgentTasks":4,"openTasks":34,"totalVendors":22,"activeVendors":10,"totalBudgetUsd":193592,"paidBudgetUsd":16213,"pax":133,"budgetPaidPct":6},"rooming":{"summary":{"pax":133,"rooms":44,"roomNights":457,"suppliers":{"ac":38,"transat":30,"sunwing":0,"landOnly":33},"palladiumPax":120,"palladiumRooms":44,"palladiumRoomNights":271,"travelMatrixPax":133},"groups":[{"supplier":"Air Canada Vacations","nights":"7N","checkIn":"2026-06-16","checkOut":"2026-06-23","pax":38,"rooms":31,"roomNights":217,"flight":"AC1810 06:50 YYZ→CUN","status":"BOOKED"},{"supplier":"Air Transat (5N charter)","nights":"5N","checkIn":"2026-06-17","checkOut":"2026-06-22","pax":30,"rooms":23,"roomNights":115,"flight":"TS326 Jun 17 07:00 YYZ→CUN (arr ~11:05) · TS327 Jun 22 11:15 CUN→YYZ return · 2-flight group charter","status":"BOOKED","alert":"5N · check-in Jun 17 · Welcome Party same day 17:30 (after arrival)"},{"supplier":"Sunwing Vacations (7N charter)","nights":"7N","checkIn":"2026-06-16","checkOut":"2026-06-23","pax":20,"rooms":15,"roomNights":105,"flight":"WS2776 15:15 YYZ→CUN","status":"BOOKED"},{"supplier":"Sunwing Conf #152409712 (Beloved sep.)","nights":"5N","checkIn":"2026-06-17","checkOut":"2026-06-22","pax":4,"rooms":4,"roomNights":20,"flight":"Beloved Planners · Bldg 16","status":"BOOKED"},{"supplier":"Travel Brands Land Only","nights":"7N est.","checkIn":"TBC","checkOut":"TBC","pax":33,"rooms":25,"roomNights":null,"flight":"Own flights","status":"BUS SCHEDULE TBD"},{"supplier":"Travel Brands - Deviation","nights":"TBC","checkIn":"TBC","checkOut":"TBC","pax":8,"rooms":6,"roomNights":null,"flight":"Deviation bookings","status":"CONFIRM DATES"}],"validationGaps":["PAX 85 TBA placeholder — confirm or drop","PAX 128/129/131 Gottumukkala — confirm occupants with Raj","PAX 132/133 Gottumukkala (Transat Deviation) — no travel-matrix match; see Unmatched Gaps tab","PAX 81 SUBBALAKSHMI/TUMULURI name order — confirm surname","PAX 122/123 KARAVADI/KARAWADI spelling","Beloved PAX 100–103 Land Only vs Sunwing #152409712 discrepancy","Land Only + Deviation dates/nights TBC — bus schedule pending"],"sheetUrl":"https://docs.google.com/spreadsheets/d/1WZbTwbJA36cdCqZmFrcaEYSdGyfCl1rPS7Vh8qa-nKs/edit","supplierCounts":{"Air Canada Vacations":38,"Air Transat (5N charter)":30,"Travel Brands Land Only":33,"Sunwing Conf #152409712 (Beloved sep.)":4,"Travel Brands - Deviation":8,"Sunwing Vacations (7N charter)":20}},"comms":[{"id":"m1","title":"Baraat Boat Booking","to":"Natasha","channel":"whatsapp","wa":"529983482377"},{"id":"m2","title":"Raj — Guest Itinerary Blast (T-22)","to":"Raj","channel":"whatsapp"},{"id":"mraj22","title":"Raj May 22 — Rooming + Transfers Response","to":"Raj","channel":"email","email":"raj@absolutewedsite.com","subject":"RE: Rooming List, Seating & Airport Transfers","body":"Hi Raj,\n\nThank you for the May 22 update. We have reviewed the rooming list and would like to note the following Building 16 requests for immediate family only:\n\n• Madduluri family (groom's parents and siblings) — adjacent rooms in Building 16 area\n• Khadoo family (bride's parents and immediate family) — adjacent rooms near Building 16\n• Beloved Planners team — Building 16 (already requested)\n\nWe will ensure Rukmini forwards e-docs to guests and will remind all Land Only guests to pre-book certified transfers (no Uber in Cancún).\n\nPlease confirm you have received our Building 16 notes column updates and advise on the Land Only bus schedule by May 29.\n\nThank you,\nBaji & Cath"},{"id":"m3","title":"Majestic Films — Payment Receipt","to":"Jennyfer","channel":"email","email":"info@jennyferreyesweddings.com"},{"id":"m4","title":"Beloved — GAMA Follow-up","to":"Jennyfer","channel":"email","email":"info@jennyferreyesweddings.com"},{"id":"m5","title":"Loto Mehndi — Deposit Confirmation","to":"Natasha","channel":"whatsapp","wa":"529983482377"},{"id":"m7","title":"GAMA Decor — Sign C4179 + Wire Deposit","to":"GAMA","channel":"email"},{"id":"m8","title":"Mills James — Sign AV Contract Today","to":"Jimena","channel":"email","email":"jmochoa@millsjames.com.mx"},{"id":"m9","title":"AbsoluteWed — Flight Release + Adjacent Rooms","to":"Raj","channel":"email","email":"raj@absolutewedsite.com"},{"id":"m10","title":"Zuniga — Re-engage (Quote Expired)","to":"Alejandra","channel":"email","email":"alejandra@decocancun.com"},{"id":"m11","title":"Natasha — Status Update WA","to":"Natasha","channel":"whatsapp","wa":"529983482377"}],"avMatrix":[{"event":"Welcome Party","date":"2026-06-17","time":"17:30–22:30","venue":"Fizz Terrace / Ballroom","audio":["QSC-K-12.2-YAMAHA speakers + stands","Shure BLX wireless mic","Yamaha 12-ch mixer","Subwoofer","Pioneer DDJ-SZ2","Infinity Gold DJ booth","DJ monitor","Laptop stand"],"lighting":["PAR LED","Robotic/moving head","Heavy-base stands","DMX ONIX or MA","Uplights"]},{"event":"Mehndi","date":"2026-06-18","time":"09:00–11:00","venue":"Mini-Ballrooms","audio":["Speaker","Audio mixer","Shure wireless mic","Aux cable"],"lighting":[]},{"event":"Sangeet","date":"2026-06-18","time":"19:00–23:00","venue":"Convention Centre Plaza","audio":["Speaker + stand","Subwoofer","DJ monitor","Audio mixer","Shure wireless","Pioneer SZ2","Laptop stand","DJ booth"],"lighting":["PAR-LED HI-LUX 300W","Moving head","Structure + base","LED uplights","DMX ONIX or MA"]},{"event":"Snathakam","date":"2026-06-19","time":"09:30–11:00","venue":"Village Deck","audio":["Speaker + stand","Yamaha mixer","Priest headset","Shure mic","Aux cable"],"lighting":[]},{"event":"Haldi","date":"2026-06-19","time":"11:00–13:00","venue":"Village Deck","audio":["Speaker + stand","Shure wireless","Priest headset","Aux cable","Yamaha mixer"],"lighting":[]},{"event":"Lady Maticoor","date":"2026-06-19","time":"16:00–17:30","venue":"Village Deck","audio":["Speaker + stand","Shure wireless","Priest headset","Aux cable","Yamaha mixer"],"lighting":[]},{"event":"Baraat","date":"2026-06-19","time":"18:00–19:30","venue":"Village Deck","audio":["Pioneer SZ2","Laptop stand","Speaker","Shure wireless","Portable generator on truck","Yamaha mixer"],"lighting":[]},{"event":"Ceremony","date":"2026-06-20","time":"06:00–13:00","venue":"Glassroom","audio":["Speaker","Yamaha mixer","DJ monitor","Shure wireless","Priest headset","Pioneer SZ2","Laptop stand"],"lighting":[]},{"event":"Reception","date":"2026-06-21","time":"19:00–01:00","venue":"Ballroom","audio":["Linear Audio speaker + stand","DJ monitor","Subwoofer","Shure BLX","Yamaha mixer","Infinity Gold booth","Pioneer DDJ-SZ2","Laptop stand"],"lighting":["PAR-LED HI-LUX 300W","Moving head","PAR-LED uplights","Structure + base","DMX ONIX or MA"]}],"avQuotes":{"millsJames":{"usd":20584.4,"mainQuoteUsd":16652,"trussQuoteUsd":3932.4,"quotes":["279122","279827"],"expires":"2026-05-27","vendor":"Mills James"},"avDelCaribe":{"usd":20584.4,"events":8,"vendor":"AV del Caribe"}},"beloved":{"confirmation":"152409712","supplier":"Sunwing Vacations via AbsoluteWed","building":16,"stay":"Jun 17–22 · 5 nights","rooms":[{"occupants":["Liliana Cruz Rosas","Jennyfer Reyes Tapia"]},{"occupants":["Jorge Muralidharan Espinoza","Ekaterina Nikulina"]}]},"absoluteWed":{"contacts":[{"name":"Raj Virk Pahwa","email":"raj@absolutewedsite.com","phone":"905-872-1000","role":"Primary"},{"name":"Jean W Teodoro","email":"groups@absolutewedsite.com","phone":"647-870-6740","role":"Groups Admin"}],"transferPolicy":"Pre-book transfers before departure. No infant car seats provided. Deviation guests may not share main group bus.","landOnlyRate":{"cad":1725,"nights":7,"includes":"AI accommodation only"}}}</script>
 <script>
-(function(){
-  // ── SHA-256 gate ──
-  const CMD_HASH = 'eced9d4e7f00ebda7310b580da3c96b3811bce80c69187c62e3558c3c1be0a46';
-  const STORE_KEY = 'bc_unlocked_groups_v1';
-  const TASK_KEY  = 'cbapp_tasks_v1';
+const PW_HASH = 'fda7173eb96e0c7529f236fe306cea4e8a84703db6b6f212f59379e8ed68a411';
+const SESSION = 'bc_cmd_auth';
+let DATA = null;
 
-  async function sha256Hex(t){
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t));
-    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-  }
-  function isUnlocked(){
-    try{return JSON.parse(sessionStorage.getItem(STORE_KEY)||'{}').cmd===true}catch(e){return false}
-  }
-  function markUnlocked(){
-    try{const m=JSON.parse(sessionStorage.getItem(STORE_KEY)||'{}');m.cmd=true;sessionStorage.setItem(STORE_KEY,JSON.stringify(m))}catch(e){}
-  }
+const RENDERERS = {};
 
-  const gate = document.getElementById('gate');
-  const app  = document.getElementById('app');
+async function sha256Hex(text) {
+  const buf = new TextEncoder().encode(text);
+  const hash = await crypto.subtle.digest('SHA-256', buf);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
-  function showApp(){
-    gate.classList.add('hidden');
-    app.classList.remove('hidden');
-    startCountdown();
-    loadTasks();
-    renderBudget();
-    updateTaskBadge();
-  }
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
-  if(isUnlocked()){
-    showApp();
-  }
+function fmtDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso + 'T12:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', weekday: 'short' });
+}
 
-  document.getElementById('gateBtn').addEventListener('click', async function(){
-    const v = document.getElementById('gateInput').value;
-    if(!v){ document.getElementById('gateErr').textContent='Enter the password.'; return; }
-    const h = await sha256Hex(v);
-    if(h === CMD_HASH){
-      markUnlocked();
-      showApp();
+function fmtShort(iso) {
+  if (!iso) return { d: '—', m: '' };
+  const d = new Date(iso + 'T12:00:00');
+  return { d: d.getDate(), m: d.toLocaleDateString('en-US', { month: 'short' }) };
+}
+
+function route() {
+  const h = location.hash.replace(/^#\/?/, '') || 'dashboard';
+  return h.split('/')[0] || 'dashboard';
+}
+
+function setActiveNav(r) {
+  document.querySelectorAll('[data-route]').forEach(el => {
+    el.classList.toggle('on', el.dataset.route === r);
+  });
+}
+
+function checkPw() {
+  const v = document.getElementById('gate-pw').value;
+  const err = document.getElementById('gate-err');
+  err.textContent = '';
+  sha256Hex(v).then(function(got) {
+    if (got === PW_HASH) {
+      try { sessionStorage.setItem(SESSION, '1'); } catch (e) {}
+      initApp();
     } else {
-      document.getElementById('gateErr').textContent = 'Incorrect — try again.';
-      document.getElementById('gateInput').select();
+      err.textContent = 'Incorrect password';
     }
+  }).catch(function() {
+    err.textContent = 'Could not verify password';
   });
-  document.getElementById('gateInput').addEventListener('keydown', function(e){
-    if(e.key==='Enter') document.getElementById('gateBtn').click();
+}
+
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+}
+
+document.getElementById('gate-btn').addEventListener('click', checkPw);
+document.getElementById('gate-pw').addEventListener('keydown', e => { if (e.key === 'Enter') checkPw(); });
+document.getElementById('menu-btn').addEventListener('click', toggleSidebar);
+document.querySelectorAll('[data-route]').forEach(el => {
+  el.addEventListener('click', () => { document.querySelector('.sidebar').classList.remove('open'); });
+});
+const TASK_STORAGE_KEY = 'bc_cmd_tasks';
+const TASK_STATUSES = ['todo', 'in_progress', 'done'];
+
+function emptyTaskState() {
+  return { edits: {}, added: [], deleted: [] };
+}
+
+function loadTaskState() {
+  try {
+    const raw = sessionStorage.getItem(TASK_STORAGE_KEY);
+    if (!raw) return emptyTaskState();
+    const parsed = JSON.parse(raw);
+    return {
+      edits: parsed.edits && typeof parsed.edits === 'object' ? parsed.edits : {},
+      added: Array.isArray(parsed.added) ? parsed.added : [],
+      deleted: Array.isArray(parsed.deleted) ? parsed.deleted : [],
+    };
+  } catch (e) {
+    return emptyTaskState();
+  }
+}
+
+function saveTaskState(state) {
+  const payload = state || loadTaskState();
+  try {
+    sessionStorage.setItem(TASK_STORAGE_KEY, JSON.stringify({
+      edits: payload.edits || {},
+      added: payload.added || [],
+      deleted: payload.deleted || [],
+    }));
+  } catch (e) { /* quota / private mode */ }
+}
+
+function bucketDefaultStatus(bucket) {
+  const b = String(bucket || '').toLowerCase();
+  if (b === 'urgent') return 'todo';
+  if (b === 'thisweek' || b === 'this_week' || b === 'this week') return 'in_progress';
+  if (b === 'sprint') return 'done';
+  return 'todo';
+}
+
+function statusFromRaw(raw) {
+  const s = String(raw || '').toLowerCase().replace(/\s+/g, '_');
+  if (s === 'done' || s === 'closed' || s === 'complete' || s === 'completed') return 'done';
+  if (s === 'in_progress' || s === 'inprogress' || s === 'progress' || s === 'active' || s === 'tmrw' || s === 'tomorrow') return 'in_progress';
+  if (s === 'milestone') return 'done';
+  if (s === 'todo' || s === 'open' || s === 'pending' || s === 'new') return 'todo';
+  return '';
+}
+
+function normalizeStatus(t) {
+  if (!t) return 'todo';
+  const explicit = statusFromRaw(t.status);
+  if (explicit) return explicit;
+  return bucketDefaultStatus(t.bucket);
+}
+
+function resolveBaseId(t, index) {
+  return t.id != null && t.id !== '' ? String(t.id) : 'ssot-' + index;
+}
+
+function getMergedTasks(baseTasks) {
+  const state = loadTaskState();
+  const deleted = new Set((state.deleted || []).map(String));
+  const merged = [];
+
+  (baseTasks || []).forEach((base, index) => {
+    const id = resolveBaseId(base, index);
+    if (deleted.has(id)) return;
+    const edit = state.edits[id] || {};
+    const row = Object.assign({}, base, edit, { id });
+    row.status = normalizeStatus(row);
+    merged.push(row);
   });
 
-  // ── Countdown ──
-  function startCountdown(){
-    function update(){
-      const now = new Date();
-      const target = new Date('2026-06-16T06:50:00-04:00'); // YYZ departure
-      const diff = target - now;
-      if(diff <= 0){ document.getElementById('cdPill').textContent = '🎉 Wedding Week!'; return; }
-      const d = Math.floor(diff/864e5);
-      const h = Math.floor((diff%864e5)/36e5);
-      const m = Math.floor((diff%36e5)/6e4);
-      document.getElementById('cdPill').textContent = `⏱ ${d}d ${h}h ${m}m to Jun 16`;
-      document.getElementById('kpiDays').textContent = d;
+  for (const added of state.added || []) {
+    if (!added || !added.id || deleted.has(String(added.id))) continue;
+    const row = Object.assign({}, added);
+    row.status = normalizeStatus(row);
+    merged.push(row);
+  }
+
+  return merged;
+}
+
+function findMergedTask(id) {
+  return getMergedTasks(DATA.tasks || []).find(t => String(t.id) === String(id));
+}
+
+function isLocalTaskId(id) {
+  return String(id).startsWith('local-');
+}
+
+function patchTaskState(mutator) {
+  const state = loadTaskState();
+  mutator(state);
+  saveTaskState(state);
+}
+
+function setTaskField(id, fields) {
+  patchTaskState(state => {
+    if (isLocalTaskId(id)) {
+      const idx = state.added.findIndex(t => String(t.id) === String(id));
+      if (idx >= 0) Object.assign(state.added[idx], fields);
+      return;
     }
-    update();
-    setInterval(update, 60000);
-  }
+    state.edits[id] = Object.assign({}, state.edits[id] || {}, fields);
+  });
+}
 
-  // ── Navigation ──
-  window.nav = function(sec, el){
-    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-    document.querySelectorAll('.sb-item').forEach(s=>s.classList.remove('active'));
-    document.getElementById('sec-'+sec).classList.add('active');
-    el.classList.add('active');
-    const titles = {
-      dash:'Dashboard', events:'Events Timeline', tasks:'Open Tasks',
-      vendors:'Vendor Status', budget:'Budget', contacts:'Contacts', comms:'Comms Hub'
-    };
-    const subs = {
-      dash:'Real-time wedding ops', events:'Jun 16–23, 2026',
-      tasks:'localStorage persists', vendors:'Updated May 30',
-      budget:'CAD/USD toggle', contacts:'All key people',comms:'Pre-drafted messages'
-    };
-    document.getElementById('pageTitle').textContent = titles[sec]||sec;
-    document.getElementById('pageSub').textContent = subs[sec]||'';
+function cycleStatus(id) {
+  const t = findMergedTask(id);
+  if (!t) return;
+  const order = TASK_STATUSES;
+  const cur = normalizeStatus(t);
+  const next = order[(order.indexOf(cur) + 1) % order.length];
+  setTaskField(id, { status: next });
+  saveTaskState();
+  refreshStats();
+  render();
+}
+
+function toggleTaskDone(id) {
+  const t = findMergedTask(id);
+  if (!t) return;
+  const next = normalizeStatus(t) === 'done' ? 'todo' : 'done';
+  setTaskField(id, { status: next });
+  saveTaskState();
+  refreshStats();
+  render();
+}
+
+function addTask(fields) {
+  const owner = String(fields?.owner || '').trim();
+  const task = String(fields?.task || '').trim();
+  if (!task) return false;
+  const priority = String(fields?.priority || 'medium').toLowerCase();
+  let bucket = 'thisWeek';
+  if (priority === 'urgent' || priority === 'high') bucket = 'urgent';
+  else if (priority === 'low' || priority === 'sprint') bucket = 'sprint';
+
+  const row = {
+    id: 'local-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+    owner: owner || 'Baji',
+    task,
+    due: fields?.due || '',
+    bucket,
+    priority,
+    status: 'todo',
   };
 
-  // ── Tasks ──
-  function loadTasks(){
-    try{
-      const s = JSON.parse(localStorage.getItem(TASK_KEY)||'{}');
-      Object.keys(s).forEach(id=>{
-        const chk = document.getElementById('chk-'+id);
-        const item = document.getElementById(id);
-        if(chk && s[id]){chk.checked=true; if(item)item.classList.add('done');}
-      });
-    }catch(e){}
-  }
-  window.ck = function(id){
-    const chk = document.getElementById('chk-'+id);
-    const item = document.getElementById(id);
-    if(!chk) return;
-    chk.checked = !chk.checked;
-    if(item) item.classList.toggle('done', chk.checked);
-    try{
-      const s = JSON.parse(localStorage.getItem(TASK_KEY)||'{}');
-      s[id] = chk.checked;
-      localStorage.setItem(TASK_KEY, JSON.stringify(s));
-    }catch(e){}
-    updateTaskBadge();
-  };
-  function updateTaskBadge(){
-    const total = document.querySelectorAll('.task-item').length;
-    const done  = document.querySelectorAll('.task-item.done').length;
-    const el = document.getElementById('badge-tasks');
-    if(el) el.textContent = (total-done);
-  }
+  patchTaskState(state => {
+    state.added.push(row);
+  });
+  saveTaskState();
+  refreshStats();
+  render();
+  return true;
+}
 
-  // ── Budget ──
-  const BUDGET = [
-    {cat:'Travel/Venue',name:'Couple Trip TR37577',cur:'CAD',total:8976,paid:8976,status:'PAID',note:'AC1810 Jun 16–23'},
-    {cat:'Travel/Venue',name:'Palladium Venue/F&B Contract',cur:'USD',total:0,paid:0,status:'OPEN',note:'Contract #207718 — Deposit 3 outstanding'},
-    {cat:'AV/Production',name:'Mills James AV Job #279122',cur:'USD',total:14192.73,paid:0,status:'UNSIGNED',note:'All events AV'},
-    {cat:'AV/Production',name:'Mills James Box Truss #279827',cur:'USD',total:3932.40,paid:0,status:'UNSIGNED',note:'Reception ballroom truss'},
-    {cat:'Decor',name:'Decor — Zuñiga Productions (Option A)',cur:'USD',total:37021.40,paid:0,status:'UNSIGNED',note:'Expires ~Jun 7 — DECIDE NOW'},
-    {cat:'Decor',name:'Decor — AL Studio / Armando (Option B)',cur:'USD',total:43126.48,paid:0,status:'UNSIGNED',note:'Updated May 27 — alternative'},
-    {cat:'Entertainment',name:'DJ JET (3D Sound) — 5 events',cur:'CAD',total:4000,paid:2000,status:'PARTIAL',note:'$2,000 due Jun 17'},
-    {cat:'Entertainment',name:'Drums in Paradise (Dhol)',cur:'USD',total:0,paid:0,status:'OPEN',note:'Baraat ceremony'},
-    {cat:'Food',name:'Patravali Ceremony Lunch — S01545',cur:'USD',total:20608.33,paid:0,status:'OPEN',note:'Jun 20 banana-leaf service'},
-    {cat:'Beauty',name:'Loto Mehndi — Lady Manticoor',cur:'USD',total:0,paid:0,status:'OPEN',note:'Jun 19 mehndi'},
-    {cat:'Photography',name:'Something Borrowed Studios',cur:'CAD',total:14238,paid:4238,status:'PARTIAL',note:'$10,000 due Jun 17'},
-    {cat:'Videography',name:'Majestic Films — Diamond Package',cur:'CAD',total:15255,paid:2500,status:'OVERDUE',note:'C$12,755 OVERDUE — pay today'},
-    {cat:'Planning',name:'Beloved Wedding Planners',cur:'USD',total:0,paid:0,status:'CONTRACTED',note:'Jun 16–22 on-site'},
-  ];
-
-  let showCur = 'USD';
-  window.setCur = function(c){
-    showCur = c;
-    document.getElementById('btnUSD').classList.toggle('active', c==='USD');
-    document.getElementById('btnCAD').classList.toggle('active', c==='CAD');
-    renderBudget();
-  };
-  window.renderBudget = function(){
-    const rate = parseFloat(document.getElementById('fxRate')?.value)||1.364;
-    function toShow(amt,cur){
-      if(amt===0) return '—';
-      const v = (showCur==='USD')? (cur==='USD'? amt : amt/rate) : (cur==='CAD'? amt : amt*rate);
-      return v.toLocaleString('en-CA',{minimumFractionDigits:0,maximumFractionDigits:0})+' '+showCur;
+function deleteTask(id) {
+  const sid = String(id);
+  patchTaskState(state => {
+    if (isLocalTaskId(sid)) {
+      state.added = state.added.filter(t => String(t.id) !== sid);
+      return;
     }
-    let rows = '';
-    let lastCat = '';
-    BUDGET.forEach(b=>{
-      if(b.cat !== lastCat){
-        rows += `<tr><td colspan="5" style="background:var(--deep-mauve);color:var(--gold2);font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:6px 14px">${b.cat}</td></tr>`;
-        lastCat = b.cat;
-      }
-      const cls = b.status==='OVERDUE'?'rr': b.status==='UNSIGNED'?'ra': b.status==='PAID'?'rg': b.status==='PARTIAL'?'ra':'';
-      rows += `<tr class="${cls}"><td>${b.name}</td><td>${toShow(b.total,b.cur)}</td><td>${b.paid?toShow(b.paid,b.cur):'—'}</td><td><span class="pill ${b.status==='PAID'||b.status==='CONTRACTED'?'green':b.status==='OVERDUE'?'red':b.status==='PARTIAL'?'amber':b.status==='UNSIGNED'?'amber':'teal'}">${b.status}</span></td><td style="font-size:11px;color:var(--text3)">${b.note}</td></tr>`;
-    });
-    const el = document.getElementById('budgetTable');
-    if(el) el.innerHTML = `<table><tr><th>Vendor / Item</th><th>Total (${showCur})</th><th>Paid</th><th>Status</th><th>Notes</th></tr>${rows}</table>`;
-  };
+    if (!state.deleted.includes(sid)) state.deleted.push(sid);
+    delete state.edits[sid];
+  });
+  saveTaskState();
+  refreshStats();
+  render();
+}
 
-  // ── Copy ──
-  window.cp = function(id, btn){
-    const el = document.getElementById(id);
-    if(!el) return;
-    navigator.clipboard.writeText(el.textContent.trim()).then(()=>{
-      const old = btn.textContent;
-      btn.textContent = '✓ Copied!';
-      setTimeout(()=>{ btn.textContent = old; }, 2000);
-    }).catch(()=>{
-      const r = document.createRange();
-      r.selectNode(el);
-      window.getSelection().removeAllRanges();
-      window.getSelection().addRange(r);
-    });
-  };
+function csvCell(val) {
+  const s = String(val ?? '');
+  if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
 
-})();
+function exportTasksCsv() {
+  const tasks = getMergedTasks(DATA.tasks || []);
+  const headers = ['id', 'owner', 'task', 'due', 'status', 'bucket', 'priority'];
+  const lines = [headers.join(',')].concat(
+    tasks.map(t => headers.map(h => csvCell(t[h])).join(','))
+  );
+  const blob = new Blob([lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'bc-wedding-tasks-' + new Date().toISOString().slice(0, 10) + '.csv';
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function exportTaskSyncBundle() {
+  const state = loadTaskState();
+  const merged = getMergedTasks(DATA.tasks || []);
+  const payload = {
+    exportedAt: new Date().toISOString(),
+    source: 'CB_Command_Center_App',
+    edits: state.edits,
+    added: state.added,
+    deleted: state.deleted,
+    mergedTasks: merged.map(t => ({
+      id: t.id,
+      owner: t.owner,
+      task: t.task,
+      due: t.due,
+      status: normalizeStatus(t),
+      bucket: t.bucket,
+      priority: t.priority,
+    })),
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'task-sync-overlay.json';
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function resetLocalTaskChanges() {
+  try {
+    sessionStorage.removeItem(TASK_STORAGE_KEY);
+  } catch (e) { /* ignore */ }
+  refreshStats();
+  render();
+}
+
+function hasLocalTaskChanges() {
+  const s = loadTaskState();
+  return Object.keys(s.edits).length > 0 || s.added.length > 0 || s.deleted.length > 0;
+}
+
+function refreshStats() {
+  if (!DATA || !DATA.stats) return;
+  const tasks = getMergedTasks(DATA.tasks || []);
+  const open = tasks.filter(t => normalizeStatus(t) !== 'done');
+  DATA.stats.openTasks = open.length;
+  DATA.stats.urgentTasks = tasks.filter(
+    t => String(t.bucket || '').toLowerCase() === 'urgent' && normalizeStatus(t) !== 'done'
+  ).length;
+}
+
+function todayIso() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function statusLabel(st) {
+  if (st === 'in_progress') return 'In progress';
+  if (st === 'done') return 'Done';
+  return 'Todo';
+}
+
+function renderStatusSelect(id, st) {
+  return '<select class="task-status-select" data-action="task-status" data-task-id="' + esc(id) + '" aria-label="Task status">' +
+    TASK_STATUSES.map(s =>
+      '<option value="' + s + '"' + (s === st ? ' selected' : '') + '>' + statusLabel(s) + '</option>'
+    ).join('') +
+    '</select>';
+}
+
+function renderTaskCard(t, opts) {
+  const compact = !!(opts && opts.compact);
+  const st = normalizeStatus(t);
+  const overdue = t.due && t.due < todayIso() && st !== 'done';
+  const checked = st === 'done';
+  const id = esc(t.id);
+  const controls = compact
+    ? '<input type="checkbox" class="task-check" data-action="task-toggle" data-task-id="' + id + '"' +
+      (checked ? ' checked' : '') + ' aria-label="Mark task done">'
+    : '<input type="checkbox" class="task-check" data-action="task-toggle" data-task-id="' + id + '"' +
+      (checked ? ' checked' : '') + ' aria-label="Mark task done">' +
+      renderStatusSelect(t.id, st) +
+      '<button type="button" class="task-del-btn" data-action="task-delete" data-task-id="' + id + '" aria-label="Delete task" title="Delete">×</button>';
+
+  return '<div class="task-item' + (overdue ? ' overdue' : '') + (checked ? ' done' : '') + '" data-task-id="' + id + '">' +
+    controls +
+    '<div class="task-body">' +
+    '<span class="badge b-muted">' + esc(t.bucket || '—') + '</span> ' +
+    '<strong>' + esc(t.owner) + '</strong>' +
+    '<div style="margin-top:6px' + (checked ? ';text-decoration:line-through;opacity:.75' : '') + '">' + esc(t.task) + '</div>' +
+    (t.due ? '<div style="font-size:11px;color:var(--muted);margin-top:4px">Due ' + esc(t.due) + '</div>' : '') +
+    '</div></div>';
+}
+
+function renderDashboard() {
+  const s = DATA.stats;
+  const days = s.daysUntilWedding;
+  const daysLabel = days > 0 ? days + ' days until the ceremony' : days === 0 ? 'The day has arrived!' : 'Celebration complete';
+  const alerts = (DATA.alerts || []).slice(0, 5).map(a =>
+    '<div class="alert ' + esc(a.level) + '">' + esc(a.text) + '</div>'
+  ).join('');
+  const upcoming = (DATA.events || []).slice(0, 4).map(e => {
+    const { d, m } = fmtShort(e.date);
+    const key = e.date === '2026-06-20' || e.date === '2026-06-21';
+    return '<div class="event-row' + (key ? ' key' : '') + '">' +
+      '<div class="date-badge"><div class="d">' + d + '</div><div class="m">' + m + '</div></div>' +
+      '<div><strong>' + esc(e.name) + '</strong><div style="font-size:12px;color:var(--muted);margin-top:4px">' +
+      esc(e.time || '') + ' · ' + esc(e.venue) + '</div></div></div>';
+  }).join('');
+  const merged = getMergedTasks(DATA.tasks || []);
+  const priorityTasks = merged
+    .filter(t => String(t.bucket || '').toLowerCase() === 'urgent')
+    .slice(0, 6);
+  const tasksHtml = priorityTasks.length
+    ? priorityTasks.map(t => renderTaskCard(t, { compact: true })).join('')
+    : '<p style="color:var(--muted)">None</p>';
+  const paidPct = s.totalBudgetUsd ? Math.round((s.paidBudgetUsd / s.totalBudgetUsd) * 100) : s.budgetPaidPct;
+  const openCount = s.openTasks != null ? s.openTasks : merged.filter(t => normalizeStatus(t) !== 'done').length;
+
+  return '<div class="page-head"><h1 class="font-serif">Wedding Command Center</h1>' +
+    '<p>Bharadwaj &amp; Catherina · Grand Palladium, Cancún · June 20, 2026</p></div>' +
+    '<div class="banner">' + esc(days > 0 ? days + ' days to go' : daysLabel) +
+    ' · Hindu Ceremony · June 20 · 7:55 AM · Glassroom</div>' +
+    (alerts ? '<div class="alert-list">' + alerts + '</div>' : '') +
+    '<div class="grid-4">' +
+    '<div class="card"><div class="card-label">Days Until</div><div class="card-val">' + (days > 0 ? days : '✦') + '</div><div style="font-size:12px;color:var(--muted)">' + esc(daysLabel) + '</div></div>' +
+    '<div class="card"><div class="card-label">Urgent Tasks</div><div class="card-val">' + s.urgentTasks + '</div>' +
+    '<div style="font-size:12px;color:var(--muted);margin-top:6px">' + openCount + ' open overall</div>' +
+    '<div class="progress"><span style="width:' + Math.min(100, s.urgentTasks * 10) + '%"></span></div></div>' +
+    '<div class="card"><div class="card-label">Active Vendors</div><div class="card-val">' + s.activeVendors + '/' + s.totalVendors + '</div></div>' +
+    '<div class="card"><div class="card-label">Budget Paid</div><div class="card-val">' + paidPct + '%</div><div class="progress"><span style="width:' + paidPct + '%"></span></div></div>' +
+    '</div>' +
+    '<div class="section-title font-serif">Upcoming Events</div><div class="card">' + (upcoming || '<p style="color:var(--muted)">No events</p>') + '</div>' +
+    '<div class="section-title font-serif">Priority Tasks</div><div class="task-list" data-task-list="dashboard">' + tasksHtml + '</div>' +
+    (s.lastLiveRefresh ? '<p class="live-pill">Live stats · refreshed <strong>' + esc(new Date(s.lastLiveRefresh).toLocaleTimeString()) + '</strong></p>' : '');
+}
+
+function renderTasks() {
+  const merged = getMergedTasks(DATA.tasks || []);
+  const cols = { todo: [], in_progress: [], done: [] };
+  for (const t of merged) {
+    const st = normalizeStatus(t);
+    if (st === 'done') cols.done.push(t);
+    else if (st === 'in_progress') cols.in_progress.push(t);
+    else cols.todo.push(t);
+  }
+
+  function col(title, items) {
+    return '<div class="k-col"><h3>' + title + ' (' + items.length + ')</h3>' +
+      '<div class="task-list">' +
+      (items.length ? items.map(t => renderTaskCard(t)).join('') : '<p style="color:var(--muted);font-size:12px">No tasks</p>') +
+      '</div></div>';
+  }
+
+  const localHint = hasLocalTaskChanges()
+    ? '<span class="badge b-warn" style="margin-left:8px">Local edits</span>'
+    : '';
+
+  return '<div class="page-head"><h1 class="font-serif">Task Tracker</h1><p>' + merged.length + ' items · SSOT + session overrides' + localHint + '</p></div>' +
+    '<div class="task-toolbar" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px">' +
+    '<button type="button" class="btn-primary" style="width:auto" data-action="task-add-toggle" data-testid="task-add-toggle">+ Add Task</button>' +
+    '<button type="button" class="theme-btn" style="width:auto;margin:0" data-action="task-export-csv" data-testid="task-export-csv">Export CSV</button>' +
+    '<button type="button" class="theme-btn" style="width:auto;margin:0" data-action="task-export-sync" data-testid="task-export-sync">Export sync bundle</button>' +
+    '<button type="button" class="theme-btn" style="width:auto;margin:0" data-action="task-reset" data-testid="task-reset">Reset local changes</button>' +
+    '</div>' +
+    '<form id="task-add-form" class="card" style="display:none;margin-bottom:16px" data-task-form="add">' +
+    '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px">' +
+    '<label style="font-size:12px;color:var(--muted)">Owner<input name="owner" class="gate-input" style="margin-top:4px" placeholder="Baji" data-testid="task-add-owner"></label>' +
+    '<label style="font-size:12px;color:var(--muted)">Task<input name="task" class="gate-input" style="margin-top:4px" required placeholder="What needs doing?" data-testid="task-add-task"></label>' +
+    '<label style="font-size:12px;color:var(--muted)">Due<input name="due" type="date" class="gate-input" style="margin-top:4px" data-testid="task-add-due"></label>' +
+    '<label style="font-size:12px;color:var(--muted)">Priority<select name="priority" class="gate-input" style="margin-top:4px" data-testid="task-add-priority">' +
+    '<option value="urgent">Urgent</option><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select></label>' +
+    '</div>' +
+    '<div style="display:flex;gap:10px;margin-top:12px">' +
+    '<button type="submit" class="gate-btn" style="width:auto;padding:10px 18px" data-action="task-add-submit" data-testid="task-add-submit">Save task</button>' +
+    '<button type="button" class="theme-btn" style="width:auto;margin:0" data-action="task-add-cancel">Cancel</button>' +
+    '</div></form>' +
+    '<div class="kanban" data-task-board="kanban">' +
+    col('Todo', cols.todo) + col('In progress', cols.in_progress) + col('Done', cols.done) +
+    '</div>';
+}
+
+let taskEventsBound = false;
+
+function handleTaskClick(e) {
+  const actionEl = e.target.closest('[data-action]');
+  if (!actionEl) return;
+  const action = actionEl.dataset.action;
+
+  if (action === 'task-add-toggle') {
+    const form = document.getElementById('task-add-form');
+    if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    return;
+  }
+  if (action === 'task-add-cancel') {
+    const form = document.getElementById('task-add-form');
+    if (form) {
+      form.style.display = 'none';
+      form.reset();
+    }
+    return;
+  }
+  if (action === 'task-export-csv') {
+    exportTasksCsv();
+    return;
+  }
+  if (action === 'task-export-sync') {
+    exportTaskSyncBundle();
+    return;
+  }
+  if (action === 'task-reset') {
+    if (confirm('Clear all local task edits, additions, and deletions? SSOT data in the page is unchanged.')) {
+      resetLocalTaskChanges();
+    }
+    return;
+  }
+  if (action === 'task-delete') {
+    const id = actionEl.dataset.taskId;
+    if (id && confirm('Remove this task from your local view?')) deleteTask(id);
+    return;
+  }
+  if (action === 'task-toggle') {
+    const id = actionEl.dataset.taskId;
+    if (id) toggleTaskDone(id);
+  }
+}
+
+function handleTaskChange(e) {
+  const el = e.target.closest('[data-action="task-status"]');
+  if (!el) return;
+  const id = el.dataset.taskId;
+  const status = el.value;
+  if (!id || !TASK_STATUSES.includes(status)) return;
+  setTaskField(id, { status });
+  saveTaskState();
+  refreshStats();
+  render();
+}
+
+function handleTaskSubmit(e) {
+  const form = e.target.closest('#task-add-form');
+  if (!form) return;
+  e.preventDefault();
+  const fd = new FormData(form);
+  const ok = addTask({
+    owner: fd.get('owner'),
+    task: fd.get('task'),
+    due: fd.get('due'),
+    priority: fd.get('priority'),
+  });
+  if (ok) {
+    form.reset();
+    form.style.display = 'none';
+  }
+}
+
+function bindTaskEvents() {
+  const main = document.getElementById('main');
+  if (!main) return;
+  if (!taskEventsBound) {
+    main.addEventListener('click', handleTaskClick);
+    main.addEventListener('change', handleTaskChange);
+    main.addEventListener('submit', handleTaskSubmit);
+    taskEventsBound = true;
+  }
+}
+
+function render() {
+  const r = route();
+  setActiveNav(r);
+  const fn = RENDERERS[r] || RENDERERS.dashboard;
+  document.getElementById('main').innerHTML = fn();
+  document.title = 'B & C Command Center · ' + r.charAt(0).toUpperCase() + r.slice(1);
+  bindTaskEvents();
+}
+
+function initApp() {
+  try {
+    const el = document.getElementById('wedding-data');
+    DATA = JSON.parse(el.textContent);
+    window.DATA = DATA;
+  } catch (e) {
+    document.getElementById('main').innerHTML = '<p>Failed to load data.</p>';
+    return;
+  }
+  refreshStats();
+  window.RENDERERS = RENDERERS;
+  RENDERERS.dashboard = renderDashboard;
+  RENDERERS.tasks = renderTasks;
+  if (typeof BcCmdPages !== 'undefined') BcCmdPages.initPhase6Pages();
+  if (typeof BcCmdCrud !== 'undefined') BcCmdCrud.initPhase4Crud();
+  if (typeof BcCmdVendors !== 'undefined') BcCmdVendors.initPhase7Vendors();
+  if (typeof BcCmdLive !== 'undefined') BcCmdLive.initPhase7Live();
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('app').classList.add('ready');
+  if (!window.__bcHashBound) {
+    window.addEventListener('hashchange', render);
+    window.__bcHashBound = true;
+  }
+  render();
+}
+
+window.render = render;
+window.initApp = initApp;
+window.route = route;
+window.setTaskField = setTaskField;
+window.saveTaskState = saveTaskState;
+window.renderTaskCard = renderTaskCard;
+window.refreshStats = refreshStats;
 </script>
+<script>/**
+ * Phase 4 — Client-side CRUD overlay for Command Center
+ * sessionStorage keys: bc_cmd_vendors | budget | contacts | events
+ * Merge local layer with embedded DATA on load.
+ */
+(function (global) {
+  'use strict';
+
+  const KEYS = {
+    vendors: 'bc_cmd_vendors',
+    budget: 'bc_cmd_budget',
+    contacts: 'bc_cmd_contacts',
+    events: 'bc_cmd_events',
+    theme: 'bc_cmd_theme',
+    dark: 'bc_cmd_dark',
+  };
+
+  const ID_PREFIX = 'local-';
+
+  function esc(s) {
+    return String(s ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso + 'T12:00:00');
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', weekday: 'short' });
+  }
+
+  function fmtShort(iso) {
+    if (!iso) return { d: '—', m: '' };
+    const d = new Date(iso + 'T12:00:00');
+    return { d: d.getDate(), m: d.toLocaleDateString('en-US', { month: 'short' }) };
+  }
+
+  function loadLayer(key) {
+    try {
+      const raw = sessionStorage.getItem(key);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveLayer(key, arr) {
+    sessionStorage.setItem(key, JSON.stringify(arr));
+  }
+
+  function newLocalId() {
+    return ID_PREFIX + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  }
+
+  function stripMeta(item) {
+    const out = { ...item };
+    delete out._updated;
+    delete out._deleted;
+    delete out._added;
+    delete out._source;
+    return out;
+  }
+
+  function mergeList(baseItems, layer, idPrefix) {
+    const base = (baseItems || []).map((item, i) => ({
+      ...item,
+      id: item.id != null ? String(item.id) : `${idPrefix}-${i}`,
+      _source: 'master',
+    }));
+    const deleted = new Set(layer.filter((x) => x._deleted).map((x) => String(x.id)));
+    const updates = new Map(
+      layer.filter((x) => x._updated && !x._deleted).map((x) => [String(x.id), x])
+    );
+    const added = layer.filter((x) => String(x.id || '').startsWith(ID_PREFIX) && !x._deleted);
+
+    const merged = base
+      .filter((x) => !deleted.has(x.id))
+      .map((x) => (updates.has(x.id) ? { ...x, ...stripMeta(updates.get(x.id)), _source: x._source } : x));
+
+    return [...merged, ...added.map((x) => ({ ...stripMeta(x), _source: 'local' }))];
+  }
+
+  function pushLayer(key, record) {
+    const layer = loadLayer(key);
+    layer.push(record);
+    saveLayer(key, layer);
+  }
+
+  function upsertLayer(key, id, patch, flags) {
+    const layer = loadLayer(key);
+    const sid = String(id);
+    if (sid.startsWith(ID_PREFIX)) {
+      const idx = layer.findIndex((x) => String(x.id) === sid);
+      if (idx >= 0) {
+        layer[idx] = { ...layer[idx], ...patch, id: sid, ...flags };
+      } else {
+        layer.push({ ...patch, id: sid, ...flags });
+      }
+    } else {
+      const idx = layer.findIndex((x) => String(x.id) === sid && x._updated);
+      const record = { ...patch, id: sid, ...flags };
+      if (idx >= 0) layer[idx] = { ...layer[idx], ...record };
+      else layer.push(record);
+    }
+    saveLayer(key, layer);
+  }
+
+  function removeFromLayer(key, id) {
+    const sid = String(id);
+    let layer = loadLayer(key);
+    if (sid.startsWith(ID_PREFIX)) {
+      layer = layer.filter((x) => String(x.id) !== sid);
+    } else {
+      layer = layer.filter((x) => !(String(x.id) === sid && x._updated));
+      layer.push({ id: sid, _deleted: true });
+    }
+    saveLayer(key, layer);
+  }
+
+  function toCsv(rows, columns) {
+    const escCell = (v) => {
+      const s = v == null ? '' : String(v);
+      return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+    const header = columns.map((c) => escCell(c.label)).join(',');
+    const body = rows
+      .map((row) => columns.map((c) => escCell(typeof c.value === 'function' ? c.value(row) : row[c.key])).join(','))
+      .join('\n');
+    return header + '\n' + body;
+  }
+
+  function downloadText(filename, text, mime) {
+    const blob = new Blob([text], { type: mime || 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function eventRoute(name) {
+    const n = String(name || '').toLowerCase();
+    if (/ceremony|wedding|muhurtham|reception|patravali|baraat|pooja|maticoor|snathakam/i.test(n)) {
+      if (/sangeet/i.test(n)) return 'sangeet';
+      if (/haldi/i.test(n)) return 'haldi';
+      if (/welcome|arrival/i.test(n)) return 'welcome';
+      if (/ceremony|wedding|muhurtham/i.test(n)) return 'ceremony';
+    }
+    if (/sangeet/i.test(n)) return 'sangeet';
+    if (/haldi|mehndi/i.test(n)) return 'haldi';
+    if (/welcome|arrival/i.test(n)) return 'welcome';
+    if (/ceremony|wedding|reception|baraat/i.test(n)) return 'ceremony';
+    return '';
+  }
+
+  function eventChipHtml(name) {
+    const route = eventRoute(name);
+    if (!route) return '';
+    return `<span class="event-chip chip-${route}" data-route="${route}">${esc(route)}</span>`;
+  }
+
+  function toolbarHtml(entityLabel, entityKey) {
+    return (
+      `<div class="crud-toolbar" data-entity="${esc(entityKey)}">` +
+      `<span class="toolbar-title">${esc(entityLabel)} · local edits in this session</span>` +
+      `<div class="toolbar-actions">` +
+      `<button type="button" class="btn-primary" data-crud-add="${esc(entityKey)}">+ Add</button>` +
+      `<button type="button" class="btn-ghost" data-crud-export="${esc(entityKey)}">Export CSV</button>` +
+      (entityKey === 'budget'
+        ? `<button type="button" class="btn-ghost" data-budget-sync-export>Export sync bundle</button>`
+        : '') +
+      `<button type="button" class="btn-ghost" data-crud-backup>Backup JSON</button>` +
+      `</div></div>`
+    );
+  }
+
+  function rowActionsHtml(id) {
+    return (
+      `<div class="crud-row-actions">` +
+      `<button type="button" class="btn-ghost btn-icon" data-crud-edit="${esc(id)}">Edit</button>` +
+      `<button type="button" class="btn-ghost btn-icon btn-danger" data-crud-delete="${esc(id)}">Delete</button>` +
+      `</div>`
+    );
+  }
+
+  function localBadge(item) {
+    return item._source === 'local' || String(item.id || '').startsWith(ID_PREFIX)
+      ? '<span class="local-badge">local</span>'
+      : '';
+  }
+
+  /* ── Public merge getters ── */
+  function getMergedVendors() {
+    return mergeList(global.DATA?.vendors, loadLayer(KEYS.vendors), 'master-v');
+  }
+
+  function getMergedBudget() {
+    return mergeList(global.DATA?.budget, loadLayer(KEYS.budget), 'master-b');
+  }
+
+  function getMergedContacts() {
+    return mergeList(global.DATA?.contacts, loadLayer(KEYS.contacts), 'master-c');
+  }
+
+  function getMergedEvents() {
+    return mergeList(global.DATA?.events, loadLayer(KEYS.events), 'master-e');
+  }
+
+  /* ── Vendors CRUD ── */
+  function addVendor(item) {
+    const id = newLocalId();
+    pushLayer(KEYS.vendors, { ...item, id, _added: true });
+    return id;
+  }
+
+  function updateVendor(id, patch) {
+    upsertLayer(KEYS.vendors, id, patch, { _updated: true });
+  }
+
+  function deleteVendor(id) {
+    removeFromLayer(KEYS.vendors, id);
+  }
+
+  function exportVendorsCsv() {
+    const rows = getMergedVendors();
+    const csv = toCsv(rows, [
+      { key: 'name', label: 'Name' },
+      { key: 'role', label: 'Role' },
+      { key: 'org', label: 'Organization' },
+      { key: 'email', label: 'Email' },
+      { key: 'phone', label: 'Phone' },
+      { key: 'status', label: 'Status' },
+      { key: 'events', label: 'Events' },
+      { key: 'notes', label: 'Notes' },
+    ]);
+    downloadText('bc-vendors.csv', csv, 'text/csv');
+  }
+
+  /* ── Budget CRUD ── */
+  function addBudget(item) {
+    const id = newLocalId();
+    pushLayer(KEYS.budget, { ...item, id, _added: true });
+    return id;
+  }
+
+  function updateBudget(id, patch) {
+    upsertLayer(KEYS.budget, id, patch, { _updated: true });
+  }
+
+  function deleteBudget(id) {
+    removeFromLayer(KEYS.budget, id);
+  }
+
+  function exportBudgetSyncBundle() {
+    const layer = loadLayer(KEYS.budget);
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      source: 'bc_cmd_budget',
+      layer,
+      mergedCount: getMergedBudget().length,
+    };
+    downloadText('budget-sync-overlay.json', JSON.stringify(payload, null, 2), 'application/json');
+  }
+
+  function exportBudgetCsv() {
+    const rows = getMergedBudget();
+    const csv = toCsv(rows, [
+      { key: 'category', label: 'Category' },
+      { key: 'item', label: 'Item' },
+      { key: 'usd', label: 'USD' },
+      { key: 'cad', label: 'CAD' },
+      { key: 'status', label: 'Status' },
+      { key: 'due', label: 'Due' },
+      { key: 'notes', label: 'Notes' },
+    ]);
+    downloadText('bc-budget.csv', csv, 'text/csv');
+  }
+
+  /* ── Contacts CRUD ── */
+  function addContact(item) {
+    const id = newLocalId();
+    pushLayer(KEYS.contacts, { ...item, id, _added: true });
+    return id;
+  }
+
+  function updateContact(id, patch) {
+    upsertLayer(KEYS.contacts, id, patch, { _updated: true });
+  }
+
+  function deleteContact(id) {
+    removeFromLayer(KEYS.contacts, id);
+  }
+
+  function exportContactsCsv() {
+    const rows = getMergedContacts();
+    const csv = toCsv(rows, [
+      { key: 'name', label: 'Name' },
+      { key: 'role', label: 'Role' },
+      { key: 'company', label: 'Company' },
+      { key: 'email', label: 'Email' },
+      { key: 'phone', label: 'Phone' },
+      { key: 'category', label: 'Category' },
+    ]);
+    downloadText('bc-contacts.csv', csv, 'text/csv');
+  }
+
+  /* ── Events CRUD ── */
+  function addEvent(item) {
+    const id = newLocalId();
+    pushLayer(KEYS.events, { ...item, id, _added: true });
+    return id;
+  }
+
+  function updateEvent(id, patch) {
+    upsertLayer(KEYS.events, id, patch, { _updated: true });
+  }
+
+  function deleteEvent(id) {
+    removeFromLayer(KEYS.events, id);
+  }
+
+  function exportEventsCsv() {
+    const rows = getMergedEvents();
+    const csv = toCsv(rows, [
+      { key: 'name', label: 'Name' },
+      { key: 'date', label: 'Date' },
+      { key: 'time', label: 'Time' },
+      { key: 'venue', label: 'Venue' },
+      { key: 'theme', label: 'Theme' },
+      { key: 'notes', label: 'Notes' },
+    ]);
+    downloadText('bc-events.csv', csv, 'text/csv');
+  }
+
+  function exportAllJson() {
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      vendors: loadLayer(KEYS.vendors),
+      budget: loadLayer(KEYS.budget),
+      contacts: loadLayer(KEYS.contacts),
+      events: loadLayer(KEYS.events),
+      merged: {
+        vendors: getMergedVendors(),
+        budget: getMergedBudget(),
+        contacts: getMergedContacts(),
+        events: getMergedEvents(),
+      },
+    };
+    downloadText(
+      'bc-cmd-local-backup.json',
+      JSON.stringify(payload, null, 2),
+      'application/json'
+    );
+  }
+
+  /* ── Modal ── */
+  let modalEntity = null;
+  let modalItemId = null;
+
+  const FORM_FIELDS = {
+    vendors: [
+      { name: 'name', label: 'Name', required: true },
+      { name: 'role', label: 'Role' },
+      { name: 'org', label: 'Organization' },
+      { name: 'email', label: 'Email', type: 'email' },
+      { name: 'phone', label: 'Phone' },
+      { name: 'status', label: 'Status' },
+      { name: 'events', label: 'Events' },
+      { name: 'notes', label: 'Notes', type: 'textarea' },
+    ],
+    budget: [
+      { name: 'category', label: 'Category', required: true },
+      { name: 'item', label: 'Item', required: true },
+      { name: 'usd', label: 'USD', type: 'number' },
+      { name: 'cad', label: 'CAD', type: 'number' },
+      { name: 'status', label: 'Status' },
+      { name: 'due', label: 'Due', type: 'date' },
+      { name: 'notes', label: 'Notes', type: 'textarea' },
+    ],
+    contacts: [
+      { name: 'name', label: 'Name', required: true },
+      { name: 'role', label: 'Role' },
+      { name: 'company', label: 'Company' },
+      { name: 'email', label: 'Email', type: 'email' },
+      { name: 'phone', label: 'Phone' },
+      {
+        name: 'category',
+        label: 'Category',
+        type: 'select',
+        options: ['planner', 'vendor', 'travel', 'family', 'other'],
+      },
+    ],
+    events: [
+      { name: 'name', label: 'Event name', required: true },
+      { name: 'date', label: 'Date', type: 'date' },
+      { name: 'time', label: 'Time' },
+      { name: 'venue', label: 'Venue' },
+      { name: 'theme', label: 'Dress / theme' },
+      { name: 'notes', label: 'Notes', type: 'textarea' },
+    ],
+  };
+
+  function ensureModalDom() {
+    if (document.getElementById('bc-crud-modal')) return;
+    const el = document.createElement('div');
+    el.id = 'bc-crud-modal';
+    el.className = 'modal-backdrop';
+    el.hidden = true;
+    el.innerHTML =
+      '<div class="modal-panel" role="dialog" aria-modal="true">' +
+      '<div class="modal-head"><h2 id="bc-modal-title">Edit</h2>' +
+      '<button type="button" class="modal-close" id="bc-modal-close" aria-label="Close">×</button></div>' +
+      '<div class="modal-body"><form id="bc-modal-form" class="crud-form"></form></div></div>';
+    document.body.appendChild(el);
+    el.addEventListener('click', (e) => {
+      if (e.target === el) hideModal();
+    });
+    document.getElementById('bc-modal-close').addEventListener('click', hideModal);
+    document.getElementById('bc-modal-form').addEventListener('submit', onModalSubmit);
+  }
+
+  function findItem(entity, id) {
+    const getters = {
+      vendors: getMergedVendors,
+      budget: getMergedBudget,
+      contacts: getMergedContacts,
+      events: getMergedEvents,
+    };
+    return (getters[entity]() || []).find((x) => String(x.id) === String(id));
+  }
+
+  function buildFormHtml(entity, item) {
+    const fields = FORM_FIELDS[entity] || [];
+    return fields
+      .map((f) => {
+        const val = item ? item[f.name] : '';
+        const req = f.required ? ' required' : '';
+        if (f.type === 'textarea') {
+          return (
+            `<div class="form-row"><label for="f-${f.name}">${esc(f.label)}</label>` +
+            `<textarea id="f-${f.name}" name="${esc(f.name)}"${req}>${esc(val)}</textarea></div>`
+          );
+        }
+        if (f.type === 'select') {
+          const opts = (f.options || [])
+            .map(
+              (o) =>
+                `<option value="${esc(o)}"${String(val) === o ? ' selected' : ''}>${esc(o)}</option>`
+            )
+            .join('');
+          return (
+            `<div class="form-row"><label for="f-${f.name}">${esc(f.label)}</label>` +
+            `<select id="f-${f.name}" name="${esc(f.name)}"${req}>${opts}</select></div>`
+          );
+        }
+        const type = f.type || 'text';
+        const numVal = val != null && val !== '' ? val : '';
+        return (
+          `<div class="form-row"><label for="f-${f.name}">${esc(f.label)}</label>` +
+          `<input id="f-${f.name}" name="${esc(f.name)}" type="${type}" value="${esc(numVal)}"${req}></div>`
+        );
+      })
+      .join('') +
+      '<div class="form-actions">' +
+      '<button type="button" class="btn-ghost" id="bc-modal-cancel">Cancel</button>' +
+      '<button type="submit" class="btn-primary">Save</button></div>';
+  }
+
+  function showModal(entity, item) {
+    ensureModalDom();
+    modalEntity = entity;
+    modalItemId = item ? item.id : null;
+    const backdrop = document.getElementById('bc-crud-modal');
+    const title = document.getElementById('bc-modal-title');
+    const form = document.getElementById('bc-modal-form');
+    title.textContent = item ? `Edit ${entity.slice(0, -1)}` : `Add ${entity.slice(0, -1)}`;
+    form.innerHTML = buildFormHtml(entity, item || null);
+    form.querySelector('#bc-modal-cancel').addEventListener('click', hideModal);
+    backdrop.hidden = false;
+  }
+
+  function hideModal() {
+    const backdrop = document.getElementById('bc-crud-modal');
+    if (backdrop) backdrop.hidden = true;
+    modalEntity = null;
+    modalItemId = null;
+  }
+
+  function readFormData(form) {
+    const data = {};
+    new FormData(form).forEach((v, k) => {
+      if (k === 'usd' || k === 'cad') {
+        data[k] = v === '' ? null : Number(v);
+      } else {
+        data[k] = v;
+      }
+    });
+    return data;
+  }
+
+  function onModalSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = readFormData(form);
+    const ops = {
+      vendors: { add: addVendor, update: updateVendor },
+      budget: { add: addBudget, update: updateBudget },
+      contacts: { add: addContact, update: updateContact },
+      events: { add: addEvent, update: updateEvent },
+    };
+    const op = ops[modalEntity];
+    if (!op) return;
+    if (modalItemId) op.update(modalItemId, data);
+    else op.add(data);
+    hideModal();
+    if (typeof global.render === 'function') global.render();
+  }
+
+  /* ── Updated renderers ── */
+  function renderVendors() {
+    const list = getMergedVendors();
+    const cards = list
+      .map((v) => {
+        const bc =
+          v.status === 'ACTIVE' || v.status === 'CONFIRMED' || v.status === 'SIGNED'
+            ? 'b-ok'
+            : 'b-warn';
+        const cls = v._source === 'local' ? ' local-item' : '';
+        return (
+          `<article class="v-card${cls}" data-id="${esc(v.id)}">` +
+          `<h3>${esc(v.name)}${localBadge(v)}</h3>` +
+          `<div class="v-role">${esc(v.role)} · ${esc(v.org)}</div>` +
+          `<span class="badge ${bc}">${esc(v.status)}</span>` +
+          (v.email
+            ? `<div class="v-row"><strong>Email</strong> <a href="mailto:${esc(v.email)}">${esc(v.email)}</a></div>`
+            : '') +
+          (v.phone
+            ? `<div class="v-row"><strong>Phone</strong> <a href="tel:${esc(v.phone)}">${esc(v.phone)}</a></div>`
+            : '') +
+          (v.events ? `<div class="v-row"><strong>Events</strong> ${esc(v.events)}</div>` : '') +
+          (v.notes ? `<div class="v-row">${esc(v.notes)}</div>` : '') +
+          rowActionsHtml(v.id) +
+          `</article>`
+        );
+      })
+      .join('');
+    return (
+      `<div class="page-head"><h1 class="font-serif">Vendor Roster</h1>` +
+      `<p>${list.length} vendors · master + session edits</p></div>` +
+      toolbarHtml('Vendors', 'vendors') +
+      `<div class="vendor-grid">${cards}</div>`
+    );
+  }
+
+  function renderBudget() {
+    const list = getMergedBudget();
+    const rows = list
+      .map((b) => {
+        const amt =
+          b.usd != null
+            ? '$' + Number(b.usd).toLocaleString()
+            : b.cad != null
+              ? 'C$' + Number(b.cad).toLocaleString()
+              : '—';
+        const sc =
+          b.status === 'PAID'
+            ? 'b-ok'
+            : b.status === 'OVERDUE'
+              ? 'b-bad'
+              : b.status === 'REFERENCE'
+                ? 'b-muted'
+                : 'b-warn';
+        const cls = b._source === 'local' ? ' class="local-item"' : '';
+        return (
+          `<tr${cls} data-id="${esc(b.id)}">` +
+          `<td>${esc(b.category)}</td><td>${esc(b.item)}${localBadge(b)}</td><td>${amt}</td>` +
+          `<td><span class="badge ${sc}">${esc(b.status)}</span></td>` +
+          `<td style="font-size:12px;color:var(--muted)">${esc(b.due || '')}</td>` +
+          `<td>${rowActionsHtml(b.id)}</td></tr>`
+        );
+      })
+      .join('');
+    const s = global.DATA?.stats || {};
+    return (
+      `<div class="page-head"><h1 class="font-serif">Budget Overview</h1>` +
+      `<p>Master + session edits · FX ${global.DATA?.meta?.fxDefault || 1.37} · <a href="https://docs.google.com/spreadsheets/d/1lwmu8dTuz4KtyX_lwsdGMzqJ6BM9mINafDmzdQd2t3w/edit#gid=0" target="_blank" rel="noopener" style="color:var(--accent)">OS_Budget sheet ↗</a></p></div>` +
+      toolbarHtml('Budget', 'budget') +
+      `<div class="grid-4" style="grid-template-columns:repeat(3,1fr)">` +
+      `<div class="card"><div class="card-label">Est. Total (USD)</div><div class="card-val">$${(s.totalBudgetUsd || 0).toLocaleString()}</div></div>` +
+      `<div class="card"><div class="card-label">Paid</div><div class="card-val">$${(s.paidBudgetUsd || 0).toLocaleString()}</div></div>` +
+      `<div class="card"><div class="card-label">Remaining</div><div class="card-val">$${Math.max(0, (s.totalBudgetUsd || 0) - (s.paidBudgetUsd || 0)).toLocaleString()}</div></div></div>` +
+      `<div class="card" style="margin-top:16px;overflow-x:auto"><table><thead><tr>` +
+      `<th>Category</th><th>Item</th><th>Amount</th><th>Status</th><th>Due</th><th>Actions</th>` +
+      `</tr></thead><tbody>${rows}</tbody></table></div>`
+    );
+  }
+
+  function renderContacts() {
+    const list = getMergedContacts();
+    const quick = list.filter((c) => /raj|jennyfer|natasha/i.test(c.name)).slice(0, 3);
+    const quickHtml = quick
+      .map(
+        (c) =>
+          `<a class="quick-btn" href="tel:${esc(c.phone || '')}">${esc(c.name)}` +
+          `<br><span style="font-size:12px;font-weight:400">${esc(c.phone || c.email || '')}</span></a>`
+      )
+      .join('');
+    const rows = list
+      .map((c) => {
+        const cls = c._source === 'local' ? ' local-item' : '';
+        return (
+          `<div class="contact-row${cls}" data-id="${esc(c.id)}">` +
+          `<span class="name">${esc(c.name)}${localBadge(c)}</span>` +
+          `<span class="badge b-muted">${esc(c.category)}</span>` +
+          `<span style="color:var(--muted);font-size:13px">${esc(c.role)}${c.company ? ' · ' + esc(c.company) : ''}</span>` +
+          (c.email ? `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>` : '') +
+          (c.phone ? `<a href="tel:${esc(c.phone)}">${esc(c.phone)}</a>` : '') +
+          rowActionsHtml(c.id) +
+          `</div>`
+        );
+      })
+      .join('');
+    return (
+      `<div class="page-head"><h1 class="font-serif">Contacts &amp; Communications</h1></div>` +
+      toolbarHtml('Contacts', 'contacts') +
+      `<div class="quick-dial">${quickHtml}</div>` +
+      `<div class="contact-list">${rows}</div>`
+    );
+  }
+
+  function renderEvents() {
+    const list = getMergedEvents();
+    const groups = {};
+    for (const e of list) {
+      (groups[e.date || 'TBD'] = groups[e.date || 'TBD'] || []).push(e);
+    }
+    const html = Object.keys(groups)
+      .sort()
+      .map((date) => {
+        const { d, m } = fmtShort(date === 'TBD' ? '' : date);
+        const rows = groups[date]
+          .map((e) => {
+            const key = date === '2026-06-20' || date === '2026-06-21';
+            const cls = e._source === 'local' ? ' local-item' : '';
+            return (
+              `<div class="event-row${key ? ' key' : ''}${cls}" data-id="${esc(e.id)}">` +
+              `<div class="date-badge"><div class="d">${d}</div><div class="m">${m}</div></div>` +
+              `<div style="flex:1">` +
+              `<strong class="font-serif" style="font-size:18px">${esc(e.name)}</strong>` +
+              localBadge(e) +
+              ` ${eventChipHtml(e.name)}` +
+              (key ? ' <span class="badge b-warn">Key Event</span>' : '') +
+              `<div style="font-size:12px;color:var(--muted);margin-top:6px">${esc(e.time)} · ${esc(e.venue)}</div>` +
+              (e.theme
+                ? `<div style="font-size:12px;color:var(--accent);margin-top:4px;font-style:italic">Dress: ${esc(e.theme)}</div>`
+                : '') +
+              rowActionsHtml(e.id) +
+              `</div></div>`
+            );
+          })
+          .join('');
+        return (
+          `<div class="section-title font-serif">${date === 'TBD' ? 'Unscheduled' : fmtDate(date)}</div>` +
+          `<div class="card">${rows}</div>`
+        );
+      })
+      .join('');
+    return (
+      `<div class="page-head"><h1 class="font-serif">Wedding Week</h1>` +
+      `<p>Jun 16–22, 2026 · master + session edits</p></div>` +
+      toolbarHtml('Events', 'events') +
+      html
+    );
+  }
+
+  /* ── Theme picker ── */
+  function applyTheme(themeId) {
+    const html = document.documentElement;
+    html.setAttribute('data-theme', themeId);
+    try {
+      sessionStorage.setItem(KEYS.theme, themeId);
+    } catch (_) {}
+    document.querySelectorAll('.theme-swatch').forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.theme === themeId);
+    });
+  }
+
+  function applyDarkMode(dark) {
+    document.documentElement.classList.toggle('dark', dark);
+    try {
+      sessionStorage.setItem(KEYS.dark, dark ? '1' : '0');
+    } catch (_) {}
+  }
+
+  function initThemePicker() {
+    const foot = document.querySelector('.sb-foot');
+    if (!foot || document.getElementById('bc-theme-picker')) return;
+
+    const savedTheme = sessionStorage.getItem(KEYS.theme) || 'ivory';
+    const savedDark = sessionStorage.getItem(KEYS.dark) === '1';
+    applyTheme(savedTheme);
+    applyDarkMode(savedDark);
+
+    const picker = document.createElement('div');
+    picker.id = 'bc-theme-picker';
+    picker.className = 'theme-picker';
+    picker.innerHTML =
+      '<div class="theme-picker-label">Chromatic preset</div>' +
+      '<div class="theme-swatches">' +
+      ['ivory', 'midnight', 'turmeric', 'peacock']
+        .map(
+          (t) =>
+            `<button type="button" class="theme-swatch${t === savedTheme ? ' active' : ''}" data-theme="${t}">${t}</button>`
+        )
+        .join('') +
+      '</div>' +
+      `<button type="button" class="mode-toggle" id="bc-mode-toggle">${savedDark ? '☀ Light mode' : '☾ Dark mode'}</button>`;
+
+    const oldBtn = document.getElementById('theme-btn');
+    if (oldBtn) oldBtn.remove();
+    foot.insertBefore(picker, foot.firstChild);
+
+    picker.querySelectorAll('.theme-swatch').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const t = btn.dataset.theme;
+        if (t === 'midnight') {
+          applyTheme('midnight');
+          applyDarkMode(true);
+        } else {
+          applyTheme(t);
+          applyDarkMode(false);
+        }
+        updateModeLabel();
+      });
+    });
+
+    function updateModeLabel() {
+      const toggle = document.getElementById('bc-mode-toggle');
+      if (toggle) {
+        toggle.textContent = document.documentElement.classList.contains('dark')
+          ? '☀ Light mode'
+          : '☾ Dark mode';
+      }
+    }
+
+    document.getElementById('bc-mode-toggle').addEventListener('click', () => {
+      const next = !document.documentElement.classList.contains('dark');
+      applyDarkMode(next);
+      if (next && !document.documentElement.getAttribute('data-theme')) applyTheme('midnight');
+      updateModeLabel();
+    });
+  }
+
+  /* ── CRUD click delegation ── */
+  function bindCrudClicks() {
+    const main = document.getElementById('main');
+    if (!main || main.dataset.crudBound) return;
+    main.dataset.crudBound = '1';
+
+    main.addEventListener('click', (e) => {
+      const addBtn = e.target.closest('[data-crud-add]');
+      if (addBtn) {
+        showModal(addBtn.dataset.crudAdd, null);
+        return;
+      }
+      if (e.target.closest('[data-budget-sync-export]')) {
+        exportBudgetSyncBundle();
+        return;
+      }
+      const exportBtn = e.target.closest('[data-crud-export]');
+      if (exportBtn) {
+        const map = {
+          vendors: exportVendorsCsv,
+          budget: exportBudgetCsv,
+          contacts: exportContactsCsv,
+          events: exportEventsCsv,
+        };
+        (map[exportBtn.dataset.crudExport] || exportAllJson)();
+        return;
+      }
+      if (e.target.closest('[data-crud-backup]')) {
+        exportAllJson();
+        return;
+      }
+      const editBtn = e.target.closest('[data-crud-edit]');
+      if (editBtn) {
+        const row = editBtn.closest('[data-id]');
+        const entity = routeToEntity(currentRoute());
+        const id = editBtn.dataset.crudEdit;
+        const item = findItem(entity, id);
+        if (item) showModal(entity, item);
+        return;
+      }
+      const delBtn = e.target.closest('[data-crud-delete]');
+      if (delBtn) {
+        const entity = routeToEntity(currentRoute());
+        const id = delBtn.dataset.crudDelete;
+        if (!confirm('Remove this item from the merged view? Local deletes stay in session only.')) return;
+        const delMap = {
+          vendors: deleteVendor,
+          budget: deleteBudget,
+          contacts: deleteContact,
+          events: deleteEvent,
+        };
+        (delMap[entity] || (() => {}))(id);
+        if (typeof global.render === 'function') global.render();
+      }
+    });
+  }
+
+  function currentRoute() {
+    const h = location.hash.replace(/^#\/?/, '') || 'dashboard';
+    return h.split('/')[0] || 'dashboard';
+  }
+
+  function routeToEntity(r) {
+    if (r === 'vendors' || r === 'budget' || r === 'contacts' || r === 'events') return r;
+    const toolbar = document.querySelector('.crud-toolbar[data-entity]');
+    if (toolbar) return toolbar.dataset.entity;
+    return 'vendors';
+  }
+
+  function patchRenderers() {
+    if (!global.RENDERERS) return;
+    global.RENDERERS.vendors = renderVendors;
+    global.RENDERERS.budget = renderBudget;
+    global.RENDERERS.contacts = renderContacts;
+    global.RENDERERS.events = renderEvents;
+  }
+
+  function initPhase4Crud() {
+    ensureModalDom();
+    patchRenderers();
+    bindCrudClicks();
+    initThemePicker();
+  }
+
+  const api = {
+    KEYS,
+    getMergedVendors,
+    getMergedBudget,
+    getMergedContacts,
+    getMergedEvents,
+    addVendor,
+    updateVendor,
+    deleteVendor,
+    exportVendorsCsv,
+    addBudget,
+    updateBudget,
+    deleteBudget,
+    exportBudgetCsv,
+    exportBudgetSyncBundle,
+    addContact,
+    updateContact,
+    deleteContact,
+    exportContactsCsv,
+    addEvent,
+    updateEvent,
+    deleteEvent,
+    exportEventsCsv,
+    exportAllJson,
+    rowActionsHtml,
+    showModal,
+    hideModal,
+    renderVendors,
+    renderBudget,
+    renderContacts,
+    renderEvents,
+    initPhase4Crud,
+    applyTheme,
+    applyDarkMode,
+    eventRoute,
+  };
+
+  global.BcCmdCrud = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<script>/**
+ * Phase 6 — Extended ops pages: rooming, comms, AV, ops hub, beloved, travel
+ * Registers RENDERERS on window.RENDERERS (patched in initApp).
+ */
+(function (global) {
+  'use strict';
+
+  function esc(s) {
+    return String(s ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso + 'T12:00:00');
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', weekday: 'short' });
+  }
+
+  function pageHead(title, sub) {
+    return (
+      '<div class="page-head"><h1 class="font-serif">' +
+      esc(title) +
+      '</h1><p>' +
+      esc(sub) +
+      '</p></div>'
+    );
+  }
+
+  function kpiCards(items) {
+    return (
+      '<div class="grid-4">' +
+      items
+        .map(
+          (k) =>
+            '<div class="card"><div class="card-label">' +
+            esc(k.label) +
+            '</div><div class="card-val">' +
+            esc(k.val) +
+            '</div></div>'
+        )
+        .join('') +
+      '</div>'
+    );
+  }
+
+  function renderRooming() {
+    const r = DATA.rooming || {};
+    const s = r.summary || {};
+    const gaps = r.validationGaps || [];
+    const groups = r.groups || [];
+    const links =
+      '<div class="hub-grid" style="margin-bottom:24px">' +
+      [
+        ['Rooming hub', '/rooming', 'All stakeholder dashboards'],
+        ['Natasha (Palladium)', '/rooming/natasha', 'Front desk · SAW'],
+        ['Raj (AbsoluteWed)', '/rooming/raj', 'Travel matrix rollups'],
+        ['Beloved handoff', '/05_Communications/CB_Beloved_Rooming_Dashboard.html', 'Planner block Bldg 16'],
+        ['Couple summary', '/05_Communications/CB_Couple_Rooming_Summary.html', 'Internal view'],
+      ]
+        .map(
+          ([t, href, d]) =>
+            '<a class="hub-card" href="' +
+            esc(href) +
+            '" target="_blank" rel="noopener"><strong>' +
+            esc(t) +
+            '</strong><div style="font-size:12px;color:var(--muted);margin-top:6px">' +
+            esc(d) +
+            '</div></a>'
+        )
+        .join('') +
+      '</div>';
+
+    const table =
+      groups.length === 0
+        ? '<p>No supplier groups in SSOT.</p>'
+        : '<table><thead><tr><th>Supplier</th><th>Nights</th><th>Check-in</th><th>Pax</th><th>Rooms</th><th>Status</th></tr></thead><tbody>' +
+          groups
+            .map(
+              (g) =>
+                '<tr><td>' +
+                esc(g.supplier) +
+                '</td><td>' +
+                esc(g.nights) +
+                '</td><td>' +
+                fmtDate(g.checkIn) +
+                '</td><td>' +
+                esc(g.pax) +
+                '</td><td>' +
+                esc(g.rooms) +
+                '</td><td><span class="badge">' +
+                esc(g.status) +
+                '</span></td></tr>'
+            )
+            .join('') +
+          '</tbody></table>';
+
+    const gapBlock =
+      gaps.length === 0
+        ? ''
+        : '<div class="section-title font-serif">Validation gaps</div><ul class="gap-list">' +
+          gaps.map((g) => '<li>' + esc(g) + '</li>').join('') +
+          '</ul>';
+
+    const sheet =
+      r.sheetUrl
+        ? '<p style="margin-top:16px;font-size:13px"><a href="' +
+          esc(r.sheetUrl) +
+          '" target="_blank" rel="noopener" style="color:var(--accent)">Open rooming matrix sheet →</a></p>'
+        : '';
+
+    return (
+      pageHead('Rooming', '133 pax · sheet wins · stakeholder dashboards') +
+      kpiCards([
+        { label: 'Total pax', val: s.pax ?? '—' },
+        { label: 'Rooms', val: s.rooms ?? '—' },
+        { label: 'Room nights', val: s.roomNights ?? '—' },
+        { label: 'Palladium block', val: (s.palladiumPax ?? '—') + ' pax' },
+      ]) +
+      links +
+      '<div class="section-title font-serif">Supplier groups</div>' +
+      table +
+      gapBlock +
+      sheet
+    );
+  }
+
+  function renderComms() {
+    const list = DATA.comms || [];
+    if (!list.length) {
+      return pageHead('Comms', 'Draft messages from SSOT') + '<p>No comms drafts.</p>';
+    }
+    const cards = list
+      .map((m) => {
+        const ch = String(m.channel || 'email').toLowerCase();
+        const body = m.body || m.subject || m.title || '';
+        const wa =
+          m.wa && ch === 'whatsapp'
+            ? ' · WA ' + esc(m.wa)
+            : m.email
+              ? ' · ' + esc(m.email)
+              : '';
+        return (
+          '<div class="comms-card card" data-comms-id="' +
+          esc(m.id) +
+          '"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">' +
+          '<strong style="color:var(--display)">' +
+          esc(m.title) +
+          '</strong><span class="ch-tag">' +
+          esc(ch) +
+          '</span></div>' +
+          '<div style="font-size:12px;color:var(--muted);margin-top:6px">To: ' +
+          esc(m.to) +
+          wa +
+          '</div>' +
+          (m.subject
+            ? '<div style="font-size:12px;margin-top:8px"><strong>Subject:</strong> ' + esc(m.subject) + '</div>'
+            : '') +
+          (m.body
+            ? '<pre style="white-space:pre-wrap;font-size:12px;margin-top:10px;padding:12px;border-radius:8px;background:var(--surface2);max-height:160px;overflow:auto">' +
+              esc(m.body) +
+              '</pre>'
+            : '') +
+          '<div>' +
+          (m.subject
+            ? '<button type="button" class="copy-btn" data-comms-copy="subject" data-comms-id="' +
+              esc(m.id) +
+              '">Copy subject</button>'
+            : '') +
+          (body
+            ? '<button type="button" class="copy-btn" data-comms-copy="body" data-comms-id="' +
+              esc(m.id) +
+              '">Copy body</button>'
+            : '') +
+          (m.wa && ch === 'whatsapp'
+            ? '<a class="copy-btn" href="https://wa.me/' +
+              esc(String(m.wa).replace(/\D/g, '')) +
+              '" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">Open WhatsApp</a>'
+            : '') +
+          (m.email
+            ? '<a class="copy-btn" href="mailto:' +
+              esc(m.email) +
+              '?subject=' +
+              encodeURIComponent(m.subject || m.title || '') +
+              '" style="text-decoration:none;display:inline-block">Open email</a>'
+            : '') +
+          '</div></div>'
+        );
+      })
+      .join('');
+
+    return (
+      pageHead('Comms', 'Copy-paste drafts · T9 parity · sheet tracks sent status only') +
+      '<p style="font-size:13px;color:var(--muted);margin-bottom:16px">' +
+      list.length +
+      ' drafts · also see <a href="/ops" target="_blank" rel="noopener" style="color:var(--accent)">/ops</a> accountability</p>' +
+      cards
+    );
+  }
+
+  function renderAv() {
+    const matrix = DATA.avMatrix || [];
+    const quotes = DATA.avQuotes || {};
+    const mj = quotes.millsJames || {};
+    const adc = quotes.avDelCaribe || {};
+
+    const quoteBlock =
+      '<div class="av-quote">' +
+      '<div class="card"><div class="card-label">Mills James (preferred)</div><div class="card-val">$' +
+      esc(String(mj.usd ?? '—').replace(/\B(?=(\d{3})+(?!\d))/g, ',')) +
+      '</div><div style="font-size:12px;color:var(--muted);margin-top:8px">Quotes ' +
+      esc((mj.quotes || []).join(', ')) +
+      ' · expires ' +
+      esc(mj.expires || '—') +
+      '</div></div>' +
+      '<div class="card"><div class="card-label">AV del Caribe (reference)</div><div class="card-val">$' +
+      esc(String(adc.usd ?? '—').replace(/\B(?=(\d{3})+(?!\d))/g, ',')) +
+      '</div><div style="font-size:12px;color:var(--muted);margin-top:8px">' +
+      esc(adc.events ?? 8) +
+      ' events scoped</div></div></div>';
+
+    const rows = matrix
+      .map((ev) => {
+        const audio = (ev.audio || []).map((a) => '<li>' + esc(a) + '</li>').join('');
+        const light = (ev.lighting || []).map((l) => '<li>' + esc(l) + '</li>').join('');
+        return (
+          '<tr><td><strong>' +
+          esc(ev.event) +
+          '</strong><br><span style="font-size:11px;color:var(--muted)">' +
+          fmtDate(ev.date) +
+          ' · ' +
+          esc(ev.time) +
+          '</span></td><td>' +
+          esc(ev.venue) +
+          '</td><td><ul style="margin:0;padding-left:16px;font-size:12px">' +
+          (audio || '<li>—</li>') +
+          '</ul></td><td><ul style="margin:0;padding-left:16px;font-size:12px">' +
+          (light || '<li>—</li>') +
+          '</ul></td></tr>'
+        );
+      })
+      .join('');
+
+    return (
+      pageHead('AV matrix', 'Mills James scope · sign before quote expiry') +
+      quoteBlock +
+      '<div class="section-title font-serif">Event × equipment</div>' +
+      '<table><thead><tr><th>Event</th><th>Venue</th><th>Audio</th><th>Lighting</th></tr></thead><tbody>' +
+      rows +
+      '</tbody></table>'
+    );
+  }
+
+  function renderOpsHub() {
+    const hubs = [
+      ['Wedding OS v6', '/os', '15-tab legacy console · comms · SAW · vault'],
+      ['Ops sprint', '/ops', 'Accountability · May 29 command'],
+      ['Entertainment', '/entertainment', 'DJ cues · Spotify · ENT tabs'],
+      ['Vendors ops', '/vendors', 'Payments stack · vendor SSOT hub'],
+      ['Guest itinerary', '/itinerary', 'Raj-facing week schedule'],
+      ['Comms transfer', '/transfer', 'Transfer studio · agent skills'],
+      ['eDoc kit', '/edoc', 'Raj rooming splitter guides'],
+      ['Guest site', 'https://ckwedsbm.netlify.app', 'Public RSVP site (external)'],
+    ];
+    return (
+      pageHead('Ops hub', 'Deep links to standalone tools — opens in new tab') +
+      '<div class="hub-grid">' +
+      hubs
+        .map(
+          ([t, href, d]) =>
+            '<a class="hub-card" href="' +
+            esc(href) +
+            '" target="_blank" rel="noopener"><strong>' +
+            esc(t) +
+            '</strong><div style="font-size:12px;color:var(--muted);margin-top:6px">' +
+            esc(d) +
+            '</div><div style="font-size:11px;color:var(--accent);margin-top:8px">' +
+            esc(href) +
+            ' →</div></a>'
+        )
+        .join('') +
+      '</div>'
+    );
+  }
+
+  function renderBeloved() {
+    const b = DATA.beloved || {};
+    const rooms = (b.rooms || [])
+      .map(
+        (rm, i) =>
+          '<div class="contact-row card"><span class="name">Room ' +
+          (i + 1) +
+          '</span><span>' +
+          esc((rm.occupants || []).join(' · ')) +
+          '</span></div>'
+      )
+      .join('');
+    return (
+      pageHead('Beloved Planners', 'Building 16 block · Sunwing via AbsoluteWed') +
+      kpiCards([
+        { label: 'Confirmation', val: b.confirmation || '—' },
+        { label: 'Building', val: b.building ?? '—' },
+        { label: 'Stay', val: (b.stay || '—').split('·')[0].trim() },
+        { label: 'Rooms', val: (b.rooms || []).length },
+      ]) +
+      '<div style="font-size:13px;margin-bottom:16px;color:var(--muted)">' +
+      esc(b.supplier) +
+      '</div>' +
+      '<div class="section-title font-serif">Occupants</div>' +
+      (rooms || '<p>No room assignments.</p>') +
+      '<p style="margin-top:16px"><a href="/rooming/beloved" target="_blank" rel="noopener" style="color:var(--accent)">Open Beloved rooming dashboard →</a></p>'
+    );
+  }
+
+  function renderTravel() {
+    const aw = DATA.absoluteWed || {};
+    const contacts = (aw.contacts || [])
+      .map(
+        (c) =>
+          '<div class="contact-row card"><span class="name">' +
+          esc(c.name) +
+          '</span><span style="font-size:12px;color:var(--muted)">' +
+          esc(c.role) +
+          '</span><a href="mailto:' +
+          esc(c.email) +
+          '" style="color:var(--accent);font-size:13px">' +
+          esc(c.email) +
+          '</a><span style="font-size:13px">' +
+          esc(c.phone) +
+          '</span></div>'
+      )
+      .join('');
+    const rate = aw.landOnlyRate || {};
+    return (
+      pageHead('Travel · AbsoluteWed', 'Raj / Jean · transfers · land-only policy') +
+      '<div class="banner" style="margin-bottom:20px">' +
+      esc(aw.transferPolicy) +
+      '</div>' +
+      kpiCards([
+        { label: 'Land-only rate', val: 'C$' + (rate.cad ?? '—') },
+        { label: 'Nights', val: rate.nights ?? '—' },
+        { label: 'Includes', val: 'AI only' },
+      ]) +
+      '<div class="section-title font-serif">Key contacts</div>' +
+      '<div class="contact-list">' +
+      contacts +
+      '</div>' +
+      '<p style="margin-top:16px"><a href="/rooming/raj" target="_blank" rel="noopener" style="color:var(--accent)">Raj rooming dashboard →</a></p>'
+    );
+  }
+
+  let phase6Bound = false;
+
+  function bindPhase6Events() {
+    if (phase6Bound) return;
+    const main = document.getElementById('main');
+    if (!main) return;
+    main.addEventListener('click', (e) => {
+      const commsBtn = e.target.closest('[data-comms-copy]');
+      if (commsBtn) {
+        const id = commsBtn.dataset.commsId;
+        const field = commsBtn.dataset.commsCopy;
+        const item = (DATA.comms || []).find((x) => String(x.id) === String(id));
+        const text =
+          field === 'subject'
+            ? item?.subject || ''
+            : item?.body || item?.subject || item?.title || '';
+        if (!text) return;
+        navigator.clipboard.writeText(text).then(
+          () => {
+            const prev = commsBtn.textContent;
+            commsBtn.textContent = 'Copied!';
+            setTimeout(() => {
+              commsBtn.textContent = prev;
+            }, 1500);
+          },
+          () => alert('Copy failed — select text manually')
+        );
+        return;
+      }
+      const btn = e.target.closest('[data-copy-text]');
+      if (!btn) return;
+      const text = btn.getAttribute('data-copy-text');
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(
+        () => {
+          const prev = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => {
+            btn.textContent = prev;
+          }, 1500);
+        },
+        () => alert('Copy failed — select text manually')
+      );
+    });
+    phase6Bound = true;
+  }
+
+  function registerRenderers() {
+    global.RENDERERS = global.RENDERERS || {};
+    global.RENDERERS.rooming = renderRooming;
+    global.RENDERERS.comms = renderComms;
+    global.RENDERERS.av = renderAv;
+    global.RENDERERS.ops = renderOpsHub;
+    global.RENDERERS.beloved = renderBeloved;
+    global.RENDERERS.travel = renderTravel;
+  }
+
+  function initPhase6Pages() {
+    registerRenderers();
+    bindPhase6Events();
+  }
+
+  global.BcCmdPages = { initPhase6Pages, registerRenderers };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<script>/**
+ * Phase 7 — Vendors page (product register · Chromatic Ritual)
+ * Replaces card grid with grouped roster rows, filters, inline actions.
+ */
+(function (global) {
+  'use strict';
+
+  function esc(s) {
+    return String(s ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function statusClass(st) {
+    const s = String(st || '').toUpperCase();
+    if (s === 'ACTIVE' || s === 'CONFIRMED' || s === 'SIGNED' || s === 'PAID') return 'b-ok';
+    if (s === 'OVERDUE' || s === 'URGENT') return 'b-bad';
+    if (s === 'REFERENCE' || s === 'EVALUATING' || s === 'SUPERSEDED') return 'b-muted';
+    return 'b-warn';
+  }
+
+  function tierLabel(t) {
+    if (t === 'internal') return 'Planners & venue';
+    if (t === 'critical') return 'Critical path';
+    return 'Vendors';
+  }
+
+  function groupVendors(list) {
+    const order = ['internal', 'critical', 'vendor', 'other'];
+    const groups = new Map();
+    for (const v of list) {
+      const tier = v.tier || 'vendor';
+      const key = order.includes(tier) ? tier : 'other';
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(v);
+    }
+    return order.filter((k) => groups.has(k)).map((k) => ({ tier: k, label: tierLabel(k), items: groups.get(k) }));
+  }
+
+  function contactActions(v) {
+    const parts = [];
+    if (v.email) {
+      parts.push(
+        `<a class="v-act" href="mailto:${esc(v.email)}" title="Email">Email</a>`
+      );
+    }
+    if (v.phone) {
+      parts.push(`<a class="v-act" href="tel:${esc(v.phone)}" title="Call">Call</a>`);
+    }
+    if (v.whatsapp) {
+      const wa = String(v.whatsapp).replace(/\D/g, '');
+      parts.push(
+        `<a class="v-act" href="https://wa.me/${esc(wa)}" target="_blank" rel="noopener">WA</a>`
+      );
+    }
+    return parts.length ? `<div class="v-actions">${parts.join('')}</div>` : '';
+  }
+
+  function renderVendorRow(v, crud) {
+    const local =
+      v._source === 'local' || String(v.id || '').startsWith('local-')
+        ? '<span class="local-badge">local</span>'
+        : '';
+    const quote =
+      v.quoteUsd != null && v.quoteUsd !== ''
+        ? `<span class="v-quote">$${Number(v.quoteUsd).toLocaleString()}</span>`
+        : '';
+    const chips = (v.events || '')
+      .split(/[,·]/)
+      .slice(0, 2)
+      .map((e) => `<span class="v-chip">${esc(e.trim())}</span>`)
+      .join('');
+    return (
+      `<article class="v-row${v._source === 'local' ? ' local-item' : ''}" data-id="${esc(v.id)}">` +
+      `<div class="v-row-main">` +
+      `<div class="v-row-head">` +
+      `<span class="v-name">${esc(v.name)}${local}</span>` +
+      `<span class="badge ${statusClass(v.status)}">${esc(v.status)}</span>` +
+      quote +
+      `</div>` +
+      `<div class="v-meta">${esc(v.role)} · ${esc(v.org)}</div>` +
+      (chips ? `<div class="v-chips">${chips}</div>` : '') +
+      (v.notes ? `<p class="v-notes">${esc(v.notes)}</p>` : '') +
+      `</div>` +
+      contactActions(v) +
+      (crud ? global.BcCmdCrud?.rowActionsHtml?.(v.id) ?? '' : '') +
+      `</article>`
+    );
+  }
+
+  function renderVendorsRich() {
+    const list = global.BcCmdCrud?.getMergedVendors?.() ?? global.DATA?.vendors ?? [];
+    const active = list.filter((v) => /ACTIVE|CONFIRMED|SIGNED|URGENT/i.test(v.status)).length;
+    const groups = groupVendors(list);
+
+    const body = groups
+      .map(
+        (g) =>
+          `<section class="v-section">` +
+          `<h2 class="v-section-title font-serif">${esc(g.label)} <span class="v-count">${g.items.length}</span></h2>` +
+          `<div class="v-roster">${g.items.map((v) => renderVendorRow(v, true)).join('')}</div>` +
+          `</section>`
+      )
+      .join('');
+
+    const toolbar = global.BcCmdCrud?.toolbarHtml?.('Vendors', 'vendors') ?? '';
+
+    return (
+      `<div class="page-head"><h1 class="font-serif">Vendor roster</h1>` +
+      `<p>${list.length} contacts · ${active} active · grouped by tier</p></div>` +
+      `<div class="v-toolbar-extra">` +
+      `<input type="search" id="v-search" class="v-search" placeholder="Filter by name, org, role…" aria-label="Filter vendors">` +
+      `<a class="v-ext-link" href="/vendors" target="_blank" rel="noopener">Open vendors ops hub ↗</a>` +
+      `</div>` +
+      toolbar +
+      `<div id="v-roster-root">${body}</div>`
+    );
+  }
+
+  let bound = false;
+
+  function bindVendorFilter() {
+    if (bound) return;
+    const main = document.getElementById('main');
+    if (!main) return;
+    main.addEventListener('input', (e) => {
+      if (e.target.id !== 'v-search') return;
+      const q = e.target.value.toLowerCase();
+      main.querySelectorAll('.v-row').forEach((row) => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = !q || text.includes(q) ? '' : 'none';
+      });
+    });
+    bound = true;
+  }
+
+  function initPhase7Vendors() {
+    global.RENDERERS = global.RENDERERS || {};
+    global.RENDERERS.vendors = renderVendorsRich;
+    bindVendorFilter();
+  }
+
+  global.BcCmdVendors = { initPhase7Vendors, renderVendorsRich };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<script>/**
+ * Phase 7 — Live ops: pathname routes, drag kanban, live stats refresh, KPI recompute
+ */
+(function (global) {
+  'use strict';
+
+  const LIVE_INTERVAL_MS = 60_000;
+  let liveTimer = null;
+  let dragBound = false;
+
+  const PATH_ROUTES = new Set([
+    'dashboard', 'events', 'tasks', 'vendors', 'rooming', 'comms', 'av', 'ops',
+    'beloved', 'travel', 'budget', 'contacts',
+  ]);
+
+  function bootstrapPathRoute() {
+    const path = location.pathname.replace(/\/+$/, '');
+    const m = path.match(/\/app(?:\/([^/?#]+))?$/i);
+    if (!m) return;
+    const seg = (m[1] || 'dashboard').toLowerCase();
+    const target = PATH_ROUTES.has(seg) ? seg : 'dashboard';
+    const want = '#/' + (target === 'dashboard' ? '' : target);
+    if (location.hash !== want && location.hash !== want.replace(/\/$/, '')) {
+      location.hash = want;
+    }
+  }
+
+  function computeBudgetStats() {
+    const fx = global.DATA?.meta?.fxDefault ?? 1.37;
+    const list = global.BcCmdCrud?.getMergedBudget?.() ?? global.DATA?.budget ?? [];
+    let totalUsd = 0;
+    let paidUsd = 0;
+    for (const b of list) {
+      const amt = b.usd ?? (b.cad ? b.cad / fx : 0);
+      if (amt && b.status !== 'REFERENCE' && b.status !== 'EVALUATING') totalUsd += amt;
+      if (b.status === 'PAID' && amt) paidUsd += amt;
+    }
+    return { totalBudgetUsd: Math.round(totalUsd), paidBudgetUsd: Math.round(paidUsd) };
+  }
+
+  function computeVendorStats() {
+    const list = global.BcCmdCrud?.getMergedVendors?.() ?? global.DATA?.vendors ?? [];
+    return {
+      totalVendors: list.length,
+      activeVendors: list.filter((v) => /ACTIVE|CONFIRMED|SIGNED|URGENT/i.test(v.status)).length,
+    };
+  }
+
+  function refreshAllStats() {
+    if (!global.DATA?.stats) return;
+    if (typeof global.refreshStats === 'function') global.refreshStats();
+    Object.assign(global.DATA.stats, computeBudgetStats(), computeVendorStats());
+    global.DATA.stats.lastLiveRefresh = new Date().toISOString();
+  }
+
+  function startLiveStats() {
+    if (liveTimer) return;
+    refreshAllStats();
+    liveTimer = setInterval(() => {
+      refreshAllStats();
+      const r = typeof global.route === 'function' ? global.route() : 'dashboard';
+      if (r === 'dashboard' && typeof global.render === 'function') global.render();
+    }, LIVE_INTERVAL_MS);
+  }
+
+  function kanbanColStatus(colEl) {
+    const h = colEl?.querySelector('h3')?.textContent?.toLowerCase() || '';
+    if (h.startsWith('in progress')) return 'in_progress';
+    if (h.startsWith('done')) return 'done';
+    return 'todo';
+  }
+
+  function bindDragKanban() {
+    const main = document.getElementById('main');
+    if (!main || dragBound) return;
+    dragBound = true;
+
+    main.addEventListener('dragstart', (e) => {
+      const card = e.target.closest('.task-item[data-task-id]');
+      if (!card || !main.querySelector('[data-task-board="kanban"]')) return;
+      card.classList.add('dragging');
+      e.dataTransfer.setData('text/plain', card.dataset.taskId);
+      e.dataTransfer.effectAllowed = 'move';
+    });
+
+    main.addEventListener('dragend', (e) => {
+      e.target.closest('.task-item')?.classList.remove('dragging');
+    });
+
+    main.addEventListener('dragover', (e) => {
+      if (!e.target.closest('[data-task-board="kanban"]')) return;
+      const col = e.target.closest('.k-col');
+      if (!col) return;
+      e.preventDefault();
+      col.classList.add('drag-over');
+    });
+
+    main.addEventListener('dragleave', (e) => {
+      e.target.closest('.k-col')?.classList.remove('drag-over');
+    });
+
+    main.addEventListener('drop', (e) => {
+      const board = e.target.closest('[data-task-board="kanban"]');
+      if (!board) return;
+      const col = e.target.closest('.k-col');
+      if (!col) return;
+      e.preventDefault();
+      col.classList.remove('drag-over');
+      board.querySelectorAll('.k-col').forEach((c) => c.classList.remove('drag-over'));
+      const id = e.dataTransfer.getData('text/plain');
+      if (!id || typeof global.setTaskField !== 'function') return;
+      const status = kanbanColStatus(col);
+      global.setTaskField(id, { status });
+      if (typeof global.saveTaskState === 'function') global.saveTaskState();
+      refreshAllStats();
+      if (typeof global.render === 'function') global.render();
+    });
+  }
+
+  function patchRenderTaskCard() {
+    if (typeof global.renderTaskCard !== 'function') return;
+    const orig = global.renderTaskCard;
+    global.renderTaskCard = function (t, opts) {
+      let html = orig(t, opts);
+      if (!opts?.compact && html.includes('class="task-item')) {
+        html = html.replace(
+          'class="task-item',
+          'draggable="true" class="task-item'
+        );
+      }
+      return html;
+    };
+  }
+
+  function initPhase7Live() {
+    bootstrapPathRoute();
+    patchRenderTaskCard();
+    refreshAllStats();
+    startLiveStats();
+    bindDragKanban();
+
+    const origRender = global.render;
+    if (origRender && !global.__bcRenderPatched) {
+      global.render = function () {
+        refreshAllStats();
+        origRender();
+        bindDragKanban();
+      };
+      global.__bcRenderPatched = true;
+    }
+  }
+
+  global.BcCmdLive = { initPhase7Live, refreshAllStats, bootstrapPathRoute };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<script>if(sessionStorage.getItem('bc_cmd_auth')==='1')initApp();</script>
 </body>
 </html>

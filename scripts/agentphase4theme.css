@@ -1,0 +1,632 @@
+/**
+ * Phase 4 — Chromatic Ritual (internal Command Center)
+ * Lighter palette · default light · Cormorant + Lora · flat minimal
+ */
+
+/* Fonts loaded via <link> in build-command-center-app.mjs */
+
+/* ── Ivory (default light) ── */
+:root,
+html[data-theme="ivory"] {
+  --ground: #faf6ee;
+  --surface: #ffffff;
+  --surface2: #f5efe6;
+  --border: #e8dcc8;
+  --text: #7b5a6a;
+  --text-strong: #5c3d4a;
+  --muted: #9a8490;
+  --accent: #c9a84c;
+  --accent-hover: #b8943a;
+  --link: #2a7b8e;
+  --link-hover: #1f6272;
+  --display: #5c3d4a;
+  --ok: #4a8a5a;
+  --warn: #b8860b;
+  --bad: #a84848;
+  --sidebar: 260px;
+  --chip-ceremony: #e8dcc8;
+  --chip-ceremony-text: #6b5344;
+  --chip-sangeet: #1a4d3a;
+  --chip-sangeet-text: #d4f0e4;
+  --chip-haldi: #e8a020;
+  --chip-haldi-text: #4a3010;
+  --chip-welcome: #1a4a6e;
+  --chip-welcome-text: #d4e8f4;
+  --modal-overlay: rgba(26, 40, 48, 0.45);
+  --btn-primary-fg: #faf6ee;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Lora', Georgia, serif;
+}
+
+/* ── Midnight (dark · soft mauve-teal, not espresso) ── */
+html.dark,
+html[data-theme="midnight"] {
+  --ground: #1a2830;
+  --surface: #243038;
+  --surface2: #2a3d45;
+  --border: #3a5058;
+  --text: #d4c8cc;
+  --text-strong: #f0e8ea;
+  --muted: #9a9094;
+  --accent: #c9a84c;
+  --accent-hover: #dbb85e;
+  --link: #5aadbe;
+  --link-hover: #7ec4d4;
+  --display: #f0e8ea;
+  --ok: #6aab7a;
+  --warn: #d4a840;
+  --bad: #c86868;
+  --chip-ceremony: #4a4038;
+  --chip-ceremony-text: #e8dcc8;
+  --chip-sangeet: #1a4d3a;
+  --chip-sangeet-text: #a8e0c8;
+  --chip-haldi: #6a4810;
+  --chip-haldi-text: #f0d080;
+  --chip-welcome: #1a3a58;
+  --chip-welcome-text: #a8d0e8;
+  --modal-overlay: rgba(10, 18, 22, 0.72);
+  --btn-primary-fg: #1a2830;
+}
+
+/* ── Turmeric (warm light) ── */
+html[data-theme="turmeric"] {
+  --ground: #fff8e8;
+  --surface: #fffcf4;
+  --surface2: #f5ecd0;
+  --border: #e8d4a0;
+  --text: #6b4a20;
+  --text-strong: #4a3010;
+  --muted: #9a7840;
+  --accent: #d4880a;
+  --accent-hover: #b87408;
+  --link: #2a6a5a;
+  --link-hover: #1f5248;
+  --display: #4a3010;
+  --chip-ceremony: #f0e0c0;
+  --chip-ceremony-text: #5c4020;
+  --chip-sangeet: #2a5a40;
+  --chip-sangeet-text: #d8f0e0;
+  --chip-haldi: #e8a020;
+  --chip-haldi-text: #3a2008;
+  --chip-welcome: #2a5a78;
+  --chip-welcome-text: #d0e8f4;
+  --modal-overlay: rgba(74, 48, 16, 0.4);
+  --btn-primary-fg: #fff8e8;
+}
+
+/* ── Peacock (cool light · sangeet energy) ── */
+html[data-theme="peacock"] {
+  --ground: #eef4f6;
+  --surface: #ffffff;
+  --surface2: #e4eef0;
+  --border: #c8d8dc;
+  --text: #3a5058;
+  --text-strong: #1a3840;
+  --muted: #6a8088;
+  --accent: #2a7b8e;
+  --accent-hover: #1f6272;
+  --link: #1a4d3a;
+  --link-hover: #0f3828;
+  --display: #1a3840;
+  --chip-ceremony: #e8e0d4;
+  --chip-ceremony-text: #5a4840;
+  --chip-sangeet: #1a4d3a;
+  --chip-sangeet-text: #c8f0dc;
+  --chip-haldi: #d4880a;
+  --chip-haldi-text: #3a2008;
+  --chip-welcome: #1a5a78;
+  --chip-welcome-text: #c8e4f4;
+  --modal-overlay: rgba(26, 56, 64, 0.45);
+  --btn-primary-fg: #eef4f6;
+}
+
+/* ── Base reset & typography ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  background: var(--ground);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-serif,
+.font-display {
+  font-family: var(--font-display);
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* No gradient text */
+h1, h2, h3, .page-head h1, .card-val, .sb-mono, .gate-mono {
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
+  color: var(--display);
+}
+
+/* ── App shell overrides ── */
+html:not(.dark) {
+  --bg: var(--ground);
+  --cream: var(--display);
+  --gold: var(--accent);
+  --gold-dim: var(--muted);
+}
+
+html, body {
+  background: var(--ground);
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+}
+
+.sb-mono,
+.gate-mono,
+.page-head h1,
+.section-title,
+.card-val,
+.v-card h3 {
+  font-family: var(--font-display);
+  color: var(--display);
+}
+
+.sb-link.on {
+  color: var(--accent);
+}
+
+.card,
+.v-card,
+.k-col,
+.contact-row,
+.task-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.banner {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--accent);
+}
+
+/* ── Event route accent chips ── */
+.event-chip,
+.route-chip {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+.chip-ceremony,
+.event-chip[data-route="ceremony"] {
+  background: var(--chip-ceremony);
+  color: var(--chip-ceremony-text);
+  border-color: var(--chip-ceremony);
+}
+
+.chip-sangeet,
+.event-chip[data-route="sangeet"] {
+  background: var(--chip-sangeet);
+  color: var(--chip-sangeet-text);
+  border-color: var(--chip-sangeet);
+}
+
+.chip-haldi,
+.event-chip[data-route="haldi"] {
+  background: var(--chip-haldi);
+  color: var(--chip-haldi-text);
+  border-color: var(--chip-haldi);
+}
+
+.chip-welcome,
+.event-chip[data-route="welcome"] {
+  background: var(--chip-welcome);
+  color: var(--chip-welcome-text);
+  border-color: var(--chip-welcome);
+}
+
+/* ── Toolbar ── */
+.crud-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.crud-toolbar .toolbar-title {
+  flex: 1;
+  min-width: 140px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.crud-toolbar .toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--btn-primary-fg);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn-ghost:hover {
+  background: var(--surface2);
+  border-color: var(--muted);
+  color: var(--text-strong);
+}
+
+.btn-ghost.btn-danger {
+  color: var(--bad);
+  border-color: var(--bad);
+}
+
+.btn-ghost.btn-danger:hover {
+  background: var(--bad);
+  color: var(--surface);
+}
+
+.btn-icon {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+/* ── Forms ── */
+.crud-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-row label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text-strong);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  outline: 2px solid var(--link);
+  outline-offset: 1px;
+  border-color: var(--link);
+}
+
+.form-row textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 560px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Modal ── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--modal-overlay);
+}
+
+.modal-backdrop[hidden] {
+  display: none;
+}
+
+.modal-panel {
+  width: 100%;
+  max-width: 520px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--display);
+}
+
+.modal-close {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: var(--text-strong);
+  background: var(--surface2);
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+/* ── CRUD row actions ── */
+.crud-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.v-card.local-item,
+.contact-row.local-item,
+tr.local-item {
+  border-left: 3px solid var(--accent);
+}
+
+.local-badge {
+  display: inline-block;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--surface2);
+  color: var(--accent);
+  border: 1px solid var(--border);
+  margin-left: 6px;
+}
+
+/* ── Theme picker ── */
+.theme-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.theme-picker-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.theme-swatches {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.theme-swatch {
+  padding: 8px 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface2);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.theme-swatch:hover {
+  border-color: var(--accent);
+}
+
+.theme-swatch.active {
+  border-color: var(--accent);
+  background: var(--surface);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.theme-swatch[data-theme="ivory"]::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 8px;
+  margin-bottom: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #faf6ee 50%, #c9a84c 50%);
+}
+
+.theme-swatch[data-theme="midnight"]::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 8px;
+  margin-bottom: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #1a2830 50%, #c9a84c 50%);
+}
+
+.theme-swatch[data-theme="turmeric"]::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 8px;
+  margin-bottom: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #fff8e8 50%, #d4880a 50%);
+}
+
+.theme-swatch[data-theme="peacock"]::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 8px;
+  margin-bottom: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #eef4f6 50%, #2a7b8e 50%);
+}
+
+.mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface2);
+  color: var(--text);
+  width: 100%;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+/* ── Status badges (flat) ── */
+.badge {
+  border-radius: 4px;
+}
+
+.b-ok { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
+.b-warn { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
+.b-bad { background: color-mix(in srgb, var(--bad) 18%, transparent); color: var(--bad); }
+.b-muted { background: var(--surface2); color: var(--muted); }
+
+/* ── Gate ── */
+#gate {
+  background: var(--ground);
+}
+
+.gate-input {
+  font-family: var(--font-body);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-strong);
+}
+
+.gate-btn {
+  background: var(--accent);
+  color: var(--btn-primary-fg);
+  font-family: var(--font-body);
+}

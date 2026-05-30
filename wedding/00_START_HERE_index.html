@@ -45,6 +45,7 @@ html,body{font-family:'Lora',Georgia,serif;color:var(--text);background:var(--iv
 .intro .cta .arrow{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold-light);margin:0 6px}
 .intro .cta .url{display:block;margin-top:8px;font-family:'Lora',serif;font-size:11px;letter-spacing:1px;color:var(--gold-pale);word-break:break-all}
 .intro .cta .lock-pill{display:inline-block;margin-top:10px;font-family:'Lora',serif;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;background:rgba(232,201,122,.15);color:var(--gold-light);padding:3px 10px;border-radius:10px;border:.5px solid rgba(232,201,122,.35)}
+.intro .cta.unlocked .lock-pill{background:rgba(123,174,123,.18);color:#CFE8CF;border-color:rgba(123,174,123,.4)}
 
 .section-btn{display:block;background:linear-gradient(135deg,var(--deep-mauve) 0%,var(--charcoal) 50%,var(--deep-teal) 100%);color:#FFE9B0;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;letter-spacing:5px;text-transform:uppercase;text-align:center;padding:18px 26px;border-radius:10px;margin:0 0 22px 0;border:1px solid var(--gold);box-shadow:0 6px 22px rgba(78,48,69,.28),inset 0 0 0 1px rgba(232,201,122,.2);text-shadow:0 0 18px rgba(232,201,122,.55),0 0 4px rgba(232,201,122,.4);position:relative;overflow:hidden}
 .section-btn::before{content:'✦';position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--gold-light);font-size:20px;text-shadow:0 0 10px rgba(232,201,122,.7)}
@@ -98,7 +99,8 @@ html,body{font-family:'Lora',Georgia,serif;color:var(--text);background:var(--iv
 .modal-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--deep-mauve);font-style:italic;margin-bottom:6px}
 .modal-sub{font-family:'Lora',serif;font-size:12px;color:var(--mauve);margin-bottom:20px;line-height:1.6}
 .modal-input{width:100%;padding:12px 14px;border:1px solid var(--ivory-dark);border-radius:8px;font-family:'Lora',serif;font-size:14px;background:#fff;color:var(--charcoal);letter-spacing:1px}
-.modal-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.18);outline:none}
+.modal-input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.modal-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.18)}
 .modal-actions{display:flex;gap:10px;margin-top:16px}
 .modal-btn{flex:1;padding:12px 16px;border:none;border-radius:8px;font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s}
 .modal-btn.primary{background:var(--deep-mauve);color:var(--gold-light)}
@@ -130,7 +132,7 @@ html,body{font-family:'Lora',Georgia,serif;color:var(--text);background:var(--iv
 <main class="wrap">
 
   <div class="intro">
-    <p>A singular, comprehensive, and easy-to-use, <strong>"Source of Truth"</strong> for the wedding-week coordination, execution during, and for last-mile ops/logistics organization with our arrival in Cancún on <strong>June 16</strong>.</p>
+    <p>A singular, comprehensive, and easy-to-use, <strong>“Source of Truth”</strong> for the wedding-week coordination, execution during, and for last-mile ops/logistics organization with our arrival in Cancún on <strong>June 16</strong>.</p>
     <p>This resource was built directly for the <strong>Couple, Parents, and Core Planning Team</strong> — including family/friends directly involved with significant planning responsibilities along with our <strong>Vendors</strong>. Every link below opens a self-contained file (no internet required beyond Google Fonts).</p>
     <p><span class="highlight">Start with the <strong>Wedding Week Itinerary</strong></span> if you just want a beautiful and informed view.</p>
     <a class="cta" data-lock-group="cmd" href="/app">
@@ -156,7 +158,7 @@ html,body{font-family:'Lora',Georgia,serif;color:var(--text);background:var(--iv
       <div class="num">01 · Command Center App</div>
       <div class="title">Wedding Command Center</div>
       <div class="who">Couple · Baji · Catherina · Core Team</div>
-      <div class="desc">Sidebar app: Dashboard, Events timeline, Tasks, Vendors, Budget, Contacts — real-time ops hub. Short link: /app</div>
+      <div class="desc">Sidebar app: Dashboard, Events timeline, Tasks, Vendors, Budget, Contacts — built from wedding-master.json. Short link: /app</div>
       <span class="lock-status">🔒 Password required</span>
     </a>
 
@@ -183,7 +185,7 @@ html,body{font-family:'Lora',Georgia,serif;color:var(--text);background:var(--iv
       <div class="num">03 · Vendor Source</div>
       <div class="title">All Vendor PDFs</div>
       <div class="who">Couple · Planners</div>
-      <div class="desc">Source files: Patravali S01545, GAMA C4179, Majestic, Zuñiga (May 28 updated), Mills James AV, DJ Jethu, Something Borrowed, Palladium SAW, flight PDFs, rooming lists (42 files).</div>
+      <div class="desc">Source files: Patravali S01545, GAMA C4179, Majestic, Zuñiga (expired ref), AV del Caribe, Drums, Mills James, DJ Jethu, Something Borrowed, Palladium SAW, flight PDFs, rooming lists (42 files).</div>
       <span class="lock-status">🔒 Password required</span>
     </a>
 
@@ -207,7 +209,7 @@ html,body{font-family:'Lora',Georgia,serif;color:var(--text);background:var(--iv
       <div class="num">05 · Communications</div>
       <div class="title">Communications Hub</div>
       <div class="who">Couple · Baji · Jennyfer</div>
-      <div class="desc">Accountability comms · rooming dashboards (Natasha/Raj/Beloved) · Comms Transfer Studio · command center. Short link: /comms</div>
+      <div class="desc">Accountability comms May 26 · rooming dashboards (Natasha/Raj/Beloved) · Comms Transfer Studio · command center. Short link: khadwedsmadd.netlify.app/comms</div>
       <span class="lock-status">🔒 Password required</span>
     </a>
 
@@ -215,7 +217,7 @@ html,body{font-family:'Lora',Georgia,serif;color:var(--text);background:var(--iv
       <div class="num">06 · Agent Skills</div>
       <div class="title">Ops Runbooks &amp; Validation</div>
       <div class="who">Couple · Core Team</div>
-      <div class="desc">Composio Gmail ingest, PM validation, UI guidelines review, Canvas dashboard readme, refresh pipeline.</div>
+      <div class="desc">Composio Gmail ingest, PM validation (May 26), UI guidelines review, Canvas dashboard readme, refresh pipeline.</div>
       <span class="lock-status">🔒 Password required</span>
     </a>
   </div>
@@ -226,8 +228,8 @@ html,body{font-family:'Lora',Georgia,serif;color:var(--text);background:var(--iv
     <div class="section-title section-title-left">Key Contacts</div>
     <div class="contact-grid">
       <div class="cc"><div class="role">Travel Ops</div><div class="name">Raj — Absolute Wedsite</div><div class="det">Travel agency · rooming · flights · transfers<br><a href="mailto:raj@absolutewedsite.com">raj@absolutewedsite.com</a></div></div>
-      <div class="cc"><div class="role">Wedding Planners</div><div class="name">Beloved Planners</div><div class="det">Jennyfer · Jorge · Lilliana · Ekaterina<br>On-site Jun 16 – Jun 22<br><a href="mailto:info@jennyferreyesweddings.com">info@jennyferreyesweddings.com</a></div></div>
-      <div class="cc"><div class="role">Hotel Liaison</div><div class="name">Natasha — Palladium</div><div class="det">Wedding #207718 · SAW lead<br><a href="mailto:natasha.lima@palladiumweddings.com">natasha.lima@palladiumweddings.com</a></div></div>
+      <div class="cc"><div class="role">Wedding Planners</div><div class="name">Beloved Planners</div><div class="det">Jennyfer · Jorge · Lilliana · Ekaterina<br>On-site Jun 16 – Jun 22</div></div>
+      <div class="cc"><div class="role">Hotel Liaison</div><div class="name">Natasha — Palladium</div><div class="det">Wedding #207718 · SAW lead</div></div>
       <div class="cc"><div class="role">Couple</div><div class="name">Catherina &amp; Baji</div><div class="det"><a href="mailto:catherina.khadoo@gmail.com">catherina.khadoo@gmail.com</a><br><a href="mailto:bmadduluri@gmail.com">bmadduluri@gmail.com</a></div></div>
     </div>
   </div>
