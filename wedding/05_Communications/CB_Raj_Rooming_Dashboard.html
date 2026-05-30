@@ -7,50 +7,141 @@
 <meta name="robots" content="noindex, nofollow">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Georgia',serif;background:#FAF6EE;color:#2E1E28;min-height:100vh;padding:40px 24px}
-.wrap{max-width:700px;margin:0 auto}
-h1{font-size:30px;font-style:italic;color:#4E3045;margin-bottom:4px}
-.sub{font-size:13px;color:#7B5A6A;margin-bottom:20px}
-.alert{background:#FFF3CD;border:1px solid #FFD700;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:13px;color:#7A5D2C}
-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);font-size:13px}
-th{background:#4E3045;color:#E8C97A;padding:10px 14px;text-align:left;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
-td{padding:10px 14px;border-bottom:1px solid #EFE4CE;color:#2E1E28}
+body{font-family:'Georgia',serif;background:#FAF6EE;color:#2E1E28;min-height:100vh;padding:28px 20px}
+.wrap{max-width:960px;margin:0 auto}
+h1{font-size:28px;font-style:italic;color:#4E3045;margin-bottom:2px}
+.sub{font-size:12px;color:#7B5A6A;margin-bottom:20px;letter-spacing:0.5px}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:20px}
+.kpi{background:#fff;border-radius:8px;padding:14px;border:0.5px solid #EFE4CE;text-align:center}
+.kpi .val{font-size:28px;font-style:italic;color:#4E3045;font-family:'Georgia',serif}
+.kpi .lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#7B5A6A;margin-top:3px}
+.notice{background:#E8F5E9;border:1px solid #7BAE7B;border-radius:8px;padding:12px 16px;margin-bottom:12px;font-size:13px;color:#2E6E2E}
+.notice strong{color:#1A5060}
+.notice-warn{background:#FFF3E0;border-color:#C9A84C;color:#7A5D2C}
+.section-title{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin:18px 0 8px;font-weight:600}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);font-size:12px;margin-bottom:20px}
+th{background:#4E3045;color:#E8C97A;padding:9px 12px;text-align:left;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
+td{padding:8px 12px;border-bottom:1px solid #EFE4CE;color:#2E1E28;vertical-align:top}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#FAF0E6}
-.pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:600;letter-spacing:0.5px}
-.pill.ac{background:#DDEEFF;color:#1A5060}
-.pill.ts{background:#FFE8CC;color:#7A4400}
-.pill.sw{background:#E8F5E9;color:#2E6E2E}
-.pill.lo{background:#F3E5F5;color:#4E3045}
-.pill.dev{background:#FFF3E0;color:#7A4400}
-.pill.bel{background:#FCE4EC;color:#880E4F}
-.back{margin-top:20px;font-size:13px}
+.pill{display:inline-block;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:600;letter-spacing:0.3px;white-space:nowrap}
+.pill-ac{background:#DDEEFF;color:#1A5060}
+.pill-ts{background:#E8EAF6;color:#303F9F}
+.pill-sw{background:#E8F5E9;color:#2E6E2E}
+.pill-tb{background:#F3E5F5;color:#4E3045}
+.pill-dev{background:#FFF3E0;color:#7A4400}
+.pill-bel{background:#FCE4EC;color:#880E4F}
+.loc-same{background:#C8E6C9;color:#1B5E20;font-size:9px}
+.loc-nearby{background:#BBDEFB;color:#0D47A1;font-size:9px}
+.loc-tbd{background:#FFF9C4;color:#7A6000;font-size:9px}
+.loc-tbc{background:#F5F5F5;color:#424242;font-size:9px}
+.loc-b16{background:#EDE7F6;color:#4527A0;font-size:9px}
+.gap-badge{display:inline-block;background:#FFE0B2;color:#7A4400;font-size:9px;padding:1px 5px;border-radius:4px;font-weight:700}
+.back{margin-top:16px;font-size:12px}
 .back a{color:#7B5A6A;text-decoration:none}
+@media(max-width:600px){table{font-size:11px}th,td{padding:6px 8px}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>Raj — AbsoluteWed Rooming Dashboard</h1>
-  <div class="sub">Travel matrix · Supplier rollups · Validation gaps · Jun 16–23, 2026</div>
+  <div class="sub">Final Rooming Master · 135 PAX · 67 room slots · Authoritative source: Raj FINAL ROOMING LIST · Updated May 30, 2026</div>
 
-  <div class="alert">⚠️ <strong>Transat alert:</strong> 30 PAX arrive Jun 18 — they MISS the Welcome Party (Jun 17, 17:30–22:30). Decision needed: extend a welcome event or brief them separately on arrival.</div>
+  <div class="kpi-row">
+    <div class="kpi"><div class="val">135</div><div class="lbl">Total PAX</div></div>
+    <div class="kpi"><div class="val">67</div><div class="lbl">Room Slots</div></div>
+    <div class="kpi"><div class="val">43</div><div class="lbl">Same Bldg</div></div>
+    <div class="kpi"><div class="val">32</div><div class="lbl">Nearby</div></div>
+    <div class="kpi"><div class="val">13</div><div class="lbl">Bldg 16</div></div>
+    <div class="kpi"><div class="val">30</div><div class="lbl">TBD</div></div>
+    <div class="kpi"><div class="val">19</div><div class="lbl">TBC</div></div>
+  </div>
 
+  <div class="notice">
+    ✅ <strong>Air Transat 5N — CORRECTED:</strong> Transat guests arrive <strong>Jun 17</strong> (TS326 07:00 YYZ → CUN ~11:05) and depart Jun 22 (TS327 11:15 CUN → YYZ). They ARE present for the Welcome Party at 17:30 Jun 17. Previous "MISS Welcome Party" alert was incorrect — now resolved.
+  </div>
+
+  <div class="notice notice-warn">
+    ⚠️ <strong>Open gaps — Raj to confirm:</strong> PAX 33/34 Ramsaran (TBC room), PAX 85 placeholder name, PAX 100–103 Beloved discrepancy (Land Only vs Sunwing #152409712), PAX 104 TBA name, PAX 132–133 Gottumukkala (empty dates + first names). ~50 Transat land-block guests have TBC dates.
+  </div>
+
+  <div class="section-title">Supplier Rollup</div>
   <table>
     <thead>
-      <tr><th>Supplier</th><th>PAX</th><th>Nights</th><th>Check-in</th><th>Check-out</th><th>Notes</th></tr>
+      <tr><th>Supplier</th><th>PAX</th><th>Nights</th><th>Check-in</th><th>Check-out</th><th>Flight / Notes</th></tr>
     </thead>
     <tbody>
-      <tr><td><span class="pill ac">Air Canada</span></td><td>38</td><td>7</td><td>Jun 16</td><td>Jun 23</td><td>AC1810 06:50 YYZ→CUN · TR37577 + others</td></tr>
-      <tr><td><span class="pill ts">Air Transat</span></td><td>30</td><td>5</td><td>Jun 18</td><td>Jun 23</td><td>⚠️ MISS Welcome Party · 2 infants (61b, 63b)</td></tr>
-      <tr><td><span class="pill sw">Sunwing 7N</span></td><td>20</td><td>7</td><td>Jun 16</td><td>Jun 23</td><td>WS2776 · Building 16 block</td></tr>
-      <tr><td><span class="pill lo">Land Only</span></td><td>33</td><td>TBD</td><td>TBC</td><td>TBC</td><td>Bus schedule TBD · confirm with Jean/Raj</td></tr>
-      <tr><td><span class="pill dev">Deviations</span></td><td>6</td><td>TBD</td><td>TBC</td><td>TBC</td><td>Gottumukkala/Kumar/Mundlapudi bookings pending</td></tr>
-      <tr><td><span class="pill bel">Beloved (Sunwing)</span></td><td>4</td><td>5</td><td>Jun 17</td><td>Jun 22</td><td>Conf #152409712 · Bldg 16 · separate from Land Only</td></tr>
+      <tr>
+        <td><span class="pill pill-ac">Air Canada Vacations</span></td>
+        <td>38</td><td>7</td><td>Jun 16</td><td>Jun 23</td>
+        <td>AC1810 06:50 YYZ→CUN 09:50 · TR#37577 + additional files</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-ts">Transat Holidays (5N)</span></td>
+        <td>30 + 2 infants</td><td>5</td><td><strong>Jun 17</strong></td><td>Jun 22</td>
+        <td>TS326 07:00 YYZ→CUN · TS327 Jun 22 11:15 CUN→YYZ · ✅ Present for Welcome Party 17:30</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-sw">Sunwing Vacations (5N)</span></td>
+        <td>20</td><td>5</td><td>Jun 17</td><td>Jun 22</td>
+        <td>TS326/TS327 charter (same flights as Transat)</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-tb">Travel Brands (Land Only)</span></td>
+        <td>33</td><td>3–7 (varies)</td><td>TBC</td><td>TBC</td>
+        <td>Land Only — bus schedule TBD · confirm with Jean/Raj</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-dev">Deviations (Funjet/Transat)</span></td>
+        <td>8</td><td>3–4</td><td>Jun 18–19</td><td>Jun 22</td>
+        <td>Kumar group deviations — dates need Raj confirmation</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-bel">Beloved Planners (Sunwing Dev.)</span></td>
+        <td>4</td><td>7</td><td>Jun 16</td><td>Jun 23</td>
+        <td>Conf #152409712 · PAX 122–125 · ⚠️ Discrepancy vs Land Only list</td>
+      </tr>
     </tbody>
   </table>
 
-  <p style="margin-top:16px;font-size:12px;color:#7B5A6A;">Open items: Flight release timeline · Land Only bus schedule · Adjacent-room blocking (Building 16) · Crew travel booking. Contact: <a href="mailto:raj@absolutewedsite.com" style="color:#2A7B8E">raj@absolutewedsite.com</a></p>
-  <div class="back"><a href="CB_Rooming_Dashboard_Hub.html">← Rooming Hub</a> · <a href="/">Source of Truth</a></div>
+  <div class="section-title">Room Location Breakdown</div>
+  <table>
+    <thead>
+      <tr><th>Location Flag</th><th>Count</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="pill loc-same">SAME Building</span></td><td>43</td><td>Immediate family + close relations — must be in same block as couple</td></tr>
+      <tr><td><span class="pill loc-nearby">NEARBY</span></td><td>32</td><td>Friends, extended family — close proximity preferred</td></tr>
+      <tr><td><span class="pill loc-b16">Building 16 (explicit)</span></td><td>13</td><td>Specific Building 16 request — vendor crew + selected family</td></tr>
+      <tr><td><span class="pill loc-tbd">TBD</span></td><td>30</td><td>Room assignment pending — no preference confirmed yet</td></tr>
+      <tr><td><span class="pill loc-tbc">TBC</span></td><td>19</td><td>To be confirmed — dates or preference still outstanding</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Open Gaps — Action Required</div>
+  <table>
+    <thead>
+      <tr><th>PAX</th><th>Name</th><th>Gap / Issue</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>33/34</td><td>Ramsaran Roehit + Beena</td><td><span class="gap-badge">TBC</span> Room # not yet assigned (AC 7N Jun 16-23)</td></tr>
+      <tr><td>85</td><td>TBA (Sooriarasan / placeholder)</td><td><span class="gap-badge">PLACEHOLDER</span> Name on Apr 9 PDF — confirm replacement or drop</td></tr>
+      <tr><td>100–103</td><td>Beloved Planners team</td><td><span class="gap-badge">DISCREPANCY</span> Listed under Land Only AND separate Sunwing #152409712 — confirm canonical booking with Raj</td></tr>
+      <tr><td>104</td><td>TBA (Kumar group)</td><td><span class="gap-badge">TBA</span> Name not provided — Kumar deviation</td></tr>
+      <tr><td>105</td><td>Raghavendra Rai, Usha</td><td><span class="gap-badge">DATES TBC</span> Kumar deviation — check-in/out unconfirmed</td></tr>
+      <tr><td>120</td><td>Punati Ravindra Babu</td><td><span class="gap-badge">TBC</span> No room assignment</td></tr>
+      <tr><td>132–133</td><td>Gottumukkala</td><td><span class="gap-badge">EMPTY</span> Dates + first names incomplete — relate to PAX 128–131 Transat deviation cleanup</td></tr>
+      <tr><td>~50 PAX</td><td>Transat / Land Only block</td><td><span class="gap-badge">TBC DATES</span> Check-in/out TBC — Raj to confirm with Travel Brands</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:11px;color:#7B5A6A;margin-bottom:8px">
+    Contact: <a href="mailto:raj@absolutewedsite.com" style="color:#2A7B8E">raj@absolutewedsite.com</a> · Jean Teodoro (AbsoluteWed) ·
+    Palladium Contract #207718 · Hotel block: 120 guests · 44 rooms · 271 room-nights
+  </p>
+  <div class="back">
+    <a href="CB_Rooming_Dashboard_Hub.html">← Rooming Hub</a> · <a href="/">Source of Truth</a>
+  </div>
 </div>
 </body>
 </html>
