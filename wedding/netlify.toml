@@ -83,6 +83,16 @@
   status = 200
 
 [[redirects]]
+  from = "/finance"
+  to = "/05_Communications/CB_Financial_Analysis_Jun03.html"
+  status = 200
+
+[[redirects]]
+  from = "/budget"
+  to = "/05_Communications/CB_Financial_Analysis_Jun03.html"
+  status = 200
+
+[[redirects]]
   from = "/transfer"
   to = "/06_Agent_Skills/CB_Comms_Transfer_Studio.html"
   status = 200

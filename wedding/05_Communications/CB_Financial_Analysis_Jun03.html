@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B&C Wedding · Financial Analysis · Jun 3, 2026</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Georgia',serif;background:#FAF6EE;color:#2E1E28;min-height:100vh;padding:28px 20px}
+.wrap{max-width:1040px;margin:0 auto}
+h1{font-size:26px;font-style:italic;color:#4E3045;margin-bottom:2px}
+.sub{font-size:12px;color:#7B5A6A;margin-bottom:20px;letter-spacing:0.4px}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px}
+.kpi{background:#fff;border-radius:8px;padding:12px;border:0.5px solid #EFE4CE;text-align:center}
+.kpi .val{font-size:22px;font-style:italic;color:#4E3045;font-family:'Georgia',serif}
+.kpi .val.red{color:#B71C1C}
+.kpi .val.green{color:#1B5E20}
+.kpi .val.amber{color:#7A4400}
+.kpi .lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#7B5A6A;margin-top:2px}
+.alert{border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12.5px}
+.alert-red{background:#FFEBEE;border:1px solid #EF9A9A;color:#B71C1C}
+.alert-amber{background:#FFF8E1;border:1px solid #FFD54F;color:#7A4400}
+.alert-green{background:#E8F5E9;border:1px solid #81C784;color:#1B5E20}
+.alert strong{font-weight:700}
+.section-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin:20px 0 8px;font-weight:700;border-bottom:1px solid #EFE4CE;padding-bottom:4px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05);font-size:11.5px;margin-bottom:18px}
+th{background:#4E3045;color:#E8C97A;padding:8px 10px;text-align:left;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700}
+th.r{text-align:right}
+td{padding:7px 10px;border-bottom:1px solid #F0E8DA;color:#2E1E28;vertical-align:middle}
+td.r{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#FAF0E6}
+.pos{color:#1B5E20;font-weight:600}
+.neg{color:#B71C1C;font-weight:600}
+.zero{color:#7B5A6A}
+.neutral{color:#2E6E8E;font-weight:600}
+.pill{display:inline-block;padding:2px 7px;border-radius:5px;font-size:9.5px;font-weight:700;letter-spacing:0.2px;white-space:nowrap}
+.pill-paid{background:#E8F5E9;color:#1B5E20}
+.pill-sign{background:#FFF3E0;color:#7A4400}
+.pill-ref{background:#F3E5F5;color:#4E3045}
+.pill-exp{background:#FFEBEE;color:#B71C1C}
+.pill-sel{background:#E3F2FD;color:#1565C0}
+.pill-due{background:#FCE4EC;color:#880E4F}
+.pill-ok{background:#E8F5E9;color:#2E7D32}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+@media(max-width:720px){.two-col{grid-template-columns:1fr}}
+.card{background:#fff;border-radius:10px;padding:14px 16px;border:0.5px solid #EFE4CE;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.card h3{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#4E3045;margin-bottom:10px;font-weight:700}
+.row-data{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed #EFE4CE;font-size:11.5px}
+.row-data:last-child{border-bottom:none;font-weight:700;padding-top:6px;font-style:italic}
+.row-data .lbl{color:#5A3E50}
+.row-data .val{font-variant-numeric:tabular-nums}
+.highlight-row td{background:#FFF8E1!important;font-weight:600}
+.total-row td{background:#FAF0E6!important;font-weight:700;font-style:italic}
+.path-card{background:#fff;border-radius:10px;padding:14px 16px;border-left:4px solid #ccc;margin-bottom:10px;font-size:11.5px}
+.path-a{border-color:#2A7B8E}
+.path-b{border-color:#4E3045}
+.path-c{border-color:#C9A84C}
+.path-card h4{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;font-weight:700}
+.path-card .path-total{font-size:18px;font-style:italic;font-weight:700;margin:4px 0}
+.path-card .path-note{font-size:10.5px;color:#7B5A6A;margin-top:4px}
+.back{margin-top:20px;font-size:12px}
+.back a{color:#7B5A6A;text-decoration:none}
+.source-note{font-size:10px;color:#9B8A96;margin-top:2px;font-style:italic}
+.ts{font-size:10px;color:#9B8A96}
+.action-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #F0E8DA;font-size:12px}
+.action-row:last-child{border-bottom:none}
+.action-num{background:#4E3045;color:#E8C97A;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.urgency{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:1px 5px;border-radius:3px}
+.urg-red{background:#FFEBEE;color:#B71C1C}
+.urg-amber{background:#FFF3E0;color:#7A4400}
+.urg-green{background:#E8F5E9;color:#1B5E20}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Financial Analysis &amp; Variance Report</h1>
+  <div class="sub">Catherina &amp; Bharadwaj · Grand Palladium CM · <strong>June 3, 2026</strong> · Sources: Zuñiga Jun 3 quote, Zuñiga May 28 PDF, Mills James Q279122 + Q279827, Beloved Planners Budget CSV, CB_Wedding_Financial_Analysis.xlsx, Catherina_Baji_wedding_planning_kit.xlsx</div>
+
+  <!-- URGENCY ALERTS -->
+  <div class="alert alert-red">
+    🚨 <strong>Mills James AV — SIGN NOW:</strong> Quote 279122 valid 30 days from May 27 → expires Jun 26. But <strong>payment/signature required 7 working days before Jun 17 event = Jun 6</strong>. That is <strong>3 DAYS from now</strong>. Quote 279827 (Box Truss, dated Apr 27) is technically past 30-day window — confirm with Jimena Ochoa whether rate is held. Combined: $18,125.13 USD.
+  </div>
+  <div class="alert alert-amber">
+    ⚠️ <strong>Zuñiga Jun 3 Quote — DECISION REQUIRED:</strong> Valid 10 days from Jun 3 → <strong>expires Jun 13</strong> (4 days before wedding). Must decide Sign vs. Decline by Jun 13. Revised total: $25,491.00 USD — does NOT include florals. If signing, also contract a florist immediately.
+  </div>
+  <div class="alert alert-amber">
+    ⚠️ <strong>Decor path not yet resolved:</strong> XLSX shows AL Studio "SELECTED/COMMITTED" at $43,126 USD but no signed contract. Zuñiga Jun 3 at $25,491 is $17,635 cheaper but excludes florals. Beloved Planners hybrid model blends both. Decision must be made this week — 13 days to first event.
+  </div>
+  <div class="alert alert-green">
+    ✅ <strong>Mills James scope confirmed:</strong> Q279122 covers 8 events (Welcome → Reception) including Labor + Pioneer DDJ SZ2 controller ×5 days. Q279827 adds Box Truss for Ballroom. CAD equivalent at 1.3803: <strong>C$25,019</strong>.
+  </div>
+
+  <!-- HERO KPIs -->
+  <div class="kpi-row">
+    <div class="kpi"><div class="val amber">C$206K</div><div class="lbl">Current Forecast</div></div>
+    <div class="kpi"><div class="val">C$150K</div><div class="lbl">Original Budget</div></div>
+    <div class="kpi"><div class="val red">+C$56K</div><div class="lbl">Over-Budget</div></div>
+    <div class="kpi"><div class="val red">+49.6%</div><div class="lbl">Variance %</div></div>
+    <div class="kpi"><div class="val">C$9,459</div><div class="lbl">Paid to Date</div></div>
+    <div class="kpi"><div class="val red">C$76,871</div><div class="lbl">Committed Unpaid</div></div>
+    <div class="kpi"><div class="val red">C$85,589</div><div class="lbl">Due / Open</div></div>
+    <div class="kpi"><div class="val">1.3803</div><div class="lbl">USD→CAD Rate</div></div>
+  </div>
+
+  <!-- SECTION 1: ZUÑIGA VARIANCE -->
+  <div class="section-title">1 · Zuñiga Productions — 3-Version Variance Analysis (USD)</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Event</th><th>Date</th><th class="r">V1 ~May 25<br><span style="font-weight:400;letter-spacing:0">EXPIRED</span></th><th class="r">V2 May 28<br><span style="font-weight:400;letter-spacing:0">Revised</span></th><th class="r">V3 Jun 3 ✓<br><span style="font-weight:400;letter-spacing:0">CURRENT</span></th><th class="r">V1→V3 $</th><th class="r">V1→V3 %</th><th class="r">V2→V3 $</th><th class="r">V2→V3 %</th><th>Key Changes V2→V3</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Welcome Party</td><td>Jun 17 · Fizz Pool</td>
+        <td class="r">$3,387.20</td><td class="r">$3,387.20</td><td class="r"><strong>$1,856.00</strong></td>
+        <td class="r pos">-$1,531.20</td><td class="r pos">-45%</td>
+        <td class="r pos">-$1,531.20</td><td class="r pos">-45%</td>
+        <td>Fewer bistro lights; reduced items to $1,200 from $2,520</td>
+      </tr>
+      <tr>
+        <td>Sangeet</td><td>Jun 18 · CC Plaza</td>
+        <td class="r">$13,200.00</td><td class="r">$12,678.80</td><td class="r"><strong>$8,317.20</strong></td>
+        <td class="r pos">-$4,882.80</td><td class="r pos">-37%</td>
+        <td class="r pos">-$4,361.60</td><td class="r pos">-34%</td>
+        <td>Added Wicker Lamp (comped); reduced chair count/price; bistro lights cut to 10 @$150</td>
+      </tr>
+      <tr>
+        <td>Haldi</td><td>Jun 19 · Village Deck</td>
+        <td class="r">$2,813.00</td><td class="r">$2,813.00</td><td class="r"><strong>$2,813.00</strong></td>
+        <td class="r zero">$0</td><td class="r zero">0%</td>
+        <td class="r zero">$0</td><td class="r zero">0%</td>
+        <td>No change — same scope all versions</td>
+      </tr>
+      <tr>
+        <td>Ceremony</td><td>Jun 20 · Glassroom</td>
+        <td class="r">$6,722.00</td><td class="r">$2,354.80</td><td class="r"><strong>$2,354.80</strong></td>
+        <td class="r pos">-$4,367.20</td><td class="r pos">-65%</td>
+        <td class="r zero">$0</td><td class="r zero">0%</td>
+        <td>No change V2→V3; large cut V1→V2 (removed elaborate mandap elements)</td>
+      </tr>
+      <tr>
+        <td>Reception</td><td>Jun 21 · Ballroom TBC</td>
+        <td class="r">$17,817.60</td><td class="r">$15,787.60</td><td class="r"><strong>$10,150.00</strong></td>
+        <td class="r pos">-$7,667.60</td><td class="r pos">-43%</td>
+        <td class="r pos">-$5,637.60</td><td class="r pos">-36%</td>
+        <td>Pipe &amp; Drape cut from $5,700→$0; Reception items $12,910→$8,050; Curved Mirror Bar + Golden Shelf comped</td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="2"><strong>TOTAL (USD)</strong></td>
+        <td class="r">$43,940.80</td><td class="r">$37,021.40</td><td class="r"><strong>$25,491.00</strong></td>
+        <td class="r pos"><strong>-$18,449.80</strong></td><td class="r pos"><strong>-42.0%</strong></td>
+        <td class="r pos"><strong>-$11,530.40</strong></td><td class="r pos"><strong>-31.1%</strong></td>
+        <td></td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="2"><strong>TOTAL (CAD @ 1.3803)</strong></td>
+        <td class="r">C$60,657</td><td class="r">C$51,103</td><td class="r"><strong>C$35,186</strong></td>
+        <td class="r pos"><strong>-C$25,471</strong></td><td class="r pos"><strong>-42.0%</strong></td>
+        <td class="r pos"><strong>-C$15,917</strong></td><td class="r pos"><strong>-31.1%</strong></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="source-note">Sources: V1 = prior expired quote on file ($43,940.80, Alejandra Galindo). V2 = Zuñiga May 28, 2026 PDF (5 individual event proposals). V3 = Zuñiga Jun 3, 2026 Revision (FINAL_Revision_June_03). Quote validity: 10 days from Jun 3 → <strong>EXPIRES JUN 13</strong>. Zuñiga does NOT include florals in any version.</p>
+
+  <!-- SECTION 2: ZUÑIGA V3 ITEM DETAIL -->
+  <div class="section-title">2 · Zuñiga Jun 3 — Event-Level Item Breakdown (V3 Current)</div>
+  <table>
+    <thead>
+      <tr><th>Event / Item</th><th class="r">Items Subtotal</th><th class="r">Ops</th><th class="r">Freight</th><th class="r">Subtotal</th><th class="r">Tax 16%</th><th class="r"><strong>TOTAL USD</strong></th></tr>
+    </thead>
+    <tbody>
+      <tr class="highlight-row"><td colspan="7"><em>Welcome Party · Jun 17 · Fizz Pool</em></td></tr>
+      <tr><td style="padding-left:20px">Bistro lights (reduced count vs May 28)</td><td class="r">$1,200.00</td><td class="r">$250.00</td><td class="r">$150.00</td><td class="r">$1,600.00</td><td class="r">$256.00</td><td class="r"><strong>$1,856.00</strong></td></tr>
+      <tr class="highlight-row"><td colspan="7"><em>Sangeet · Jun 18 · CC Plaza</em></td></tr>
+      <tr><td style="padding-left:20px">Stage 28×12ft, Ivory Sofa, Vinyl Dancefloor 24×24ft, Rustic Car, Tablecloths ×12, Thonet Chairs ×120, Wicker Lamps ×30</td><td class="r">$6,470.00</td><td class="r">$450.00</td><td class="r">$250.00</td><td class="r">$7,170.00</td><td class="r">$1,147.20</td><td class="r"><strong>$8,317.20</strong></td></tr>
+      <tr class="highlight-row"><td colspan="7"><em>Haldi · Jun 19 · Village Deck</em></td></tr>
+      <tr><td style="padding-left:20px">Shading Structure 6×10m, Morrocan Chairs ×6, Havan, Golden Bajaat ×4</td><td class="r">$1,775.00</td><td class="r">$400.00</td><td class="r">$250.00</td><td class="r">$2,425.00</td><td class="r">$388.00</td><td class="r"><strong>$2,813.00</strong></td></tr>
+      <tr class="highlight-row"><td colspan="7"><em>Ceremony · Jun 20 · Glassroom</em></td></tr>
+      <tr><td style="padding-left:20px">Wooden Stage 16×16ft, Havan, Golden Bajaat ×4, Ganesh Statue, Wooden Column (comp), Steps (comp)</td><td class="r">$1,430.00</td><td class="r">$350.00</td><td class="r">$250.00</td><td class="r">$2,030.00</td><td class="r">$324.80</td><td class="r"><strong>$2,354.80</strong></td></tr>
+      <tr class="highlight-row"><td colspan="7"><em>Reception · Jun 21 · Ballroom TBC</em></td></tr>
+      <tr><td style="padding-left:20px">Curved Strip w/Acrylic Beads ×4, Stage 28×16ft, White Velvet Sofa, Vinyl Dancefloor Black ×24ft, Gold Monogram, Curved Mirror Bar (comp), Acrylic Versailles Chairs ×120, Golden Shelf ×2 (comp)</td><td class="r">$8,050.00</td><td class="r">$450.00</td><td class="r">$250.00</td><td class="r">$8,750.00</td><td class="r">$1,400.00</td><td class="r"><strong>$10,150.00</strong></td></tr>
+      <tr class="total-row">
+        <td><strong>ZUÑIGA V3 TOTAL</strong></td>
+        <td class="r"><strong>$18,925.00</strong></td><td class="r"><strong>$1,900.00</strong></td><td class="r"><strong>$1,100.00</strong></td><td class="r"><strong>$21,975.00</strong></td><td class="r"><strong>$3,516.00</strong></td><td class="r"><strong>$25,491.00</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="source-note">⚠️ Florals NOT included. Note: Curved Mirror Bar, Golden Shelf, Wooden Column, Steps — all "comp" (no charge) in V3. Pipe &amp; Drape In Black removed entirely from V3 (was $5,700 in V1). Quote expires Jun 13, 2026.</p>
+
+  <!-- SECTION 3: MILLS JAMES AV -->
+  <div class="section-title">3 · Mills James México — AV Quotes 279122 + 279827 (USD)</div>
+  <div class="two-col">
+    <div class="card">
+      <h3>Q279122 — All Events (Jun 17–21)</h3>
+      <div class="row-data"><span class="lbl">Welcome Event (Jun 17, Fizz Pool)</span><span class="val">$630.17</span></div>
+      <div class="row-data"><span class="lbl">Sangeet (Jun 18, CC Plaza)</span><span class="val">$2,272.43</span></div>
+      <div class="row-data"><span class="lbl">Snathakam (Jun 19 AM, Village Deck)</span><span class="val">$498.28</span></div>
+      <div class="row-data"><span class="lbl">Haldi (Jun 19, Beach)</span><span class="val">$370.78</span></div>
+      <div class="row-data"><span class="lbl">Lady Manticoor (Jun 19 PM, Beach Deck)</span><span class="val">$498.28</span></div>
+      <div class="row-data"><span class="lbl">Baraat (Jun 19 PM, Village Deck on boat)</span><span class="val">$562.32</span></div>
+      <div class="row-data"><span class="lbl">Ceremony (Jun 20, Glassroom Foyer)</span><span class="val">$556.90</span></div>
+      <div class="row-data"><span class="lbl">Reception (Jun 21, Ballroom)</span><span class="val">$2,530.96</span></div>
+      <div class="row-data"><span class="lbl">Labor — all events (A3, L3, AV Techs)</span><span class="val">$2,490.00</span></div>
+      <div class="row-data"><span class="lbl">Misc — Pioneer DDJ SZ2 ×5 days + Laptop Stand ×5</span><span class="val">$1,825.00</span></div>
+      <div class="row-data"><span class="lbl"><strong>Q279122 Total</strong></span><span class="val"><strong>$14,192.73</strong></span></div>
+    </div>
+    <div class="card">
+      <h3>Q279827 — Box Truss, Reception Only (Jun 21)</h3>
+      <div class="row-data"><span class="lbl">Rigging (12×10ft truss + 4×5ft + corners)</span><span class="val">$720.00</span></div>
+      <div class="row-data"><span class="lbl">Chain Motors ×4 (1-ton, 20m)</span><span class="val">$340.00</span></div>
+      <div class="row-data"><span class="lbl">Rigging Points ×4</span><span class="val">$600.00</span></div>
+      <div class="row-data"><span class="lbl">Motor Control + Cable</span><span class="val">$250.00</span></div>
+      <div class="row-data"><span class="lbl">Product Total</span><span class="val">$2,190.00</span></div>
+      <div class="row-data"><span class="lbl">Labor (2 Riggers + 2 Ground Riggers)</span><span class="val">$1,200.00</span></div>
+      <div class="row-data"><span class="lbl">Tax 16%</span><span class="val">$542.40</span></div>
+      <div class="row-data"><span class="lbl"><strong>Q279827 Total</strong></span><span class="val"><strong>$3,932.40</strong></span></div>
+      <br>
+      <div style="background:#FFF8E1;border-radius:6px;padding:8px;font-size:11px;color:#7A4400">
+        ⚠️ <strong>Status "Quote Only"</strong> — dated Apr 27. 30-day validity = expired May 27. Confirm rate hold with Jimena Ochoa (<a href="mailto:jmochoa@millsjames.com.mx" style="color:#2A7B8E">jmochoa@millsjames.com.mx</a>).
+      </div>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr><th>Quote</th><th>Scope</th><th class="r">Events</th><th class="r">Job Total USD</th><th class="r">CAD @ 1.3803</th><th>Status</th><th>Sign Deadline</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Q279122</td><td>AV + Labor + DJ controller rental — all 8 events</td><td class="r">8</td><td class="r">$14,192.73</td><td class="r">C$19,590</td><td><span class="pill pill-sign">TENTATIVE</span></td><td><strong class="neg">Jun 6 ⚡</strong></td></tr>
+      <tr><td>Q279827</td><td>Box Truss 26×26ft — Reception Ballroom only</td><td class="r">1</td><td class="r">$3,932.40</td><td class="r">C$5,429</td><td><span class="pill pill-exp">QUOTE ONLY</span></td><td><strong class="neg">Confirm rate</strong></td></tr>
+      <tr class="total-row"><td colspan="3"><strong>COMBINED MILLS JAMES</strong></td><td class="r"><strong>$18,125.13</strong></td><td class="r"><strong>C$25,019</strong></td><td colspan="2">XLSX row #6 — matches exactly ✓</td></tr>
+    </tbody>
+  </table>
+  <p class="source-note">Pioneer DDJ SZ2 ($350/day × 5 days = $1,750) is DJ Jethu's controller — Mills James provides hardware; DJ Jethu is separate. Janitor note from XLSX: "Revise Welcome/Mehndi scope" — may reduce total if those events are dropped from scope.</p>
+
+  <!-- SECTION 4: DECOR PATH COMPARISON -->
+  <div class="section-title">4 · Decor Path Comparison — Decision Required This Week</div>
+  <div class="path-card path-a">
+    <h4>Path A · Zuñiga Jun 3 + Separate Florist</h4>
+    <div class="path-total">$25,491 USD + ~$12,000–15,000 florals ≈ $37–40K USD total</div>
+    <div class="path-note">✅ Cheapest structural vendor — 42% below V1 expired quote · ❌ Florals NOT included — must contract Todo Florece / Blossom / Maya Floral immediately · ⚠️ Quote expires Jun 13 — 3 days before wedding</div>
+  </div>
+  <div class="path-card path-b">
+    <h4>Path B · AL Studio — All-In (XLSX "Selected")</h4>
+    <div class="path-total">$43,126.48 USD = C$59,530</div>
+    <div class="path-note">✅ Includes florals + delivery/setup 20% · ✅ Integrated with Beloved Planners · ❌ No signed contract yet — "PENDING sign" · ❌ $17,635 USD more than Zuñiga structures alone (but includes florals)</div>
+  </div>
+  <div class="path-card path-c">
+    <h4>Path C · Hybrid (Beloved Planners Model — AL Studio florals + Zuñiga structures)</h4>
+    <div class="path-total">~$54,000–62,000 USD (per BP CSV breakdown)</div>
+    <div class="path-note">✅ Maximizes visual richness — best of both vendors · ❌ Most complex coordination · ❌ Highest cost · BP CSV shows $30,212 Reception + $15,657 Sangeet + $9,728 Ceremony + $4,818 Haldi + $2,633 Welcome = $62,632 decor total (pre-tax/markup)</div>
+  </div>
+  <table>
+    <thead>
+      <tr><th>Vendor</th><th class="r">Total USD</th><th class="r">CAD</th><th>Florals</th><th>Status</th><th>Expires</th><th>Net vs AL Studio</th></tr>
+    </thead>
+    <tbody>
+      <tr class="highlight-row"><td><strong>Zuñiga Jun 3 (V3)</strong></td><td class="r"><strong>$25,491</strong></td><td class="r"><strong>C$35,186</strong></td><td>❌ No</td><td><span class="pill pill-sign">SIGN BY JUN 13</span></td><td class="neg">Jun 13</td><td class="pos">-$17,635 (structures only)</td></tr>
+      <tr><td>Zuñiga May 28 (V2)</td><td class="r">$37,021</td><td class="r">C$51,103</td><td>❌ No</td><td><span class="pill pill-exp">EXPIRED</span></td><td class="neg">Expired</td><td class="pos">-$6,105 (structures only)</td></tr>
+      <tr><td>Zuñiga ~May 25 (V1)</td><td class="r">$43,941</td><td class="r">C$60,657</td><td>❌ No</td><td><span class="pill pill-exp">EXPIRED</span></td><td class="neg">Expired</td><td class="neg">+$815</td></tr>
+      <tr class="highlight-row"><td><strong>AL Studio (XLSX Selected)</strong></td><td class="r"><strong>$43,126</strong></td><td class="r"><strong>C$59,530</strong></td><td>✅ Yes</td><td><span class="pill pill-sign">PENDING SIGN</span></td><td>Open</td><td><em>Baseline</em></td></tr>
+      <tr><td>GAMA C4179</td><td class="r">$43,202</td><td class="r">C$59,635</td><td>❌ No</td><td><span class="pill pill-ref">REFERENCE</span></td><td>—</td><td class="neg">+$76 (no florals)</td></tr>
+      <tr><td>AV del Caribe</td><td class="r">$20,584</td><td class="r">C$28,414</td><td>❌ No</td><td><span class="pill pill-ref">AV ALT</span></td><td>—</td><td class="pos">AV only — not decor</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 5: BELOVED PLANNERS BUDGET -->
+  <div class="section-title">5 · Beloved Planners Budget CSV — Master Budget Reconciliation</div>
+  <p style="font-size:11.5px;color:#5A3E50;margin-bottom:10px">Beloved Planners track a comprehensive hybrid budget (AL Studio florals + Zuñiga structures). Their total of <strong>$154,943.53 USD</strong> is the full event spend as they model it. This differs from the couple's XLSX ($206,428 CAD / ~$149,543 USD) due to different scope assumptions.</p>
+  <table>
+    <thead>
+      <tr><th>Category</th><th class="r">BP CSV Total USD</th><th class="r">XLSX Forecast USD</th><th class="r">Variance USD</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Photography + Videography</td><td class="r">$22,000.00</td><td class="r">~$19,200</td><td class="r neg">+$2,800</td><td>BP: Majestic ($11K) + Banga ($11K). XLSX: Majestic C$12,755 + SB C$14,238</td></tr>
+      <tr><td>DJ / MC</td><td class="r">$4,500.00</td><td class="r">$4,000.00</td><td class="r neg">+$500</td><td>BP: DJ 3D Sound (Jethu) $4,500. XLSX: $4,000</td></tr>
+      <tr><td>AV Equipment (Mills James)</td><td class="r">$18,125.13</td><td class="r">$18,125.13</td><td class="r zero">$0</td><td>✅ Perfect match — both use Q279122 + Q279827</td></tr>
+      <tr><td>Entertainment (Drums / Mariachi / Dhol)</td><td class="r">$3,386.00</td><td class="r">$3,386.00</td><td class="r zero">$0</td><td>Mariachi $1,600 + Dhol ×2 $1,786</td></tr>
+      <tr><td>Beauty by Sharda (HMUA)</td><td class="r">$3,300.00</td><td class="r">$3,300.00</td><td class="r zero">$0</td><td>✅ Exact match</td></tr>
+      <tr><td>Loto Mehndi (Bridal)</td><td class="r">$1,763.20</td><td class="r">$1,763.20</td><td class="r zero">$0</td><td>✅ Exact match — $1,520 + 16% tax</td></tr>
+      <tr><td>Patravali Catering</td><td class="r">$13,188.97</td><td class="r">$13,188.97</td><td class="r zero">$0</td><td>✅ Exact match — S01545 · 100-130 pax</td></tr>
+      <tr><td>Resort Wedding Package (venue fees/bars)</td><td class="r">$24,920.00</td><td class="r">~$21,528</td><td class="r neg">+$3,392</td><td>BP includes all Palladium per-event charges + soft bars</td></tr>
+      <tr><td>Decor — Welcome Party</td><td class="r">$2,633.20</td><td class="r">—</td><td class="r">—</td><td>Hybrid: Jaimalas (AL Studio) + Bistro Lights (Zuñiga 8×$210)</td></tr>
+      <tr><td>Decor — Haldi</td><td class="r">$4,818.20</td><td class="r">—</td><td class="r">—</td><td>Hybrid: Hindu door panel (AL Studio) + Zuñiga furniture + vendor fee</td></tr>
+      <tr><td>Decor — Sangeet</td><td class="r">$15,657.20</td><td class="r">—</td><td class="r">—</td><td>Hybrid: Backdrop/florals (AL Studio) + dance floor/chairs (Zuñiga) + vendor fee</td></tr>
+      <tr><td>Decor — Ceremony</td><td class="r">$9,728.00</td><td class="r">—</td><td class="r">—</td><td>Hybrid: Floral mandap (AL Studio) + stage/Havan (Zuñiga) + vendor fee</td></tr>
+      <tr><td>Decor — Reception</td><td class="r">$30,212.00</td><td class="r">—</td><td class="r">—</td><td>Hybrid: Ceiling/backdrop (AL Studio) + pipe-drape/stage/chairs (Zuñiga) + vendor fee</td></tr>
+      <tr class="total-row">
+        <td><strong>BP CSV TOTAL</strong></td><td class="r"><strong>$154,943.53</strong></td>
+        <td class="r"><strong>~$149,543</strong><br><span style="font-size:10px;font-weight:400">(C$206,428 ÷ 1.3803)</span></td>
+        <td class="r neg"><strong>+$5,400</strong></td>
+        <td>BP slightly higher — fuller resort package + hybrid decor vs. AL Studio-only in XLSX</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 6: UPDATED BUDGET SCENARIOS -->
+  <div class="section-title">6 · Forecast Scenarios — Impact of Decor Decision</div>
+  <table>
+    <thead>
+      <tr><th>Scenario</th><th class="r">Decor USD</th><th class="r">Decor CAD</th><th class="r">Total Forecast CAD</th><th class="r">vs Original Budget</th><th class="r">vs XLSX Forecast</th></tr>
+    </thead>
+    <tbody>
+      <tr class="highlight-row">
+        <td><strong>XLSX Baseline (AL Studio selected)</strong></td>
+        <td class="r">$43,126</td><td class="r">C$59,530</td>
+        <td class="r"><strong>C$206,428</strong></td>
+        <td class="r neg">+C$56,428 (+37.6%)</td><td class="r zero">—</td>
+      </tr>
+      <tr>
+        <td>Scenario A · Zuñiga Jun 3 only (no florals)</td>
+        <td class="r">$25,491</td><td class="r">C$35,186</td>
+        <td class="r">C$182,084</td>
+        <td class="r neg">+C$32,084 (+21.4%)</td>
+        <td class="r pos">-C$24,344 (-11.8%)</td>
+      </tr>
+      <tr>
+        <td>Scenario A+ · Zuñiga Jun 3 + florist (~$12K USD)</td>
+        <td class="r">$37,491</td><td class="r">C$51,745</td>
+        <td class="r">C$198,643</td>
+        <td class="r neg">+C$48,643 (+32.4%)</td>
+        <td class="r pos">-C$7,785 (-3.8%)</td>
+      </tr>
+      <tr>
+        <td>Scenario B · BP Hybrid (AL Studio + Zuñiga)</td>
+        <td class="r">~$62,632</td><td class="r">~C$86,454</td>
+        <td class="r">~C$233,352</td>
+        <td class="r neg">+C$83,352 (+55.6%)</td>
+        <td class="r neg">+C$26,924 (+13.0%)</td>
+      </tr>
+      <tr class="total-row">
+        <td><strong>Recommended · AL Studio (full scope, incl. florals)</strong></td>
+        <td class="r"><strong>$43,126</strong></td><td class="r"><strong>C$59,530</strong></td>
+        <td class="r"><strong>C$206,428</strong></td>
+        <td class="r neg"><strong>+C$56,428</strong></td>
+        <td class="r zero"><strong>Baseline</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="source-note">Budget gap of +C$56,428 (+37.6%) over original C$150K budget is driven primarily by: Palladium wedding package estimate ($34,508 CAD), AL Studio decor ($59,530 CAD), Patravali catering ($18,205 CAD), Mills James AV ($25,019 CAD), and Majestic Films/Something Borrowed photography ($27,000 CAD combined).</p>
+
+  <!-- SECTION 7: FULL BUDGET MASTER -->
+  <div class="section-title">7 · Updated Budget Master — All Line Items (as of Jun 3, 2026)</div>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Item</th><th>Category</th><th class="r">Native Amt</th><th>Cur</th><th class="r">CAD Forecast</th><th>Status</th><th>Due</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Couple's Trip TR37577</td><td>Travel</td><td class="r">8,976</td><td>CAD</td><td class="r">C$8,976</td><td><span class="pill pill-paid">PAID ✓</span></td><td>—</td></tr>
+      <tr><td>2</td><td>Palladium Wedding Package</td><td>Venue</td><td class="r">~25,000</td><td>USD</td><td class="r">C$34,509</td><td><span class="pill pill-sign">ESTIMATED ±5%</span></td><td>TBC Natasha</td></tr>
+      <tr><td>3</td><td>Palladium Deposit #3</td><td>Venue</td><td class="r">1,600</td><td>USD</td><td class="r">C$2,209</td><td><span class="pill pill-due">OVERDUE</span></td><td class="neg">May 26 — call</td></tr>
+      <tr><td>4</td><td>Majestic Films — Balance</td><td>Video</td><td class="r">12,755</td><td>CAD</td><td class="r">C$12,755</td><td><span class="pill pill-due">OVERDUE</span></td><td class="neg">May 26 — pay</td></tr>
+      <tr><td>6</td><td>Mills James AV (Q279122 + Q279827)</td><td>AV</td><td class="r">18,125</td><td>USD</td><td class="r">C$25,019</td><td><span class="pill pill-sign">SIGN NOW</span></td><td class="neg"><strong>Jun 6 ⚡</strong></td></tr>
+      <tr><td>8</td><td>AL Studio — Decor + Florals</td><td>Decor</td><td class="r">43,126</td><td>USD</td><td class="r">C$59,530</td><td><span class="pill pill-sel">SELECTED</span></td><td class="neg">Jun 7 sign</td></tr>
+      <tr><td>9</td><td>Zuñiga Jun 3 (alt — Path A)</td><td>Decor</td><td class="r">25,491</td><td>USD</td><td class="r">C$35,186</td><td><span class="pill pill-ref">REFERENCE</span></td><td class="neg">Jun 13 decide</td></tr>
+      <tr><td>10</td><td>Drums in Paradise</td><td>Ent.</td><td class="r">3,386</td><td>USD</td><td class="r">C$4,674</td><td><span class="pill pill-sign">DUE</span></td><td>Jun 12</td></tr>
+      <tr><td>11</td><td>Loto Mehndi (Jun 16 + Jun 18)</td><td>Beauty</td><td class="r">1,763</td><td>USD</td><td class="r">C$2,434</td><td><span class="pill pill-paid">COMMITTED</span></td><td>Signed PO</td></tr>
+      <tr><td>13</td><td>DJ Jethu (JEYARAJAH SHARAN)</td><td>Ent.</td><td class="r">4,000</td><td>USD</td><td class="r">C$5,521</td><td><span class="pill pill-sign">DUE</span></td><td>Confirm</td></tr>
+      <tr><td>14</td><td>Patravali South Asian Catering</td><td>Catering</td><td class="r">13,189</td><td>USD</td><td class="r">C$18,205</td><td><span class="pill pill-sign">DUE</span></td><td>Nov 10 (final)</td></tr>
+      <tr><td>15</td><td>Something Borrowed Photography</td><td>Photo</td><td class="r">14,238</td><td>CAD</td><td class="r">C$14,238</td><td><span class="pill pill-ok">SIGNED</span></td><td>Jun 17</td></tr>
+      <tr><td>16</td><td>Beauty by Sharda (HMUA)</td><td>Beauty</td><td class="r">3,300</td><td>USD</td><td class="r">C$4,555</td><td><span class="pill pill-sign">ESTIMATED</span></td><td>Invoice pending</td></tr>
+      <tr><td>17</td><td>Banu Prakash — Priest</td><td>Officiant</td><td class="r">0</td><td>—</td><td class="r">C$0</td><td><span class="pill pill-ref">REFERENCE</span></td><td>Group room rate</td></tr>
+      <tr><td>19</td><td>Baraat Boat</td><td>Ent.</td><td class="r">150</td><td>USD</td><td class="r">C$207</td><td><span class="pill pill-sign">DUE</span></td><td>Jun 19</td></tr>
+      <tr><td>21</td><td>Misc / Gratuities / Tips</td><td>Other</td><td class="r">2,000</td><td>USD</td><td class="r">C$2,761</td><td><span class="pill pill-sign">DUE</span></td><td>On-site</td></tr>
+      <tr><td>22</td><td>Reception Food + Drinks (Bhogali)</td><td>Catering</td><td class="r">10,800</td><td>USD</td><td class="r">C$14,908</td><td><span class="pill pill-ok">COMMITTED</span></td><td>TBC Natasha</td></tr>
+      <tr><td>20</td><td>Tasting Apr 27</td><td>Venue</td><td class="r">350</td><td>USD</td><td class="r">C$483</td><td><span class="pill pill-paid">PAID ✓</span></td><td>—</td></tr>
+      <tr class="total-row">
+        <td colspan="5"><strong>TOTAL FORECAST (CAD)</strong></td>
+        <td class="r"><strong>C$206,428</strong></td>
+        <td colspan="2">vs Original Budget C$150,000 → <span class="neg">+C$56,428 (+37.6%)</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 8: ACTION ITEMS -->
+  <div class="section-title">8 · Action Items — Ranked by Urgency</div>
+  <div class="card" style="margin-bottom:18px">
+    <div class="action-row">
+      <div class="action-num">1</div>
+      <span class="urgency urg-red">TODAY Jun 3</span>
+      <span><strong>Mills James Q279122</strong> — Contact Jimena Ochoa (<a href="mailto:jmochoa@millsjames.com.mx" style="color:#2A7B8E">jmochoa@millsjames.com.mx</a> / 998 339 1825) and sign. Confirm Q279827 rate hold (30-day expired). Combined $18,125 USD.</span>
+    </div>
+    <div class="action-row">
+      <div class="action-num">2</div>
+      <span class="urgency urg-red">BY JUN 5</span>
+      <span><strong>Decor Decision</strong> — Choose: (A) Zuñiga Jun 3 + separate florist, (B) AL Studio, or (C) hybrid. Either way confirm with Jennyfer at Beloved Planners which path is live.</span>
+    </div>
+    <div class="action-row">
+      <div class="action-num">3</div>
+      <span class="urgency urg-red">BY JUN 6</span>
+      <span><strong>Palladium Deposit #3</strong> ($1,600 USD) — OVERDUE since May 26. Call Natasha Lima (<a href="mailto:natasha.lima@palladiumweddings.com" style="color:#2A7B8E">natasha.lima@palladiumweddings.com</a>) immediately to avoid cancellation risk.</span>
+    </div>
+    <div class="action-row">
+      <div class="action-num">4</div>
+      <span class="urgency urg-red">BY JUN 6</span>
+      <span><strong>Majestic Films Balance</strong> ($12,755 CAD) — OVERDUE since May 26. Pay via majestic-films-ltd.vsco.page/pay or direct transfer.</span>
+    </div>
+    <div class="action-row">
+      <div class="action-num">5</div>
+      <span class="urgency urg-amber">BY JUN 7</span>
+      <span><strong>AL Studio contract</strong> — If Path B or C selected, sign Jennyfer/AL Studio agreement. Contact: aleventstudio02@gmail.com.</span>
+    </div>
+    <div class="action-row">
+      <div class="action-num">6</div>
+      <span class="urgency urg-amber">BY JUN 13</span>
+      <span><strong>Zuñiga Decision</strong> — Sign or formally decline Alejandra Galindo's Jun 3 quote (<a href="mailto:alejandra@decocancun.com" style="color:#2A7B8E">alejandra@decocancun.com</a> / WA 998 192 8070). Quote expires Jun 13.</span>
+    </div>
+    <div class="action-row">
+      <div class="action-num">7</div>
+      <span class="urgency urg-amber">BY JUN 10</span>
+      <span><strong>Florist</strong> (if Path A/C) — Contact Todo Florece, Blossom Cancun, or Maya Floral. Minimum 7 days lead. If florals not contracted by Jun 10, Path A becomes unviable.</span>
+    </div>
+    <div class="action-row">
+      <div class="action-num">8</div>
+      <span class="urgency urg-amber">BY JUN 12</span>
+      <span><strong>Drums in Paradise</strong> — Pay/confirm quote valid Jun 12. Contact via Beloved Planners (Jennyfer).</span>
+    </div>
+    <div class="action-row">
+      <div class="action-num">9</div>
+      <span class="urgency urg-green">ONGOING</span>
+      <span><strong>Google Sheets sync</strong> — Update CB Wedding OS v6 MASTER tab with Jun 3 Zuñiga $25,491 as reference row. Update Mills James to SIGN status once done. FX rate: update from 1.38034989 to current rate.</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <table style="margin-bottom:10px">
+    <thead><tr><th>Source Document</th><th>Date</th><th>Key Figure</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Zuñiga Jun 3 FINAL Revision</td><td>2026-06-03</td><td>$25,491.00 USD total (5 events)</td><td><span class="pill pill-sign">ACTIVE — expires Jun 13</span></td></tr>
+      <tr><td>Zuñiga May 28 All Events PDF</td><td>2026-05-28</td><td>$37,021.40 USD total</td><td><span class="pill pill-exp">EXPIRED</span></td></tr>
+      <tr><td>Mills James Q279122</td><td>2026-05-27</td><td>$14,192.73 USD (8 events)</td><td><span class="pill pill-sign">TENTATIVE — sign by Jun 6</span></td></tr>
+      <tr><td>Mills James Q279827 (Box Truss)</td><td>2026-04-27</td><td>$3,932.40 USD (Reception)</td><td><span class="pill pill-exp">Rate TBC — 30-day expired</span></td></tr>
+      <tr><td>CB_Wedding_Financial_Analysis.xlsx</td><td>2026-05-30</td><td>C$206,428 forecast / C$9,459 paid</td><td><span class="pill pill-ok">MASTER TRACKER</span></td></tr>
+      <tr><td>Beloved Planners Budget CSV</td><td>—</td><td>$154,943.53 USD total</td><td><span class="pill pill-ref">BP VIEW (hybrid model)</span></td></tr>
+      <tr><td>Catherina_Baji_wedding_planning_kit.xlsx</td><td>—</td><td>C$150,000 original budget · 138 guests</td><td><span class="pill pill-ok">PLANNING KIT</span></td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:11px;color:#7B5A6A;margin-bottom:8px">
+    Analysis prepared Jun 3, 2026 · FX: 1 USD = 1.38034989 CAD (per CB_Wedding_Financial_Analysis.xlsx Forecast Summary) · Palladium Contract #207718 · Beloved Planners: Jennyfer Reyes Tapia (<a href="mailto:Info@jennyferreyesweddings.com" style="color:#2A7B8E">Info@jennyferreyesweddings.com</a>) · Mills James: Jimena Ochoa (<a href="mailto:jmochoa@millsjames.com.mx" style="color:#2A7B8E">jmochoa@millsjames.com.mx</a>) · Zuñiga: Alejandra Galindo (<a href="mailto:alejandra@decocancun.com" style="color:#2A7B8E">alejandra@decocancun.com</a>)
+  </p>
+  <div class="back">
+    <a href="index.html">← Comms Hub</a> · <a href="../01_Command_Center/CB_WeddingOS_v6.html">Wedding OS v6</a> · <a href="../00_START_HERE_index.html">Source of Truth</a>
+  </div>
+</div>
+</body>
+</html>
