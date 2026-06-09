@@ -1,0 +1,21 @@
+{
+  "name": "bc-wedding-os",
+  "version": "1.0.0",
+  "description": "C&B Wedding Command Center — tooling scripts",
+  "type": "module",
+  "scripts": {
+    "link:google": "node scripts/link-google.mjs",
+    "sync:sheets": "node scripts/sync-sheets.mjs",
+    "sync:drive": "node scripts/sync-drive.mjs",
+    "budget:push": "node scripts/sync-sheets.mjs --sheet=budget",
+    "budget:pull": "node scripts/sync-sheets.mjs --pull --sheet=budget",
+    "check:auth": "node scripts/check-auth.mjs"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0",
+    "open": "^10.2.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

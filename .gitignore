@@ -15,3 +15,10 @@ build/
 # Claude Code
 .claude/
 .claude_history
+
+# Secrets — never commit
+.env.local
+.env.*.local
+.google-token.json
+*.token.json
+ADMIN_PASSWORDS.md
